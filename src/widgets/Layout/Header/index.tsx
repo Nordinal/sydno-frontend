@@ -61,12 +61,14 @@ const SingInForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 
 
     const onFinish = (values) => {
 
-        instanceApi.post('/login', {
-            email: values.email,
-            password: values.pass,
-        })
-        .then((res) => {
-            instanceApi.get('/user');
+        instanceApi.get('http://45.10.245.87/sanctum/csrf-cookie').then((res) => {
+            instanceApi.post('/login', {
+                email: values.email,
+                password: values.pass,
+            })
+            .then((res) => {
+                instanceApi.get('/user');
+            })
         })
     }
 
