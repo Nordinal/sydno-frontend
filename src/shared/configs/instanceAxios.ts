@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const API = 'http://45.10.245.87/api'
+export const BaseUrl = 'http://localhost';
 
 export const instanceApi= axios.create({
-    baseURL: API,
+    baseURL: BaseUrl,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'

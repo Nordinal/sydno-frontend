@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from 'axios';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 
-export const Header = ({createAd}: {createAd: boolean}) => {
+export const Header = () => {
     return (
         <Layout.Header className="flex justify-between items-center" style={{height: '48px'}}>
             <Link href={'/'}>
@@ -21,7 +21,7 @@ export const Header = ({createAd}: {createAd: boolean}) => {
             </Link>
             <div>
                 <SingButton />
-                {createAd && <Link href={'/create-ad'}><Button type='primary'>Разместить объявление</Button></Link>}
+                <Link href={'/create-ad'}><Button type='primary'>Разместить объявление</Button></Link>
             </div>
         </Layout.Header>
     );
@@ -61,13 +61,13 @@ const SingInForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 
 
     const onFinish = (values) => {
 
-        instanceApi.get('http://45.10.245.87/sanctum/csrf-cookie').then((res) => {
-            instanceApi.post('/login', {
+        instanceApi.get('/sanctum/csrf-cookie').then((res) => {
+            instanceApi.post('/api/login', {
                 email: values.email,
                 password: values.pass,
             })
             .then((res) => {
-                instanceApi.get('/user');
+                instanceApi.get('/api/user');
             })
         })
     }
@@ -139,14 +139,16 @@ const SingOutForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' |
 
     const onFinish = (values) => {
         console.log(values)
-        instanceApi.post('/register', {
-            name: values.name,
-            email: values.email,
-            password: values.pass,
-            password_confirmation: values.repeatPass
-        })
-        .then((res) => {
-            console.log(res);
+        instanceApi.get('/sanctum/csrf-cookie').then((res) => {
+            instanceApi.post('/api/register', {
+                name: values.name,
+                email: values.email,
+                password: values.pass,
+                password_confirmation: values.repeatPass
+            })
+            .then((res) => {
+                console.log(res);
+            })
         })
     }
 

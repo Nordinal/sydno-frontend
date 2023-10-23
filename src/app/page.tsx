@@ -1,10 +1,6 @@
-'use client'
-import { MainLayout } from '@/widgets/Layout';
 
-export default function Index(props) {
+export default function Index() {
   return (
-    <MainLayout>
-      Контент
-    </MainLayout>
+    <div>Конент</div>
   )
 }
