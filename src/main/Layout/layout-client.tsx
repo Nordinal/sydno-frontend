@@ -1,9 +1,11 @@
 'use client';
 import { useEffect } from 'react';
 import { Layout, ConfigProvider } from 'antd';
-import { Header } from '@/widgets/Layout/Header';
-import { Footer } from '@/widgets/Layout/Footer';
+import { Header } from '@/main/Layout/Header';
+import { Footer } from '@/main/Layout/Footer';
 import { instanceApi } from '@/shared/configs/instanceAxios';
+import { useUser } from '@/entities/user/model';
+import { useShallow } from 'zustand/react/shallow';
 
 ConfigProvider.config({
     theme: {
@@ -11,10 +13,11 @@ ConfigProvider.config({
     }
 })
 
-export const MainLayoutClient = ({children, user}: {children: React.ReactNode, user: object}) => {
+export const MainLayoutClient = ({children}: {children: React.ReactNode}) => {
+    const { fetch } = useUser(useShallow(state => ({fetch: state.fetch})));
     
     useEffect(() => {
-        // instanceApi.get('/api/user').then(res => console.log(res));
+        fetch();
     }, [])
 
     return (

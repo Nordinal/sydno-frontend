@@ -1,41 +1,22 @@
 'use client';
 import {useState} from 'react';
-import { Layout, Button, Typography, Modal, Form, Input, Tabs, Checkbox  } from "antd";
-import Link from "next/link";
-import axios from 'axios';
+import { Button, Typography, Modal, Form, Input, Tabs, Checkbox  } from "antd";
 import { instanceApi } from '@/shared/configs/instanceAxios';
+import { useUser } from '@/entities/user/model';
+import { useShallow } from 'zustand/react/shallow';
 
-export const Header = () => {
-    return (
-        <Layout.Header className="flex justify-between items-center" style={{height: '48px'}}>
-            <Link href={'/'}>
-                <Typography.Title
-                    style={{
-                        color: 'white',
-                        margin: 0
-                    }}
-                    level={4}
-                >
-                    Судно
-                </Typography.Title>
-            </Link>
-            <div>
-                <SingButton />
-                <Link href={'/create-ad'}><Button type='primary'>Разместить объявление</Button></Link>
-            </div>
-        </Layout.Header>
-    );
-}
-
-const SingButton = () => {
+export const SingButton = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { resetError } = useUser(useShallow(state => ({resetError: state.resetError})));
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        resetError();
     }
 
     const handleOpen = () => {
         setIsModalOpen(true);
+        resetError();
     }
 
     return (
@@ -50,31 +31,29 @@ const SingButton = () => {
 
 const ContentModal = () => {
     const [mode, setMode] = useState<'singin' | 'singout' | 'forgotpass'>('singin');
+    const { error, resetError } = useUser(useShallow(state => ({error: state.error, resetError: state.resetError})));
 
-    if(mode === 'singin') return <SingInForm onToggleForm={(val) => setMode(val)}/>
-    if(mode === 'singout') return <SingOutForm onToggleForm={(val) => setMode(val)}/>
-    if(mode === 'forgotpass') return <ForgotPasswordForm onToggleForm={(val) => setMode(val)} />
+    const onChangeMode = (val: 'singin' | 'singout' | 'forgotpass') => {
+        setMode(val);
+        resetError();
+    }
+
+    if(mode === 'singin') return <SingInForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
+    if(mode === 'singout') return <SingOutForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
+    if(mode === 'forgotpass') return <ForgotPasswordForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode} />
     return null;
 }
 
-const SingInForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void}) => {
+const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
+    const { login } = useUser(useShallow((state) => ({login: state.login})));
 
-    const onFinish = (values) => {
-
-        instanceApi.get('/sanctum/csrf-cookie').then((res) => {
-            instanceApi.post('/api/login', {
-                email: values.email,
-                password: values.pass,
-            })
-            .then((res) => {
-                instanceApi.get('/api/user');
-            })
-        })
+    const onFinish = (values: {email: string, pass: string, remember: boolean}) => {
+        login(values);
     }
 
     return (
         <>
-            <Typography.Title level={2} style={{marginBottom: '2rem'}}>Вход</Typography.Title>
+            <Typography.Title level={2} style={{marginBottom: errorMessage ? '1rem' :'2rem'}}>Вход</Typography.Title>
             <Form
                 wrapperCol={{ span: 24 }}
                 autoComplete="off"
@@ -82,6 +61,14 @@ const SingInForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 
                 onFinish={onFinish}
                 // onFinishFailed={onFinishFailed}
             >
+                
+                {
+                    errorMessage &&
+                    <Form.Item>
+                        <Typography.Text type="danger">{errorMessage}</Typography.Text>
+                    </Form.Item>
+                }
+
                 <Form.Item
                     name="email"
                     initialValue=''
@@ -115,9 +102,9 @@ const SingInForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 
                     />
                 </Form.Item>
 
-                <Form.Item name="remember" valuePropName="checked">
+                <Form.Item name="remember">
                     <div className='flex justify-between align-center'>
-                        <Checkbox>Запомнить меня</Checkbox>
+                        <Checkbox defaultChecked>Запомнить меня</Checkbox>
                         <Button type='link' onClick={() => onToggleForm('forgotpass')}>Забыли пароль?</Button>
                     </div>
                 </Form.Item>
@@ -135,26 +122,16 @@ const SingInForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 
     )
 }
 
-const SingOutForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void}) => {
+const SingOutForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
+    const { registration } = useUser(useShallow((state) => ({registration: state.registration})));
 
-    const onFinish = (values) => {
-        console.log(values)
-        instanceApi.get('/sanctum/csrf-cookie').then((res) => {
-            instanceApi.post('/api/register', {
-                name: values.name,
-                email: values.email,
-                password: values.pass,
-                password_confirmation: values.repeatPass
-            })
-            .then((res) => {
-                console.log(res);
-            })
-        })
+    const onFinish = (values: {email: string, name: string, pass: string, confirmationPass: string}) => {
+        registration(values);
     }
 
     return (
         <>
-            <Typography.Title level={2} style={{marginBottom: '2rem'}}>Регистрация</Typography.Title>
+            <Typography.Title level={2} style={{marginBottom: errorMessage ? '1rem' :'2rem'}}>Регистрация</Typography.Title>
             <Form
                 name="auth"
                 wrapperCol={{ span: 24 }}
@@ -164,6 +141,15 @@ const SingOutForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' |
                 // onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
+
+                { 
+                    errorMessage &&
+                    <Form.Item>
+                        <Typography.Text type="danger">{errorMessage}</Typography.Text>
+                    </Form.Item>
+                }
+
+
                 <Form.Item
                     name="name"
                     rules={[{ required: true, message: 'Обязательное поле' }]}
@@ -210,12 +196,12 @@ const SingOutForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' |
                 </Form.Item>
 
                 <Form.Item
-                    name="repeatPass"
+                    name="confirmationPass"
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <Input.Password
                         readOnly
-                        name='repeatPass'
+                        name='confirmationPass'
                         placeholder='Повторите пароль'
                         spellCheck='false'
                         autoCorrect='off'
@@ -238,11 +224,11 @@ const SingOutForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' |
     )
 }
 
-const ForgotPasswordForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void}) => {
+const ForgotPasswordForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
 
     return (
         <>
-        <Typography.Title level={2} style={{marginBottom: '2rem'}}>Восстановление пароля</Typography.Title>
+        <Typography.Title level={2} style={{marginBottom: errorMessage ? '1rem' :'2rem'}}>Восстановление пароля</Typography.Title>
         <Form
             wrapperCol={{ span: 24 }}
             autoComplete="off"
@@ -250,10 +236,18 @@ const ForgotPasswordForm = ({onToggleForm}: {onToggleForm: (val: 'singin' | 'sin
             // onFinish={onFinish}
             // onFinishFailed={onFinishFailed}
         >
+
+                {
+                    errorMessage &&
+                    <Form.Item>
+                        <Typography.Text type="danger">{errorMessage}</Typography.Text>
+                    </Form.Item>
+                }
+
             <Form.Item
                 name="email"
                 initialValue=''
-                // rules={[{ required: true, message: 'Обязательное поле' }]}
+                rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Input
                     readOnly

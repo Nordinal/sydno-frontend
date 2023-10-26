@@ -5,13 +5,14 @@ import 'antd/dist/antd.variable.min.css';
 import { StyledComponentsRegistry } from '@/shared/ui/AntdRegistry';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 import { AxiosError, AxiosPromise } from 'axios';
-import { MainLayoutServer } from '@/widgets/Layout/layout-server';
+import { MainLayoutServer } from '@/main/Layout/layout-server';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Главная страница',
   description: '123',
   icons: {
-    icon: './public/favicon.ico',
+    icon: '/favicon.ico',
   }
 };
 
@@ -32,13 +33,13 @@ export default async function RootLayout(props: {
     user: object
   }
 }) {
-  // const user = await getUser();
+
   return (
-    <html lang='en'>
+    <html lang='ru'>
       <head />
       <body>
         <StyledComponentsRegistry>
-            <MainLayoutServer >
+            <MainLayoutServer>
               {props.children}
             </MainLayoutServer>
         </StyledComponentsRegistry>
