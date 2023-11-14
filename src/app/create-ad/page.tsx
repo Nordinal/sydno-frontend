@@ -103,9 +103,9 @@ export default function CreateAd() {
             </Col>
             <Col span={6}>
                 <Timeline>
-                    <Timeline.Item>Создание объявления</Timeline.Item>
-                    <Timeline.Item>Какой-то следующий пункт</Timeline.Item>
-                    <Timeline.Item>Какой-то следующий пункт</Timeline.Item>
+                    <Timeline.Item color='red'>Основная информация</Timeline.Item>
+                    <Timeline.Item>Юридическая информация</Timeline.Item>
+                    <Timeline.Item>Техническая информация</Timeline.Item>
                 </Timeline>
             </Col>
         </Row>

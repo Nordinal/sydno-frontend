@@ -1,36 +1,68 @@
 'use client';
 import {useState} from 'react';
 import { Button, Typography, Modal, Form, Input, Tabs, Checkbox  } from "antd";
-import { instanceApi } from '@/shared/configs/instanceAxios';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
+import { MailOutlined } from '@ant-design/icons';
 
-export const SingButton = () => {
+export const SingButton = ({type = 'link', caption = 'Вход/Регистрация'}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { resetError } = useUser(useShallow(state => ({resetError: state.resetError})));
+    const [mode, setMode] = useState<'singin' | 'singout' | 'forgotpass'>('singin');
+    const { resetError, auth } = useUser(useShallow(state => ({resetError: state.resetError, auth: state.auth})));
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setMode('singin');
         resetError();
     }
 
     const handleOpen = () => {
         setIsModalOpen(true);
+        setMode('singin');
         resetError();
     }
 
     return (
         <>
-            <Button type='link' onClick={handleOpen}>Вход/Регистрация</Button>
+            <Button type={type} onClick={handleOpen}>{caption}</Button>
             <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
-                <ContentModal />
+                {
+                    !auth
+                        ? <ContentModal handleCancel={handleCancel} mode={mode} setMode={setMode}/>
+                        : <AlreadyAuth />
+                }
             </Modal>
         </>
     )
 }
 
-const ContentModal = () => {
-    const [mode, setMode] = useState<'singin' | 'singout' | 'forgotpass'>('singin');
+const AlreadyAuth = () => {
+    const { name, logout } = useUser(useShallow(state => ({name: state.name, logout: state.logout})));
+
+    return (
+        <>
+            <div className='flex items-center mb-4'>
+                <Typography.Title level={4} style={{marginBottom: 0}}>{name}, вы уже авторизованы</Typography.Title>
+            </div>
+            <div className='mb-4'>
+                <Typography.Text type='secondary'>Желаете выйти?</Typography.Text>
+            </div>
+            <div>
+                <Button type='primary' danger onClick={() => logout()}>Выйти</Button>
+            </div>
+        </>
+    );
+}
+
+const ContentModal = ({
+    handleCancel,
+    setMode,
+    mode
+}: {
+    handleCancel: Function
+    setMode: (val: 'singin' | 'singout' | 'forgotpass') => void,
+    mode: 'singin' | 'singout' | 'forgotpass'
+}) => {
     const { error, resetError } = useUser(useShallow(state => ({error: state.error, resetError: state.resetError})));
 
     const onChangeMode = (val: 'singin' | 'singout' | 'forgotpass') => {
@@ -39,7 +71,7 @@ const ContentModal = () => {
     }
 
     if(mode === 'singin') return <SingInForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
-    if(mode === 'singout') return <SingOutForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
+    if(mode === 'singout') return <SingOutForm handleCancel={handleCancel} errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
     if(mode === 'forgotpass') return <ForgotPasswordForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode} />
     return null;
 }
@@ -122,12 +154,37 @@ const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' 
     )
 }
 
-const SingOutForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
-    const { registration } = useUser(useShallow((state) => ({registration: state.registration})));
+const SingOutForm = ({
+    onToggleForm,
+    errorMessage,
+    handleCancel
+}: {
+    onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void,
+    errorMessage: string,
+    handleCancel: Function
+}) => {
+    const { registration, registrationStatus } = useUser(useShallow((state) => ({registration: state.registration, registrationStatus: state.registrationStatus})));
 
     const onFinish = (values: {email: string, name: string, pass: string, confirmationPass: string}) => {
         registration(values);
     }
+
+    if(registrationStatus) return (
+        <>
+            <div className='mb-2'>
+                <MailOutlined style={{fontSize: '32px', color: 'var(--ant-success-color)'}}/>
+            </div>
+            <div className='flex items-center mb-4'>
+                <Typography.Title level={4} style={{marginBottom: 0}}>На вашу почту отправлено письмо</Typography.Title>
+            </div>
+            <div className='mb-4'>
+                <Typography.Text type='secondary'>Перейдите по ссылке в письме для подтверждения своего email</Typography.Text>
+            </div>
+            <div>
+                <Button type='primary' onClick={() => handleCancel()}>Продолжить</Button>
+            </div>
+        </>
+    );
 
     return (
         <>

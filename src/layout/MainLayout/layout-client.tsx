@@ -1,8 +1,8 @@
 'use client';
 import { useEffect } from 'react';
 import { Layout, ConfigProvider } from 'antd';
-import { Header } from '@/main/Layout/Header';
-import { Footer } from '@/main/Layout/Footer';
+import { Header } from '@/layout/MainLayout/Header/ui';
+import { Footer } from '@/layout/MainLayout/Footer/ui';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
@@ -23,10 +23,9 @@ export const MainLayoutClient = ({children}: {children: React.ReactNode}) => {
     return (
         <Layout style={{background: 'white', minHeight: '100vh'}}>
             <Header />
-                <Layout.Content style={{margin: '0 50px'}}>
-                    {children}
-                </Layout.Content>
-            <Footer />
+            <Layout.Content style={{margin: '0 auto', width: '75%'}}>
+                {children}
+            </Layout.Content>
         </Layout>
     );
 } 

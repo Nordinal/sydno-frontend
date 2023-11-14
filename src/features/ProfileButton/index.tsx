@@ -2,19 +2,37 @@ import { useUser } from "@/entities/user/model";
 import { Avatar, Dropdown, MenuProps, Typography } from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { UserOutlined } from '@ant-design/icons';
+import { useRouter } from "next/navigation";
 
 
 export const ProfileButton = () => {
     const { name, logout } = useUser(useShallow(state => ({name: state.name, logout: state.logout})));
+    const router = useRouter();
 
     const items: MenuProps['items'] = [
         {
             key: '1',
-            label: 'Мои объявления'
+            label: 'Мои объявления',
+            onClick: () => {
+                router.push('/profile')
+            }
         },
         {
             key: '2',
-            label: 'Что-то другое'
+            label: 'Избранное'
+        },
+        {
+            type: 'divider'
+        },
+        {
+            key: 'settings',
+            label: 'Настройки',
+            onClick: () => {
+                router.push('/profile/settings')
+            }
+        },
+        {
+            type: 'divider'
         },
         {
             key: '3',
@@ -28,7 +46,7 @@ export const ProfileButton = () => {
 
     return (
         <Dropdown menu={{ items }} className="cursor-pointer">
-            <div className="flex items-center">
+            <div className="flex items-center" onClick={() => router.push('/profile')}>
                 <Avatar size="small" icon={<UserOutlined />}/>
                 <Typography.Text strong style={{color: 'white'}} className="ml-2">{name}</Typography.Text>
             </div>

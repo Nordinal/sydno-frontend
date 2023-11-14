@@ -6,22 +6,33 @@ export interface IUserModel {
     auth: boolean | null;
     name: string;
     error: AxiosError | null;
+    instance: object;
+    registrationStatus: boolean | null;
     fetch: () => void;
-    login: (values: {email: string, pass: string, remember: boolean}) => void;
-    registration: (values: {email: string, name: string, pass: string, confirmationPass: string}) => void;
-    logout: () => void;
+    login: (values: {email: string, pass: string, remember: boolean}) => Promise<void>;
+    registration: (values: {email: string, name: string, pass: string, confirmationPass: string}) => Promise<void>;
+    logout: () => Promise<void>;
     resetError: () => void;
+    verify: (payload: {
+        id: string;
+        hash: string;
+        expires: string;
+        signature: string;
+    }) => Promise<boolean>;
 };
 
 export const useUser = create<IUserModel>((set) => ({
     auth: null,
     name: '',
+    instance: {},
     error: null,
+    registrationStatus: null,
     fetch: async () => {
         try {
             const user = await instanceApi.get<{name: string}>('/api/user');
             set({
                 name: user.data.name,
+                instance: user.data,
                 auth: true
             })
         }
@@ -52,7 +63,13 @@ export const useUser = create<IUserModel>((set) => ({
                 password: values.pass,
                 password_confirmation: values.confirmationPass
             });
-            location.reload();
+            const user = await instanceApi.get<{name: string}>('/api/user');
+            set({
+                name: user.data.name,
+                instance: user.data,
+                auth: true,
+                registrationStatus: true
+            })
         }
         catch (e) {
             if(e instanceof AxiosError) set({error: e});
@@ -65,6 +82,22 @@ export const useUser = create<IUserModel>((set) => ({
         }
         catch (e) {
             if(e instanceof AxiosError) set({error: e});
+        }
+    },
+    verify: async (payload) => {
+        try {
+            await instanceApi.get(`/api/email/verify/${payload.id}/${payload.hash}?expires=${payload.expires}&signature=${payload.signature}`);
+            const user = await instanceApi.get<{name: string}>('/api/user');
+            set({
+                name: user.data.name,
+                instance: user.data,
+                auth: true
+            })
+            return true;
+        }
+        catch (e) {
+            if(e instanceof AxiosError) set({error: e});
+            return false;
         }
     },
     resetError: () => {

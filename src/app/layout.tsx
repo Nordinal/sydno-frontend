@@ -5,27 +5,18 @@ import 'antd/dist/antd.variable.min.css';
 import { StyledComponentsRegistry } from '@/shared/ui/AntdRegistry';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 import { AxiosError, AxiosPromise } from 'axios';
-import { MainLayoutServer } from '@/main/Layout/layout-server';
+import { MainLayoutServer } from '@/layout/MainLayout/layout-server';
 import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Главная страница',
   description: '123',
   icons: {
-    icon: '/favicon.ico',
+    icon: ['/favicon.ico?v=4'],
+    apple: ['/apple-touch-icon.png?v=4'],
+    shortcut: ['/apple-touch-icon.png'],
   }
 };
-
-const getUser = async (): Promise<object | AxiosError | void> => {
-  try {
-    return await instanceApi.get('/api/user')
-  }
-  catch (e: unknown) {
-    if(e instanceof AxiosError) {
-      return e;
-    }
-  }
-}
 
 export default async function RootLayout(props: {
   children: React.ReactNode;
