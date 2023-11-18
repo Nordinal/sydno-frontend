@@ -2,8 +2,6 @@
 import { useEffect } from 'react';
 import { Layout, ConfigProvider } from 'antd';
 import { Header } from '@/layout/MainLayout/Header/ui';
-import { Footer } from '@/layout/MainLayout/Footer/ui';
-import { instanceApi } from '@/shared/configs/instanceAxios';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -14,11 +12,11 @@ ConfigProvider.config({
 })
 
 export const MainLayoutClient = ({children}: {children: React.ReactNode}) => {
-    const { fetch } = useUser(useShallow(state => ({fetch: state.fetch})));
-    
+    const { fetch, hasUser } = useUser(useShallow(state => ({fetch: state.fetch, hasUser: state.hasUser })));
+
     useEffect(() => {
-        fetch();
-    }, [])
+        if(!hasUser()) fetch();
+    });
 
     return (
         <Layout style={{background: 'white', minHeight: '100vh'}}>

@@ -1,11 +1,13 @@
+'use client';
 import { useUser } from "@/entities/user/model";
 import { SingButton } from "@/entities/user/ui/SingButton";
-import { Result } from "antd";
+import { Button, Result } from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { LoadingOutlined } from '@ant-design/icons';
+import Link from "next/link";
 
 
-export const AuthWrapper = ({children}: {children: React.ReactElement}) => {
+export const AuthWrapper = ({children, invert}: {children: React.ReactElement, invert?: boolean}) => {
     const { auth } = useUser(useShallow(state => ({auth: state.auth})));
 
     if(auth === null) {
@@ -18,7 +20,10 @@ export const AuthWrapper = ({children}: {children: React.ReactElement}) => {
         );
     }
     if(auth === false) {
-        return (
+        if(invert) return (
+            <>{children}</>
+        );
+        else return (
             <Result
                 status="warning"
                 title="Необходимо авторизоваться на сайте"
@@ -29,7 +34,16 @@ export const AuthWrapper = ({children}: {children: React.ReactElement}) => {
         );
     }
     else if(auth === true) {
-        return (
+        if(invert) return (
+            <Result
+                status="warning"
+                title="Вы уже авторизованы на сайте"
+                extra={[
+                    <Link href='/'><Button type='primary'>На главную</Button></Link>
+                ]}
+            />
+        );
+        else return (
             <>{children}</>
         );
     }

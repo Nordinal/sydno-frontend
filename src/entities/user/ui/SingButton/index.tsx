@@ -5,7 +5,13 @@ import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 import { MailOutlined } from '@ant-design/icons';
 
-export const SingButton = ({type = 'link', caption = 'Вход/Регистрация'}) => {
+export const SingButton = ({
+    type = 'link',
+    caption = 'Вход/Регистрация'
+}: {
+    type?: "link" | "text" | "ghost" | "default" | "primary" | "dashed" | undefined;
+    caption?: string;
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mode, setMode] = useState<'singin' | 'singout' | 'forgotpass'>('singin');
     const { resetError, auth } = useUser(useShallow(state => ({resetError: state.resetError, auth: state.auth})));
@@ -37,7 +43,7 @@ export const SingButton = ({type = 'link', caption = 'Вход/Регистра�
 }
 
 const AlreadyAuth = () => {
-    const { name, logout } = useUser(useShallow(state => ({name: state.name, logout: state.logout})));
+    const { name, logout } = useUser(useShallow(state => ({name: state.instance?.name, logout: state.logout})));
 
     return (
         <>
@@ -78,9 +84,13 @@ const ContentModal = ({
 
 const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
     const { login } = useUser(useShallow((state) => ({login: state.login})));
+    const [remember, setRemember] = useState(true);
 
     const onFinish = (values: {email: string, pass: string, remember: boolean}) => {
-        login(values);
+        login({
+            ...values,
+            remember
+        });
     }
 
     return (
@@ -91,7 +101,6 @@ const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' 
                 autoComplete="off"
                 
                 onFinish={onFinish}
-                // onFinishFailed={onFinishFailed}
             >
                 
                 {
@@ -104,7 +113,17 @@ const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' 
                 <Form.Item
                     name="email"
                     initialValue=''
-                    // rules={[{ required: true, message: 'Обязательное поле' }]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Обязательное поле'
+                        },
+                        {
+                            type: 'email',
+                            message: 'Укажите корректную почту',
+                            validateTrigger: 'onBlur'
+                        }
+                    ]}
                 >
                     <Input
                         readOnly
@@ -121,7 +140,7 @@ const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' 
                     name="pass"
                     initialValue=''
                     style={{marginBottom: '1rem'}}
-                    // rules={[{ required: true, message: 'Обязательное поле' }]}
+                    rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <Input.Password
                         readOnly
@@ -134,9 +153,9 @@ const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' 
                     />
                 </Form.Item>
 
-                <Form.Item name="remember">
+                <Form.Item>
                     <div className='flex justify-between align-center'>
-                        <Checkbox defaultChecked>Запомнить меня</Checkbox>
+                        <Checkbox checked={remember} onClick={() => setRemember(!remember)}>Запомнить меня</Checkbox>
                         <Button type='link' onClick={() => onToggleForm('forgotpass')}>Забыли пароль?</Button>
                     </div>
                 </Form.Item>
@@ -163,28 +182,23 @@ const SingOutForm = ({
     errorMessage: string,
     handleCancel: Function
 }) => {
-    const { registration, registrationStatus } = useUser(useShallow((state) => ({registration: state.registration, registrationStatus: state.registrationStatus})));
+    const { registration } = useUser(useShallow((state) => ({ registration: state.registration })));
+
+    const openSuccessRegisterModal = () => {
+        Modal.success({
+            title: 'На вашу почту отправлено письмо',
+            content: (
+                <Typography.Text type='secondary'>Перейдите по ссылке в письме для подтверждения своего email</Typography.Text>
+            ),
+            okText: 'Продолжить',
+            icon: <MailOutlined />
+        })
+    }    
 
     const onFinish = (values: {email: string, name: string, pass: string, confirmationPass: string}) => {
-        registration(values);
+        registration(values).then(res => res && openSuccessRegisterModal());
     }
 
-    if(registrationStatus) return (
-        <>
-            <div className='mb-2'>
-                <MailOutlined style={{fontSize: '32px', color: 'var(--ant-success-color)'}}/>
-            </div>
-            <div className='flex items-center mb-4'>
-                <Typography.Title level={4} style={{marginBottom: 0}}>На вашу почту отправлено письмо</Typography.Title>
-            </div>
-            <div className='mb-4'>
-                <Typography.Text type='secondary'>Перейдите по ссылке в письме для подтверждения своего email</Typography.Text>
-            </div>
-            <div>
-                <Button type='primary' onClick={() => handleCancel()}>Продолжить</Button>
-            </div>
-        </>
-    );
 
     return (
         <>
@@ -195,7 +209,6 @@ const SingOutForm = ({
                 initialValues={{ remember: false }}
                 
                 onFinish={onFinish}
-                // onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
 
@@ -224,7 +237,17 @@ const SingOutForm = ({
 
                 <Form.Item
                     name="email"
-                    rules={[{ required: true, message: 'Обязательное поле' }]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Обязательное поле'
+                        },
+                        {
+                            type: 'email',
+                            message: 'Укажите корректную почту',
+                            validateTrigger: 'onBlur',
+                        }
+                    ]}
                 >
                     <Input
                         readOnly
@@ -282,6 +305,23 @@ const SingOutForm = ({
 }
 
 const ForgotPasswordForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
+    const { forgotPassword } = useUser(useShallow((state) => ({ forgotPassword: state.forgotPassword })));
+
+    const openSuccessForgotModal = () => {
+        Modal.success({
+            title: 'На вашу почту отправлено письмо',
+            content: (
+                <Typography.Text type='secondary'>Перейдите по ссылке в письме для смены пароля</Typography.Text>
+            ),
+            okText: 'Продолжить',
+            icon: <MailOutlined />
+        });
+    }
+
+    const onFinish = (values: {email: string}) => {
+        forgotPassword(values).then(res => res && openSuccessForgotModal());
+    }
+
 
     return (
         <>
@@ -289,11 +329,8 @@ const ForgotPasswordForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: '
         <Form
             wrapperCol={{ span: 24 }}
             autoComplete="off"
-            
-            // onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
+            onFinish={onFinish}
         >
-
                 {
                     errorMessage &&
                     <Form.Item>
@@ -303,8 +340,17 @@ const ForgotPasswordForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: '
 
             <Form.Item
                 name="email"
-                initialValue=''
-                rules={[{ required: true, message: 'Обязательное поле' }]}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Обязательное поле'
+                    },
+                    {
+                        type: 'email',
+                        message: 'Укажите корректную почту',
+                        validateTrigger: 'onBlur',
+                    }
+                ]}
             >
                 <Input
                     readOnly

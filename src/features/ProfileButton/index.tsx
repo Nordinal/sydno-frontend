@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 
 export const ProfileButton = () => {
-    const { name, logout } = useUser(useShallow(state => ({name: state.name, logout: state.logout})));
+    const { name, logout, avatar } = useUser(useShallow(state => ({name: state.instance?.name, logout: state.logout, avatar: state.instance?.avatar})));
     const router = useRouter();
 
     const items: MenuProps['items'] = [
@@ -47,7 +47,7 @@ export const ProfileButton = () => {
     return (
         <Dropdown menu={{ items }} className="cursor-pointer">
             <div className="flex items-center" onClick={() => router.push('/profile')}>
-                <Avatar size="small" icon={<UserOutlined />}/>
+                <Avatar src={avatar} size="small" icon={<UserOutlined />}/>
                 <Typography.Text strong style={{color: 'white'}} className="ml-2">{name}</Typography.Text>
             </div>
         </Dropdown>
