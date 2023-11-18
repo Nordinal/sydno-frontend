@@ -7,13 +7,14 @@ import { useShallow } from 'zustand/react/shallow';
 import { ProfileButton } from '@/features/ProfileButton';
 import { LoadingOutlined } from '@ant-design/icons';
 import Image from 'next/image';
+import './styles.css';
 
 export const Header = () => {
     const { auth } = useUser(useShallow(state => ({auth: state.auth})));
 
     return (
-        <div style={{height: '48px', lineHeight: '48px', backgroundColor: '#202124'}}>
-            <div className='w-3/4 flex justify-between items-center' style={{margin: '0 auto'}}>
+        <div className="sudno-Header">
+            <div className='sudno-container flex justify-between items-center' style={{margin: '0 auto'}}>
                 <div>
                     <Link href={'/'}>
                         <div className='flex items-center'>
