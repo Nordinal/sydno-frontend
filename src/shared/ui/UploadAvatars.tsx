@@ -53,7 +53,7 @@ export const UploadAvatars: React.FC = () => {
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        <img alt="avatar" style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>
   );

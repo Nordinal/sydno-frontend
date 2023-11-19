@@ -7,9 +7,20 @@ import { useShallow } from 'zustand/react/shallow';
 import { ProfileButton } from '@/features/ProfileButton';
 import { LoadingOutlined } from '@ant-design/icons';
 import Image from 'next/image';
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const dontShowCreateAdUrls = ['/create-ad'];
 
 export const Header = () => {
     const { auth } = useUser(useShallow(state => ({auth: state.auth})));
+    const [showCreateAdButton, setShowCreateAdButton] = useState<boolean>(true);
+    const pathname = usePathname();
+
+    useEffect(() => {
+        if(dontShowCreateAdUrls.includes(pathname)) setShowCreateAdButton(false);
+        else setShowCreateAdButton(true);
+    }, [pathname]);
 
     return (
         <div style={{height: '48px', lineHeight: '48px', backgroundColor: '#202124'}}>
@@ -27,7 +38,10 @@ export const Header = () => {
                         ? <div className={auth ? 'mr-4' : ''}>{auth ? <ProfileButton /> : <SingButton /> }</div>
                         : <LoadingOutlined className="mr-4" style={{color: '#fff', fontSize: '18px'}}/>
                     }
-                    <Link href={'/create-ad'}><Button type='primary'>Разместить объявление</Button></Link>
+                    {
+                        showCreateAdButton &&
+                        <Link href={'/create-ad'}><Button type='primary'>Разместить объявление</Button></Link>
+                    }
                 </div>
             </div>
         </div>

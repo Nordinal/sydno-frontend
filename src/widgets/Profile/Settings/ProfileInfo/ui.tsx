@@ -6,11 +6,12 @@ import { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export const ProfileInfo= () => {
-    const { updateProfileInfo, name, email, updateAvatar } = useUser(useShallow((state) => ({
+    const { updateProfileInfo, name, email, updateAvatar, avatarSrc } = useUser(useShallow((state) => ({
         name: state.instance?.name,
         email: state.instance?.email,
         updateProfileInfo: state.updateProfileInfo,
-        updateAvatar: state.updateAvatar
+        updateAvatar: state.updateAvatar,
+        avatarSrc: state.instance?.avatar
     })));
 
     const [avatar, setAvatar] = useState<File | null>(null);
@@ -106,7 +107,7 @@ export const ProfileInfo= () => {
                     name="avatar"
                     label="Фотография"
                 >
-                    <UploadAvatar onChange={(file) => setAvatar(file)}/>
+                    <UploadAvatar src={avatarSrc} onChange={(file) => setAvatar(file)}/>
                 </Form.Item>
 
                 <Form.Item className='justify-end'>

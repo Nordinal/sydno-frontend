@@ -7,7 +7,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import Link from "next/link";
 
 
-export const AuthWrapper = ({children, invert}: {children: React.ReactElement, invert?: boolean}) => {
+export const AuthWrapper = ({children, invert}: {children: React.ReactNode, invert?: boolean}) => {
     const { auth } = useUser(useShallow(state => ({auth: state.auth})));
 
     if(auth === null) {

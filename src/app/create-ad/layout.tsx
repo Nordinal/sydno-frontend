@@ -1,3 +1,4 @@
+import CreateAdLayoutClient from "@/layout/CreateAdLayout/layout-client";
 import { Metadata } from "next";
 
 
@@ -11,6 +12,6 @@ export default function RootLayout({
     children: React.ReactNode;
   }) {
     return (
-      <>{children}</>
+      <CreateAdLayoutClient>{children}</CreateAdLayoutClient>
     );
   }

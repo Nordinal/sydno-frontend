@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { message, Modal, Upload } from 'antd';
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import Image from 'next/image';
+import { instanceApiFormData } from '../configs/instanceAxios';
+import axios from 'axios';
 
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -12,6 +14,25 @@ const getBase64 = (file: RcFile): Promise<string> =>
         reader.onload = () => resolve(reader.result as string);
         reader.onerror = error => reject(error);
 });
+
+const getFile = async (url: string): Promise<string | RcFile | Blob | null> => {
+  const response = await axios.get(url, {
+    // responseType: "blob",
+    // responseEncoding: "base64",
+    headers: {
+      // 'Content-Type': 'image/jpeg'
+      // 'Accept': '*/*',
+      // 'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Request-Headers:': 'access-control-allow-origin'
+    },
+    // withCredentials: true
+  });
+  // const data = await response.blob();
+  // const metadata = {
+  //   type: "image/jpeg,image/png"
+  // }
+  // const file = new)
+}
 
 const beforeUpload = (file: RcFile) => {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -25,31 +46,32 @@ const beforeUpload = (file: RcFile) => {
   return isJpgOrPng && isLt2M;
 };
 
-export const UploadAvatar = ({onChange}: {onChange: (file: File) => void}) => {
-  const [file, setFile] = useState<UploadFile | null>(null);
+export const UploadAvatar = ({
+  onChange,
+  src
+}: {
+  onChange: (file: string | RcFile | Blob | null) => void;
+  src?: string | null
+}) => {
+  const [file, setFile] = useState<string | RcFile | Blob | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
 
-  const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
-    
-  };
-
-  const beforeUpload = (file: RcFile) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('Вы можете загрузать только JPG/PNG файлы!');
+  useEffect(() => {
+    if(src) {
+      const avatar = getFile(src);
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('Картинка должна весить менее 2 МБ!');
-    }
+  }, [src])
 
-    return isJpgOrPng && isLt2M;
-  };
-
-  const customRequest = ({ onSuccess, file }) => {
-    onSuccess('ok')
+  const customRequest = ({
+    onSuccess,
+    file
+  }: {
+    onSuccess: ((body: any, xhr?: XMLHttpRequest | undefined) => void) | undefined,
+    file: string | RcFile | Blob
+  }) => {
+    if(onSuccess) onSuccess('ok')
     setFile(file);
     onChange(file);
   }
@@ -86,8 +108,7 @@ export const UploadAvatar = ({onChange}: {onChange: (file: File) => void}) => {
         accept = "image/jpeg,image/png"
         maxCount={1}
         beforeUpload={beforeUpload}
-        onChange={handleChange}
-        customRequest={customRequest}
+        customRequest={({ onSuccess, file }) => customRequest({ onSuccess, file })}
         onRemove={onRemove}
         onPreview={handlePreview}
       >
