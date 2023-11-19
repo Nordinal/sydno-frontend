@@ -1,7 +1,8 @@
-import { IAdvertCard } from "./ui/AdvertCard";
+import { IAdvertListItem } from "./model";
 
 export default [
     {
+        id: 0,
         images: [
             'https://s00.yaplakal.com/pics/pics_original/4/0/7/17139704.jpg',
             'https://avatars.mds.yandex.net/i?id=74d0f660897f4dad66d70c94c63cee6f05169434-5467951-images-thumbs&n=13',
@@ -11,13 +12,15 @@ export default [
         ],
         title: 'Название Корабля',
         price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
+        tags: [ 'тип', 'назначение', 'класс', 'мощность', 'флаг'],
+        phone: '8-800-535-35-35',
+        addres: 'Геленджик',
+        isFavorite: false,
     },
     {
+        id: 1,
         images: [
-            'https://24newspolit.ru/wp-content/uploads/2023/01/screenshot_5-7.jpg',
+            'http://u.kanobu.ru/editor/images/90/90d60810-9164-4606-8ecb-0d416de057d9.webp',
             'https://avatars.dzeninfra.ru/get-zen_doc/1576786/pub_62dd78ff0112073c7a35e0f1_62dd792594e04162bc9e2647/scale_1200',
             'https://i.redd.it/t9frlb8loec91.png',
             'https://www.kinonews.ru/insimgs/2017/shotimg/shotimg72090_1.jpg',
@@ -25,11 +28,13 @@ export default [
         ],
         title: 'Название Корабля',
         price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
+        tags: [ 'тип', 'назначение', 'класс', 'мощность', 'флаг'],
+        phone: '8-800-535-35-35',
+        addres: 'Геленджик',
+        isFavorite: false,
     },
     {
+        id: 2,
         images: [
             'https://i.ytimg.com/vi/aQQkv5S6iEI/maxresdefault.jpg',
             'https://i.pinimg.com/originals/b5/97/42/b59742cefa4c5f3c1447c4a8a439035d.jpg',
@@ -39,192 +44,23 @@ export default [
         ],
         title: 'Название Корабля',
         price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
+        tags: [ 'тип', 'назначение', 'класс', 'мощность', 'флаг'],
+        phone: '8-800-535-35-35',
+        addres: 'Геленджик',
+        isFavorite: false,
     },
     {
-        images: [],
+        id: 3,
+        images: [
+            'https://i.ytimg.com/vi/jFSIKMUU4rY/maxresdefault.jpg',
+            'https://i.imgur.com/XwA1soyh.jpg',
+            'https://s00.yaplakal.com/pics/pics_original/1/0/9/15278901.jpg',
+        ],
         title: 'Название Корабля',
         price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
+        tags: [ 'тип', 'назначение', 'класс', 'мощность', 'флаг'],
+        phone: '8-800-535-35-35',
+        addres: 'Геленджик',
+        isFavorite: false,
     },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-    {
-        images: [],
-        title: 'Название Корабля',
-        price: 100000,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum dolorum culpa ullam officiis cum deleniti alias veniam odit, excepturi nisi accusamus dolorem, ea consequuntur hic perferendis. Laudantium nam hic laborum.',
-        phone: '1-205-650-2143',
-        addres: 'adadadasds'
-    },
-] as IAdvertCard[];
+] as IAdvertListItem[];
