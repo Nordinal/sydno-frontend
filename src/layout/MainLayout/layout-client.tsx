@@ -23,7 +23,7 @@ export const MainLayoutClient = ({children}: {children: React.ReactNode}) => {
     return (
         <Layout style={{background: 'white', minHeight: '100vh'}}>
             <Header />
-            <Layout.Content className='sudno-container pt-10'>
+            <Layout.Content className='sudno-container pt-12'>
                 {children}
             </Layout.Content>
         </Layout>

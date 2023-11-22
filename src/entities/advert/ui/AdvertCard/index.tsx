@@ -3,8 +3,8 @@ import { Row, Col, Typography, Space, Tag, Button, Tooltip } from "antd";
 import './styles.css';
 import SmallImageSlider from "@/shared/ui/SmallImageSlider";
 import isTouchDevice from "@/shared/helpers/isTouchDevice";
-import { IAdvertListItem } from "../../model";
-import { useAdvertList } from "../../model";
+import { IAdvertListItem } from "../../types/main";
+import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
 
 export interface IAdvertCard extends IAdvertListItem {
@@ -23,7 +23,8 @@ const NUMBER_FORMAT_OPTIONS = {
 const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone, addres, images, isFavorite, id }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
-    const { addToFavorites } = useAdvertList(useShallow(state => ({ addToFavorites: state.addToFavorites })));
+    const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(isFavorite || false);
+    const { addToFavorites } = useAdvert(useShallow(state => ({ addToFavorites: state.addToFavorites })));
     const isTouch = isTouchDevice();
 
     const showNumberBtnHandler = (e: SyntheticEvent) => {
@@ -40,7 +41,9 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
     }
 
     const likeButtonClickhandler = () => {
-        addToFavorites(id);
+        addToFavorites(id).then(() => {
+            setIsLocalFavorite(true);
+        });
     }
 
     return (
@@ -109,13 +112,13 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
                             <Typography.Paragraph style={{
                                 opacity: showDetails || isTouch ? '1' : '0'
                             }}>
-                                {
+                                {/* {
                                     showNumber ?
                                         phone :
                                         <Button onClick={showNumberBtnHandler}>
                                             Показать телефон
                                         </Button>
-                                }
+                                } */}
                             </Typography.Paragraph>
                         </div>
                         <Tooltip
@@ -123,7 +126,8 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
                             color={'red'}
                         >
                             <Button
-                                style={{ opacity: showDetails || isTouch || isFavorite ? '1' : '0' }}
+                                style={{ opacity: showDetails || isTouch || isLocalFavorite ? '1' : '0',
+                            width: 'auto' }}
                                 onClick={likeButtonClickhandler}
                             >
                                 ♥

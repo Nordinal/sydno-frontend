@@ -1,0 +1,1 @@
+export { default as SearchFiltres } from "./ui/SearhFiltres";
