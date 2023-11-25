@@ -4,11 +4,13 @@ import { Col, InputNumber, Row } from "antd";
 
 const Engine: React.FC<{
     num_engines?: number;
-    power?: number;
+    min_power?: number;
+    max_power?: number;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     num_engines,
-    power,
+    min_power,
+    max_power,
     changeConfigProperty,
 }) => {
     return (
@@ -27,11 +29,18 @@ const Engine: React.FC<{
                 <Col span={6}>
                     <p>Мощность двигателей</p>
                     <InputNumber
-                        value={power}
+                        value={min_power}
                         min={1}
                         max={100000}
-                        onChange={(value) => changeConfigProperty<number | undefined>('power', value || undefined)}
-                        formatter={(value) => value ? `${value} кВт` : ''}
+                        onChange={(value) => changeConfigProperty<number | undefined>('min_power', value || undefined)}
+                        formatter={(value) => value ? `от ${value} кВт` : ''}
+                    />
+                    <InputNumber
+                        value={max_power}
+                        min={1}
+                        max={100000}
+                        onChange={(value) => changeConfigProperty<number | undefined>('max_power', value || undefined)}
+                        formatter={(value) => value ? `до ${value} кВт` : ''}
                     />
                 </Col>
             </Row>

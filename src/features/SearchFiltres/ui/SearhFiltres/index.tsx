@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TFilterOptions } from '@/entities/advert';
 import { Button, Col, InputNumber, Row, Typography } from 'antd';
-import { CorpusMaterial, Engine, Gabarites } from '../../templates';
+import { CorpusMaterial, Engine, Gabarites, MainFiltres } from '../../templates';
 import './styles.css';
 
 export interface ISearchFiltresProps {
@@ -63,66 +63,17 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                         Фильтры
                     </Typography.Title>
                 </Col>
-                <Col span={24} className='pb-4'>
-                    <Typography.Title level={5}>
-                        Габариты
-                    </Typography.Title>
-                    <Gabarites
-                        overall_length={filterConfig.overall_length}
-                        overall_width={filterConfig.overall_width}
-                        board_height={filterConfig.board_height}
-                        maximum_freeboard={filterConfig.maximum_freeboard}
-                        changeConfigProperty={changeConfigProperty}
-                    />
-                </Col>
-                <Col span={24} className='pb-4'>
-                    <Typography.Title level={5}>
-                        Материал корпуса
-                    </Typography.Title>
-                    <div style={{ width: '25%' }}>
-                        <CorpusMaterial
-                            material={filterConfig.material}
-                            changeConfigProperty={changeConfigProperty}
-                        />
-                    </div>
-                </Col>
-                <Col span={6} className='pb-4'>
-                    <p>Предельная масса (дедвейт)</p>
-                    <InputNumber
-                        value={filterConfig.deadweight}
-                        min={1}
-                        max={10000}
-                        onChange={(value) => changeConfigProperty<number | undefined>('deadweight', value || undefined)}
-                        formatter={(value) => value ? `${value} т` : ''}
-                    />
-                </Col>
-                <Col span={6} className='pb-4'>
-                    <p>Доковый вес</p>
-                    <InputNumber
-                        value={filterConfig.dock_weight}
-                        min={1}
-                        max={10000}
-                        onChange={(value) => changeConfigProperty<number | undefined>('dock_weight', value || undefined)}
-                        formatter={(value) => value ? `${value} т` : ''}
-                    />
-                </Col>
-                <Col span={6} className='pb-4'>
-                    <p>Водоизмещение полное</p>
-                    <InputNumber
-                        value={filterConfig.full_displacement}
-                        min={1}
-                        max={10000}
-                        onChange={(value) => changeConfigProperty<number | undefined>('full_displacement', value || undefined)}
-                        formatter={(value) => value ? `${value} т` : ''}
-                    />
-                </Col>
-                <Col span={6} className='pb-4'>
-                    <p>Валовая вместимость</p>
-                    <InputNumber
-                        value={filterConfig.gross_tonnage}
-                        min={1}
-                        max={10000}
-                        onChange={(value) => changeConfigProperty<number | undefined>('gross_tonnage', value || undefined)}
+                <Col span={24}>
+                    <MainFiltres
+                        type={filterConfig.type}
+                        purpose={filterConfig.purpose}
+                        class_formula_right={filterConfig.class_formula_right}
+                        vessel_status={filterConfig.vessel_status}
+                        min_overall_length={filterConfig.min_overall_length}
+                        max_overall_length={filterConfig.max_overall_length}
+                        min_overall_width={filterConfig.min_overall_width}
+                        max_overall_width={filterConfig.max_overall_width}
+                        changeConfigProperty={changeConfigProperty}                  
                     />
                 </Col>
                 <Col span={24} className={showHiddenBlock ? 'pb-4' : ''}>
@@ -131,7 +82,8 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                             Двигатель
                         </Typography.Title>
                         <Engine
-                            power={filterConfig.power}
+                            min_power={filterConfig.min_power}
+                            max_power={filterConfig.max_power}
                             num_engines={filterConfig.num_engines}
                             changeConfigProperty={changeConfigProperty}
                         />

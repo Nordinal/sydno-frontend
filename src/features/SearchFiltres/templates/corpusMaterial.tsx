@@ -3,12 +3,10 @@ import React from "react";
 import { TChangeConfigProperty } from "../ui/SearhFiltres";
 
 const OPTIONS = [
-    { value: 'деревянный', label: 'деревянный' },
+    { value: 'древесина', label: 'древесина' },
     { value: 'сталь', label: 'сталь' },
-    { value: 'сплав', label: 'сплав' },
-    { value: 'железобетонные', label: 'железобетонные', },
-    { value: 'пластическая масса', label: 'пластическая масса', },
-    { value: 'композитные', label: 'композитные', },
+    { value: 'железобетонный', label: 'железобетонный' },
+    { value: 'композитный', label: 'композитный', },
 ];
 
 const CorpusMaterial: React.FC<{
@@ -22,7 +20,7 @@ const CorpusMaterial: React.FC<{
             <Select
                 placeholder={material || 'Материал корпуса'}
                 style={{ width: '100%' }}
-                defaultValue={material}
+                value={material}
                 onChange={(value) => changeConfigProperty<string>('material', value)}
                 options={OPTIONS}
             />

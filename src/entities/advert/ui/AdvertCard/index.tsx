@@ -40,9 +40,10 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
         setShowDetails(true);
     }
 
-    const likeButtonClickhandler = () => {
+    const likeButtonClickhandler = (e: SyntheticEvent) => {
+        e.stopPropagation();
         addToFavorites(id).then(() => {
-            setIsLocalFavorite(true);
+            setIsLocalFavorite(!isLocalFavorite);
         });
     }
 
@@ -112,13 +113,13 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
                             <Typography.Paragraph style={{
                                 opacity: showDetails || isTouch ? '1' : '0'
                             }}>
-                                {/* {
+                                {
                                     showNumber ?
                                         phone :
                                         <Button onClick={showNumberBtnHandler}>
                                             Показать телефон
                                         </Button>
-                                } */}
+                                }
                             </Typography.Paragraph>
                         </div>
                         <Tooltip
