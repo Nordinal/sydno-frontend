@@ -4,6 +4,7 @@ import { Layout, ConfigProvider } from 'antd';
 import { Header } from '@/layout/MainLayout/Header/ui';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
+import './styles.css';
 
 ConfigProvider.config({
     theme: {
