@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AdvertCard, useAdvert, IAdvertListItem } from "@/entities/advert";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Skeleton, Typography } from "antd";
 import { useShallow } from "zustand/react/shallow";
-import getUrlQueryParams from "@/shared/helpers/getUrlQueryParams";
 import { Pagination } from 'antd';
+import useQueryParamsObserver from "@/shared/helpers/useQueryParamsObserver";
 
 const PAGINATION_LIMIT_PAGE = 10;
 
@@ -14,12 +14,11 @@ const SearchLayoutContent: React.FC = () => {
     const [advertList, setAdvertList] = useState<IAdvertListItem[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isErrorLoad, setIsErrorLoad] = useState<boolean>(false);
-    const searchParams = useSearchParams();
 
-    useEffect(() => {
+    useQueryParamsObserver((queryParams) => {
         setIsLoading(true);
         getAdvertList({
-            ...getUrlQueryParams(searchParams),
+            ...queryParams,
             limit: PAGINATION_LIMIT_PAGE,
         }).then((response) => {
             setAdvertList(response);
@@ -29,7 +28,7 @@ const SearchLayoutContent: React.FC = () => {
             setIsLoading(false);
             setIsErrorLoad(true);
         });
-    }, [searchParams])
+    });
 
     const onAdvertCardClick = (id: number) => {
         router.push('/advert/' + id);
@@ -65,14 +64,14 @@ const SearchLayoutContent: React.FC = () => {
                 />
             ))}
             {
-                advertList.length > 0 ? 
-                <div className="flex justify-center pt-8">
-                    <Pagination
-                        defaultCurrent={1}
-                        total={50}
-                    />
-                </div>
-                : <></>
+                advertList.length > 0 ?
+                    <div className="flex justify-center pt-8">
+                        <Pagination
+                            defaultCurrent={1}
+                            total={50}
+                        />
+                    </div>
+                    : <></>
             }
         </>
     );

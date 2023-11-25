@@ -12,18 +12,18 @@ const OPTIONS = [
 ];
 
 const CorpusMaterial: React.FC<{
-    defaultValue?: string;
+    material?: string;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
-    defaultValue,
+    material,
     changeConfigProperty
 }) => {
         return (
             <Select
-                placeholder={defaultValue || 'Материал корпуса'}
+                placeholder={material || 'Материал корпуса'}
                 style={{ width: '100%' }}
-                defaultValue={defaultValue}
-                onChange={(value) => changeConfigProperty<string>('corpusMaterial', value)}
+                defaultValue={material}
+                onChange={(value) => changeConfigProperty<string>('material', value)}
                 options={OPTIONS}
             />
         );
