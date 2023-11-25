@@ -1,0 +1,11 @@
+.sudno-Header {
+    background-color: #202124;
+    height: 48px;
+    line-height: 48px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+}

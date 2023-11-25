@@ -1,0 +1,15 @@
+.sudno-AdvertCard {
+    transition: 0.2s;
+    padding: 15px;
+}
+
+.sudno-AdvertCard:hover {
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+    cursor: pointer;
+}
+
+@media (max-width: 576px) {
+    .sudno-AdvertCard {
+        box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+    }
+}

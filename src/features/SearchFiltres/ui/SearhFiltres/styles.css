@@ -1,0 +1,9 @@
+.sudno-SearhFiltres-hiddenBlock {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.sudno-SearhFiltres-hiddenBlock-active {
+    max-height: 2000px;
+    overflow: hidden;
+}
