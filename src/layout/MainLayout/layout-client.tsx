@@ -5,6 +5,7 @@ import { Header } from '@/layout/MainLayout/Header/ui';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 import './styles.css';
+import ruRU from 'antd/lib/locale/ru_RU';
 
 ConfigProvider.config({
     theme: {
@@ -20,11 +21,13 @@ export const MainLayoutClient = ({children}: {children: React.ReactNode}) => {
     });
 
     return (
-        <Layout style={{background: 'white', minHeight: '100vh'}}>
-            <Header />
-            <Layout.Content className='sudno-container pt-12'>
-                {children}
-            </Layout.Content>
-        </Layout>
+        <ConfigProvider locale={ruRU}>
+            <Layout style={{background: 'white', minHeight: '100vh'}}>
+                <Header />
+                <Layout.Content className='sudno-container'>
+                    {children}
+                </Layout.Content>
+            </Layout>
+        </ConfigProvider>
     );
 } 

@@ -1,10 +1,12 @@
 'use client';
-import { Button, Col, Row, Steps } from 'antd';
+import { Button, Col, Modal, Row, Steps } from 'antd';
 import CreateAdStepOne from './StepOne/ui';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CreateAdStepTwo from './StepTwo/ui';
 import CreateAdStepThree from './StepThree/ui';
+import { ICreateAdStepOne, useCreateAd } from '@/entities/createAd/model';
+import { useShallow } from 'zustand/react/shallow';
 
 export type onFinishStep = ({
     type,
@@ -15,20 +17,47 @@ export type onFinishStep = ({
 }) => void
 
 export default function CreateAd() {
-    const [current, setCurrent] = useState(0);
+    const { createStepOne } = useCreateAd(useShallow(state => ({createStepOne: state.createStepOne})))
+    const steps: ['StepOne', 'StepTwo', 'StepThree'] = ['StepOne', 'StepTwo', 'StepThree']
+    const [current, setCurrent] = useState<'StepOne' | 'StepTwo' | 'StepThree'>('StepOne');
+    const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
+    const index = steps.indexOf(current);
 
-    const onFinishStep: onFinishStep = ({
+    const openErrorModal = () => {
+        Modal.error({
+            title: 'Произошла какая-то ошибка',
+            okText: 'Продолжить',
+        });
+    }
+
+    const onFinishStep: onFinishStep = async ({
         type,
         data
     }) => {
-        console.log(data);
-        if(current < 2) setCurrent((current) => ++current);
+        let done = false;
+
+        setLoading(true);
+
+        if(type === 'StepOne') {
+            done = await createStepOne(data as ICreateAdStepOne)
+        }
+
+        setLoading(false);
+
+        if(!done) {
+            openErrorModal()
+            return;
+        }
+
+        const index = steps.indexOf(type);
+        if(index < 2) setCurrent(steps[index + 1]);
         else router.push('/profile')
     };
 
     const onBack = () => {
-        if(current >= 1) setCurrent((current) => --current);
+        const index = steps.indexOf(current);
+        if(index >= 1) setCurrent(steps[index - 1]);
     }
 
     return (
@@ -37,7 +66,7 @@ export default function CreateAd() {
                 style={{
                     marginBottom: '48px'
                 }}
-                current={current}
+                current={index}
                 items={[
                     {
                         title: 'Основная информация',
@@ -50,18 +79,24 @@ export default function CreateAd() {
                     },
                 ]}
             />
-            <div className={current !== 0 ? 'hidden' : ''}><CreateAdStepOne onFinish={onFinishStep}/></div>
-            <div className={current !== 1 ? 'hidden' : ''}><CreateAdStepTwo onFinish={onFinishStep}/></div>
-            <div className={current !== 2 ? 'hidden' : ''}><CreateAdStepThree onFinish={onFinishStep}/></div>
+            {
+                index === 0
+                    ? <CreateAdStepOne onFinish={onFinishStep}/>
+                    : index === 1
+                        ? <CreateAdStepTwo onFinish={onFinishStep}/>
+                        : index === 2
+                            ? <CreateAdStepThree onFinish={onFinishStep}/>
+                            : null
+            }
             <Row>
                 <Col span={6}>
-                    <Button disabled={current === 0} onClick={onBack} className='mr-4 w-full' type="default">
+                    <Button loading={loading} disabled={index === 0} onClick={onBack} className='mr-4 w-full' type="default">
                         Назад
                     </Button>
                 </Col>
                 <Col offset={1} span={15}>
-                    <Button form='create-ad' type="primary" className='mr-4 w-full' htmlType="submit">
-                        {current === 2 ? 'Создать объявление' : 'Перейти к следующему шагу'}
+                    <Button loading={loading} form={current} type="primary" className='mr-4 w-full' htmlType="submit">
+                        {index === 2 ? 'Создать объявление' : 'Перейти к следующему шагу'}
                     </Button>
                 </Col>
             </Row>

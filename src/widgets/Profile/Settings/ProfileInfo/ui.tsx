@@ -2,19 +2,23 @@
 import { useUser } from "@/entities/user/model";
 import { UploadAvatar } from "@/shared/ui/UploadAvatar";
 import { Button, Divider, Form, Input, Modal, Typography } from "antd";
+import { MaskedInput } from "antd-mask-input";
+import { RcFile } from "antd/lib/upload";
 import { useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export const ProfileInfo= () => {
-    const { updateProfileInfo, name, email, updateAvatar, avatarSrc } = useUser(useShallow((state) => ({
+    const { updateProfileInfo, name, email, updateAvatar, avatarSrc, phone_number, deleteAvatar } = useUser(useShallow((state) => ({
         name: state.instance?.name,
         email: state.instance?.email,
+        phone_number: state.instance?.phone_number,
         updateProfileInfo: state.updateProfileInfo,
         updateAvatar: state.updateAvatar,
+        deleteAvatar: state.deleteAvatar,
         avatarSrc: state.instance?.avatar
     })));
 
-    const [avatar, setAvatar] = useState<File | null>(null);
+    const [avatar, setAvatar] = useState<string | RcFile | Blob | null>(null);
 
     const openSuccessModal = () => {
         Modal.success({
@@ -31,17 +35,20 @@ export const ProfileInfo= () => {
     }
 
     const onFinish = ({
-        email,
-        name
+        name,
+        phone_number
     }: {
-        email: string,
+        phone_number: string,
         name: string
     }) => {
         updateProfileInfo({
-            email,
+            phone_number,
             name
         }).then(res => {
-            if(res) if(avatar) updateAvatar(avatar).then(res => res ? openSuccessModal() : openErrorModal());
+            if(res) {
+                if(avatar) updateAvatar(avatar).then(res => res ? openSuccessModal() : openErrorModal());
+                else deleteAvatar().then(res => res ? openSuccessModal() : openErrorModal());
+            }
             else openErrorModal()
         });
         
@@ -61,26 +68,32 @@ export const ProfileInfo= () => {
             >
 
                 <Form.Item
-                    name="email"
                     label="Почта"
                     initialValue={email}
                     rules={[
                         {
                             required: true,
                             message: 'Обязательное поле'
-                        },
-                        {
-                            type: 'email',
-                            message: 'Укажите корректную почту',
-                            validateTrigger: 'onBlur'
                         }
                     ]}
                 >
-                    <Input
-                        placeholder='Электронная почта'
-                        spellCheck='false'
-                        autoCorrect='off'
-                        autoComplete='off'
+                    <Typography.Text>{email}</Typography.Text>
+                </Form.Item>
+
+                <Form.Item
+                    name="phone_number"
+                    label="Номер телефона"
+                    initialValue={phone_number}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Обязательное поле'
+                        }
+                    ]}
+                >
+                    <MaskedInput
+                        mask={'+7(000)000-00-00'}
+                        placeholder='Номер телефона'
                     />
                 </Form.Item>
 
@@ -107,7 +120,7 @@ export const ProfileInfo= () => {
                     name="avatar"
                     label="Фотография"
                 >
-                    <UploadAvatar src={avatarSrc} onChange={(file) => setAvatar(file)}/>
+                    <UploadAvatar src={avatarSrc} onLoad={(file) => setAvatar(file)}/>
                 </Form.Item>
 
                 <Form.Item className='justify-end'>

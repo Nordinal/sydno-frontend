@@ -1,4 +1,5 @@
 import { instanceApi, instanceApiFormData } from '@/shared/configs/instanceAxios';
+import { RcFile } from 'antd/lib/upload';
 import { AxiosError } from 'axios';
 import { create } from 'zustand';
 
@@ -41,10 +42,11 @@ export interface IUserModel extends IUserData {
         current_password?: string
     }) => Promise<boolean>
     updateProfileInfo: (payload: {
-        email: string;
+        phone_number: string;
         name: string;
     }) => Promise<boolean>
-    updateAvatar: (payload: File) => Promise<boolean>
+    updateAvatar: (payload: string | RcFile | Blob) => Promise<boolean>
+    deleteAvatar: () => Promise<boolean>
 };
 
 const initState: IUserData = {
@@ -150,7 +152,7 @@ export const useUser = create<IUserModel>((set, get) => ({
     updateProfileInfo: async (payload) => {
         try {
             await instanceApi.put(
-                `/api/user/profile-information?email=${payload.email}&name=${payload.name}`
+                `/api/user/profile-information?phone_number=${payload.phone_number}&name=${payload.name}`
             );
             const user =  await instanceApi.get<IUser>('/api/user');
             set({
@@ -176,6 +178,19 @@ export const useUser = create<IUserModel>((set, get) => ({
         }
         catch (e) {
             if(e instanceof AxiosError) set({error: e});
+            return false;
+        }
+    },
+    deleteAvatar: async () => {
+        try {
+            await instanceApi.delete('/api/user/avatar');
+            const user =  await instanceApi.get<IUser>('/api/user');
+            set({
+                instance: user.data
+            })
+            return true;
+        }
+        catch {
             return false;
         }
     },

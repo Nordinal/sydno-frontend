@@ -26,7 +26,7 @@ export default async function RootLayout(props: {
 }) {
 
   return (
-    <html lang='ru'>
+    <html>
       <head />
       <body>
         <StyledComponentsRegistry>

@@ -12,7 +12,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = error => reject(error);
   });
 
-export const UploadAvatars: React.FC = () => {
+export const UploadAvatars: React.FC<{onChange: (images: UploadFile<any>[]) => void, images: string[]}> = ({onChange, images}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -32,8 +32,18 @@ export const UploadAvatars: React.FC = () => {
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
   };
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+    onChange(newFileList);
+  }
+
+  const customRequest = ({
+    onSuccess
+  }: {
+    onSuccess: ((body: any, xhr?: XMLHttpRequest | undefined) => void) | undefined,
+  }) => {
+    if(onSuccess) onSuccess('ok');
+  }
 
   const uploadButton = (
     <div>
@@ -44,11 +54,12 @@ export const UploadAvatars: React.FC = () => {
   return (
     <>
       <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}
+        customRequest={({ onSuccess }) => customRequest({ onSuccess })}
+        multiple
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>

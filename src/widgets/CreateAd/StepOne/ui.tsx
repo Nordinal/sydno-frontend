@@ -1,26 +1,35 @@
 'use client';
 import { UploadAvatars } from '@/shared/ui/UploadAvatars';
-import { Form, Button, Input, Typography, InputNumber, Timeline, Col, Row } from 'antd';
+import { Form, Input, InputNumber } from 'antd';
 import { onFinishStep } from '../ui';
+import { useState } from 'react';
+import { UploadFile } from 'antd/es/upload';
+import { ICreateAdStepOne, useCreateAd } from '@/entities/createAd/model';
+import { MaskedInput } from 'antd-mask-input';
+import { useShallow } from 'zustand/react/shallow';
+import { useUser } from '@/entities/user/model';
 
 export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
-    const _onFinish = (values) => {
-        onFinish({type: 'StepOne', data: values})
+    const { instance } = useCreateAd(useShallow(state => ({instance: state.instance})));
+    const { phone_number } = useUser(useShallow(state => ({phone_number: state.instance?.phone_number})));
+    const [images, setImages] = useState<UploadFile<any>[]>([]);
+    const _onFinish = (values: ICreateAdStepOne) => {
+        onFinish({type: 'StepOne', data: {...values, images}})
     }
     return (
         <Form
-            id='create-ad'
-            name="create-ad"
+            id='StepOne'
+            labelWrap
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 15, offset: 1 }}
-            initialValues={{ remember: true }}
             onFinish={_onFinish}
             autoComplete="off"
         >
             <Form.Item
                 label="Заголовок объявления"
                 labelAlign='left'
-                name="title"
+                name="header"
+                initialValue={instance.header}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Input />
@@ -29,7 +38,8 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
             <Form.Item
                 label="Регистрационный номер"
                 labelAlign='left'
-                name="register"
+                name="registration_number"
+                initialValue={instance.registration_number}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 wrapperCol={{ span: 6, offset: 1 }}
             >
@@ -39,34 +49,39 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
             <Form.Item
                 label="Цена"
                 labelAlign='left'
-                name="sale"
+                name="price"
+                initialValue={instance.price}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber />
+                <InputNumber style={{width: '40%'}}/>
             </Form.Item>
 
             <Form.Item
                 label="Фото"
                 labelAlign='left'
-                name="images"
             >
-                <UploadAvatars />
+                <UploadAvatars onChange={(images) => setImages(images)} />
             </Form.Item>
 
             <Form.Item
                 label="Номер телефона"
                 labelAlign='left'
-                name="phone"
+                name="phone_number"
+                initialValue={instance.phone_number || phone_number}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 wrapperCol={{ span: 6, offset: 1 }}
             >
-                <Input  />
+                <MaskedInput
+                    mask={'+7(000)000-00-00'}
+                    placeholder='Номер телефона'
+                />
             </Form.Item>
 
             <Form.Item
                 label="Описание"
                 labelAlign='left'
                 name="description"
+                initialValue={instance.description}
             >
                 <Input.TextArea rows={8} />
             </Form.Item>

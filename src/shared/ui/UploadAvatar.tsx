@@ -1,37 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { message, Modal, Upload } from 'antd';
-import type { UploadChangeParam } from 'antd/es/upload';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import Image from 'next/image';
-import { instanceApiFormData } from '../configs/instanceAxios';
+import React, { FC, useEffect, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, message, Modal, Upload } from 'antd';
+import type { RcFile } from 'antd/es/upload/interface';
 import axios from 'axios';
+import ImgCrop from 'antd-img-crop';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
-const getBase64 = (file: RcFile): Promise<string> =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = error => reject(error);
-});
-
-const getFile = async (url: string): Promise<string | RcFile | Blob | null> => {
+const getFile = async (url: string): Promise<RcFile | File | null> => {
   const response = await axios.get(url, {
-    // responseType: "blob",
-    // responseEncoding: "base64",
-    headers: {
-      // 'Content-Type': 'image/jpeg'
-      // 'Accept': '*/*',
-      // 'Access-Control-Allow-Origin': '*',
-      // 'Access-Control-Request-Headers:': 'access-control-allow-origin'
-    },
-    // withCredentials: true
+    responseType: "blob"
   });
-  // const data = await response.blob();
-  // const metadata = {
-  //   type: "image/jpeg,image/png"
-  // }
-  // const file = new)
+
+  const metadata = {
+    type: "image/jpeg,image/png"
+  }
+  const file = new File([response.data], 'Аватар', metadata);
+  return file;
 }
 
 const beforeUpload = (file: RcFile) => {
@@ -47,20 +31,22 @@ const beforeUpload = (file: RcFile) => {
 };
 
 export const UploadAvatar = ({
-  onChange,
+  onLoad,
   src
 }: {
-  onChange: (file: string | RcFile | Blob | null) => void;
+  onLoad: (file: File | null) => void;
   src?: string | null
 }) => {
-  const [file, setFile] = useState<string | RcFile | Blob | null>(null);
+  const [file, setFile] = useState<RcFile | File | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
 
   useEffect(() => {
     if(src) {
-      const avatar = getFile(src);
+      getFile(src).then((file) => {
+        dispatchFile(file);
+      });
     }
   }, [src])
 
@@ -69,28 +55,22 @@ export const UploadAvatar = ({
     file
   }: {
     onSuccess: ((body: any, xhr?: XMLHttpRequest | undefined) => void) | undefined,
-    file: string | RcFile | Blob
+    file: string | Blob | RcFile
   }) => {
-    if(onSuccess) onSuccess('ok')
+    if(onSuccess) onSuccess('ok');
+    dispatchFile(file as File);
+  }
+
+  const dispatchFile = (file: File | null) => {
+    if(file) setPreviewImage(URL.createObjectURL(file));
+    else setPreviewImage('');
     setFile(file);
-    onChange(file);
+    onLoad(file);
   }
 
-  const handleCancel = () => setPreviewOpen(false);
-
-  const onRemove = () => {
-    setFile(null);
-    onChange(null);
-  }
-
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
+  const handlePreview = async (file: File) => {
     setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+    setPreviewTitle(file.name);
   };
 
   const uploadButton = (
@@ -102,21 +82,53 @@ export const UploadAvatar = ({
 
   return (
     <>
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        accept = "image/jpeg,image/png"
-        maxCount={1}
-        beforeUpload={beforeUpload}
-        customRequest={({ onSuccess, file }) => customRequest({ onSuccess, file })}
-        onRemove={onRemove}
-        onPreview={handlePreview}
-      >
-        {file ? null : uploadButton}
-      </Upload>
-      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+      <ImgCrop modalTitle='Редактирование аватара' modalOk='Продолжить' modalCancel='Отмена' rotationSlider>
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          accept = "image/jpeg,image/png"
+          maxCount={1}
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          customRequest={({ onSuccess, file }) => customRequest({ onSuccess, file })}
+        >
+          {file 
+            ? <Avatar
+                src={previewImage}
+                onDelete={(e) => {
+                  e.stopPropagation();
+                  dispatchFile(null);
+                }}
+                onPreview={(e) => {
+                  e.stopPropagation();
+                  handlePreview(file);
+                }}
+              />
+            : uploadButton
+          }
+        </Upload>
+      </ImgCrop>
+      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={() => setPreviewOpen(false)}>
+        <img alt="avatar" style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>
   );
 };
+
+
+const Avatar: FC<{
+  src: string,
+  onDelete?: React.MouseEventHandler<HTMLElement>,
+  onPreview?: React.MouseEventHandler<HTMLElement>
+}> = ({src, onDelete, onPreview}) => {
+
+  return (
+    <div className='relative'>
+      <img src={src} alt="avatar" style={{ width: "100%" }} /> 
+      <div className='absolute bottom-2 right-2 z-10'>
+        <Button onClick={onPreview} className='mr-1' size='small' icon={<EyeOutlined />} title='Посмотреть'/>
+        <Button onClick={onDelete} size='small' icon={<DeleteOutlined />}  title='Удалить'/>
+      </div>
+    </div>
+  )
+}
