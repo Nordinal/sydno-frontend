@@ -6,7 +6,8 @@ const OPTIONS = [
     { value: 'древесина', label: 'древесина' },
     { value: 'сталь', label: 'сталь' },
     { value: 'железобетонный', label: 'железобетонный' },
-    { value: 'композитный', label: 'композитный', },
+    { value: 'композитный', label: 'композитный' },
+    { value: null, label: 'не важно' },
 ];
 
 const CorpusMaterial: React.FC<{
@@ -18,10 +19,9 @@ const CorpusMaterial: React.FC<{
 }) => {
         return (
             <Select
-                placeholder={material || 'Материал корпуса'}
                 style={{ width: '100%' }}
                 value={material}
-                onChange={(value) => changeConfigProperty<string>('material', value)}
+                onChange={(value) => changeConfigProperty<string>('material', value === null ? undefined : value)}
                 options={OPTIONS}
             />
         );

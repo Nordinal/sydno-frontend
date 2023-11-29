@@ -6,6 +6,7 @@ const VESSEL_STATUS_OPTIIONS = [
     {value: 'эксплуатируется', label: 'эксплуатируется'},
     {value: 'на холодном отстое', label: 'на холодном отстое'},
     {value: 'прекращено действие документов', label: 'прекращено действие документов'},
+    {value: null, label: 'не важно'},
 ]
 
 /**
@@ -63,7 +64,7 @@ const MainFiltres: React.FC<{
                         style={{width: '100%'}}
                         value={vessel_status}
                         options={VESSEL_STATUS_OPTIIONS}
-                        onChange={(value) => changeConfigProperty<string>('vessel_status', value)}
+                        onChange={(value) => changeConfigProperty<string>('vessel_status', value === null ? undefined : value)}
                     />
                 </Col>
             </Row>

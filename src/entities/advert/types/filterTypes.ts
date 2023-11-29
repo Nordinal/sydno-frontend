@@ -45,9 +45,9 @@ export interface ILegalFilterOptions {
     was_registered?: boolean;
 
     /**
-     * Учет действует до
+     * Учет действует до Date
      */
-    register_valid_until?: Date;
+    register_valid_until?: string;
 
     /**
      * статус судна

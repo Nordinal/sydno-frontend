@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
 import { TFilterOptions } from '@/entities/advert';
-import { Button, Col, InputNumber, Row, Typography } from 'antd';
-import { CorpusMaterial, Engine, Gabarites, MainFiltres } from '../../templates';
+import {
+    Button,
+    Col,
+    Input,
+    Row,
+    Typography 
+} from 'antd';
+import {
+    CorpusMaterial,
+    Engine,
+    MainFiltres,
+    ExploitationType,
+    IcePower,
+    WasRegistered,
+    RegisterDeadline 
+} from '../../templates';
 import './styles.css';
 
 export interface ISearchFiltresProps {
@@ -78,15 +92,74 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                 </Col>
                 <Col span={24} className={showHiddenBlock ? 'pb-4' : ''}>
                     <div className={showHiddenBlock ? 'sudno-SearhFiltres-hiddenBlock-active' : 'sudno-SearhFiltres-hiddenBlock'}>
-                        <Typography.Title level={5}>
-                            Двигатель
-                        </Typography.Title>
-                        <Engine
-                            min_power={filterConfig.min_power}
-                            max_power={filterConfig.max_power}
-                            num_engines={filterConfig.num_engines}
-                            changeConfigProperty={changeConfigProperty}
-                        />
+                        <Row className='pb-4'>
+                            <Col span={6}>
+                                <p>Тип эксплуатации</p>
+                                <ExploitationType
+                                    exploitations_type={filterConfig.exploitations_type}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <p>Ледовое усиление</p>
+                                <IcePower
+                                    ice_power={filterConfig.ice_power}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <p>Находилось ли на учете</p>
+                                <WasRegistered
+                                    was_registered={filterConfig.was_registered}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <p>Учет действует до</p>
+                                <RegisterDeadline
+                                    register_valid_until={filterConfig.register_valid_until}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <p>Номер проекта</p>
+                                <Input
+                                    value={filterConfig.project_number}
+                                    onChange={(event) => changeConfigProperty<string>('project_number', event.target.value)}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <p>Строительный номер</p>
+                                <Input
+                                    value={filterConfig.building_number}
+                                    onChange={(event) => changeConfigProperty<string>('building_number', event.target.value)}
+                                />
+                            </Col>
+                        </Row>
+                        <Row className='pb-4'>
+                            <Col span={24}>
+                                <Typography.Title level={5}>
+                                    Двигатель
+                                </Typography.Title>
+                                <Engine
+                                    min_power={filterConfig.min_power}
+                                    max_power={filterConfig.max_power}
+                                    num_engines={filterConfig.num_engines}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={6}>
+                                <Typography.Title level={5}>
+                                    Материал корпуса
+                                </Typography.Title>
+                                <CorpusMaterial
+                                    material={filterConfig.material}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                        </Row>
                     </div>
                 </Col>
                 <Col span={24}>
