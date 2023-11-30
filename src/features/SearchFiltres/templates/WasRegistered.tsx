@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from 'antd';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
 
-const OPTIONS = [
+const SELECT_OPTIONS = [
     {value: true, label: 'да'},
     {value: false, label: 'нет'},
     {value: null, label: 'не важно'},
@@ -20,7 +20,7 @@ const WasRegistered: React.FC<{
         style={{ width: '100%' }}
         value={was_registered}
         onChange={(value) => changeConfigProperty<boolean>('was_registered', value === null ? undefined : value)}
-        options={OPTIONS}
+        options={SELECT_OPTIONS}
     />
   )
 }

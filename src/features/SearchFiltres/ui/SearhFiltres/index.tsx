@@ -14,7 +14,11 @@ import {
     ExploitationType,
     IcePower,
     WasRegistered,
-    RegisterDeadline 
+    RegisterDeadline,
+    BuildingYear,
+    BuildingCountry,
+    PortAdress,
+    VesselLocation,
 } from '../../templates';
 import './styles.css';
 
@@ -70,7 +74,10 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
     }
 
     return (
-        <div className="rounded-xl p-4" style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden' }}>
+        <div
+            className="rounded-xl p-4" 
+            style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden' }}
+        >
             <Row>
                 <Col span={24}>
                     <Typography.Title level={3}>
@@ -93,46 +100,80 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                 <Col span={24} className={showHiddenBlock ? 'pb-4' : ''}>
                     <div className={showHiddenBlock ? 'sudno-SearhFiltres-hiddenBlock-active' : 'sudno-SearhFiltres-hiddenBlock'}>
                         <Row className='pb-4'>
-                            <Col span={6}>
+                            <Col className='pb-2' span={6}>
                                 <p>Тип эксплуатации</p>
                                 <ExploitationType
                                     exploitations_type={filterConfig.exploitations_type}
                                     changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>
-                            <Col span={6}>
+                            <Col className='pb-2' span={6}>
                                 <p>Ледовое усиление</p>
                                 <IcePower
                                     ice_power={filterConfig.ice_power}
                                     changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>
-                            <Col span={6}>
+                            <Col className='pb-2' span={6}>
                                 <p>Находилось ли на учете</p>
                                 <WasRegistered
                                     was_registered={filterConfig.was_registered}
                                     changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>
-                            <Col span={6}>
+                            <Col className='pb-2' span={6}>
                                 <p>Учет действует до</p>
                                 <RegisterDeadline
                                     register_valid_until={filterConfig.register_valid_until}
                                     changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>
-                            <Col span={6}>
+                            <Col className='pb-2' span={6}>
                                 <p>Номер проекта</p>
                                 <Input
                                     value={filterConfig.project_number}
                                     onChange={(event) => changeConfigProperty<string>('project_number', event.target.value)}
                                 />
                             </Col>
-                            <Col span={6}>
+                            <Col className='pb-2' span={6}>
                                 <p>Строительный номер</p>
                                 <Input
                                     value={filterConfig.building_number}
                                     onChange={(event) => changeConfigProperty<string>('building_number', event.target.value)}
+                                />
+                            </Col>
+                            <Col className='pb-2' span={6}>
+                                <p>Год постройки</p>
+                                <BuildingYear
+                                    building_year={filterConfig.building_year}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col className='pb-2' span={6}>
+                                <p>Страна постройки</p>
+                                <BuildingCountry
+                                    building_country={filterConfig.building_country}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col className='pb-2' span={6}>
+                                <Typography.Title level={5}>
+                                    Порт приписки
+                                </Typography.Title>
+                                <PortAdress
+                                    port_adress_city={filterConfig.port_adress_city}
+                                    port_adress_country={filterConfig.port_adress_country}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                            <Col className='pb-2' span={6}>
+                                <Typography.Title level={5}>
+                                    Местонахождение судна
+                                </Typography.Title>
+                                <VesselLocation
+                                    vessel_location_country={filterConfig.vessel_location_country}
+                                    vessel_location_city={filterConfig.vessel_location_city}
+                                    changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>
                         </Row>

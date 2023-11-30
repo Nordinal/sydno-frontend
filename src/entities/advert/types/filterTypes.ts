@@ -65,32 +65,31 @@ export interface ILegalFilterOptions {
     building_number?: string;
 
     /**
-     * год постройки
+     * год постройки Date
      */
-    building_year?: Date;
+    building_year?: string;
 
     /**
      * страна постройки
      */
     building_country?: string;
 
-    /**
-     * порт приписки
-     */
-    // страна и город
-    port_adress?: {
-        country: string;
-        city: string
-    };
+    // порт приписки
+    // страна
+    port_adress_country?: string;
+
+    // город
+    port_adress_city?: string;
 
     /**
      * местонахождение судна
      */
     // порт или в рейсе
-    vessel_location?: {
-        country: string;
-        city: string
-    } | 'в рейсе';
+    vessel_location_country?: string;
+
+    // порт или в рейсе
+    vessel_location_city?: string;
+
 
     /**
      * Номер IMO
