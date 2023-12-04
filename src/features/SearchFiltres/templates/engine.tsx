@@ -16,7 +16,7 @@ const Engine: React.FC<{
     return (
         <>
             <Row>
-                <Col span={6}>
+                <Col span={12}>
                     <p>Количество двигателей</p>
                     <InputNumber
                         value={num_engines}
@@ -26,7 +26,7 @@ const Engine: React.FC<{
                         formatter={(value) => value ? `${value} шт` : ''}
                     />
                 </Col>
-                <Col span={6}>
+                <Col span={12}>
                     <p>Мощность двигателей</p>
                     <InputNumber
                         value={min_power}

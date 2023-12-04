@@ -5,7 +5,6 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 const SELECT_OPTIONS = [
     {value: true, label: 'да'},
     {value: false, label: 'нет'},
-    {value: null, label: 'не важно'},
 ]
 
 const WasRegistered: React.FC<{
@@ -19,7 +18,8 @@ const WasRegistered: React.FC<{
     <Select
         style={{ width: '100%' }}
         value={was_registered}
-        onChange={(value) => changeConfigProperty<boolean>('was_registered', value === null ? undefined : value)}
+        allowClear
+        onChange={(value) => changeConfigProperty<boolean>('was_registered', value)}
         options={SELECT_OPTIONS}
     />
   )

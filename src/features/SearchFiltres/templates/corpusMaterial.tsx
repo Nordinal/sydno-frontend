@@ -7,7 +7,6 @@ const OPTIONS = [
     { value: 'сталь', label: 'сталь' },
     { value: 'железобетонный', label: 'железобетонный' },
     { value: 'композитный', label: 'композитный' },
-    { value: null, label: 'не важно' },
 ];
 
 const CorpusMaterial: React.FC<{
@@ -21,7 +20,8 @@ const CorpusMaterial: React.FC<{
             <Select
                 style={{ width: '100%' }}
                 value={material}
-                onChange={(value) => changeConfigProperty<string>('material', value === null ? undefined : value)}
+                allowClear
+                onChange={(value) => changeConfigProperty<string>('material', value)}
                 options={OPTIONS}
             />
         );

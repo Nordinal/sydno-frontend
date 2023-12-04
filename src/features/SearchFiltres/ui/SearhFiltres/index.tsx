@@ -19,6 +19,8 @@ import {
     BuildingCountry,
     PortAdress,
     VesselLocation,
+    BoardHeight,
+    CargoTanks,
 } from '../../templates';
 import './styles.css';
 
@@ -176,12 +178,16 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                                     changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>
+                            <Col className='pb-2' span={6}>
+                                <CargoTanks
+                                    cargo_tanks={filterConfig.cargo_tanks}
+                                    total_capacity_cargo_tanks={filterConfig.total_capacity_cargo_tanks}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
                         </Row>
                         <Row className='pb-4'>
-                            <Col span={24}>
-                                <Typography.Title level={5}>
-                                    Двигатель
-                                </Typography.Title>
+                            <Col span={12}>
                                 <Engine
                                     min_power={filterConfig.min_power}
                                     max_power={filterConfig.max_power}
@@ -192,11 +198,17 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                         </Row>
                         <Row>
                             <Col span={6}>
-                                <Typography.Title level={5}>
-                                    Материал корпуса
-                                </Typography.Title>
                                 <CorpusMaterial
                                     material={filterConfig.material}
+                                    changeConfigProperty={changeConfigProperty}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={12}>
+                                <BoardHeight
+                                    max_board_height={filterConfig.max_board_height}
+                                    min_board_height={filterConfig.min_board_height}
                                     changeConfigProperty={changeConfigProperty}
                                 />
                             </Col>

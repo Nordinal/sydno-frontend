@@ -90,7 +90,6 @@ export interface ILegalFilterOptions {
     // порт или в рейсе
     vessel_location_city?: string;
 
-
     /**
      * Номер IMO
      */
@@ -209,7 +208,7 @@ export interface ITechnicalFilterOptions {
     /**
      * Максимальная скорость в грузу
      */
-    maximum_speed_in_ballast?: number;
+    max_speed_in_load?: number;
 
     /**
      * Грузовой танк

@@ -3,9 +3,8 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { Select } from 'antd';
 
 const OPTIONS = [
-    {value: true, label: 'Да'},
-    {value: false, label: 'Нет'},
-    {value: null, label: 'Не важно'},
+  {value: true, label: 'Да'},
+  {value: false, label: 'Нет'},
 ]
 
 const IcePower: React.FC<{
@@ -20,7 +19,8 @@ const IcePower: React.FC<{
         style={{width: '100%'}}
         value={ice_power}
         options={OPTIONS}
-        onChange={(value) => changeConfigProperty<boolean>('ice_power', value === null ? undefined : value)}
+        allowClear
+        onChange={(value) => changeConfigProperty<boolean>('ice_power', value)}
     />
   )
 }

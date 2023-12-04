@@ -20,8 +20,8 @@ const SearchLayoutContent: React.FC = () => {
         getAdvertList({
             ...queryParams,
             limit: PAGINATION_LIMIT_PAGE,
-        }).then((response) => {
-            setAdvertList(response);
+        }).then((newAdvertList) => {
+            setAdvertList(newAdvertList);
             setIsLoading(false);
             setIsErrorLoad(false);
         }).catch(() => {
