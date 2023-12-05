@@ -1,6 +1,6 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
-import { InputNumber, Switch } from 'antd';
+import { Col, InputNumber, Row, Switch } from 'antd';
 
 const CargoTanks: React.FC<{
     cargo_tanks?: boolean;
@@ -11,19 +11,29 @@ const CargoTanks: React.FC<{
     total_capacity_cargo_tanks,
     changeConfigProperty
 }) => {
+    const handleSwitchClick = (checked?: boolean) => {
+        // Если скрываем фильтр, то и значение лучше удалить
+        if (!checked) {
+            changeConfigProperty<undefined>('cargo_tanks', undefined);
+            changeConfigProperty<undefined>('total_capacity_cargo_tanks', undefined);
+        } else {
+            changeConfigProperty<boolean>('cargo_tanks', checked);
+        }
+    }
+
     return (
-        <div className='flex'>
-            <div className="">
+        <Row gutter={[8, 16]}>
+            <Col span={12}>
                 <p>Грузовой танк</p>
                 <Switch
-                    onChange={(checked) => changeConfigProperty<boolean | undefined>('cargo_tanks', checked || undefined)}
+                    onChange={handleSwitchClick}
                     checked={cargo_tanks}
                     size='small'
                 />
-            </div>
+            </Col>
             {
                 cargo_tanks ? 
-                <div className="">
+                <Col span={12}>
                     <p>Cуммарная вместимость</p>
                     <InputNumber
                         value={total_capacity_cargo_tanks}
@@ -33,10 +43,10 @@ const CargoTanks: React.FC<{
                         onChange={(value) => changeConfigProperty<number | undefined>('total_capacity_cargo_tanks', value || undefined)}
                         formatter={(value) => value ? `${value} т ` : ''}
                     /> 
-                </div>
+                </Col>
                 : <></>
             }
-        </div>
+        </Row>
     );
 }
 

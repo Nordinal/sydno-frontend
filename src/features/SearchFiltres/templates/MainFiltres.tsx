@@ -16,7 +16,7 @@ const VESSEL_STATUS_OPTIIONS = [
 const MainFiltres: React.FC<{
     type?: string;
     purpose?: string;
-    class_formula_right?: string;
+    class_formula?: string;
     vessel_status?: 'эксплуатируется' | 'на холодном отстое' | 'прекращено действие документов';
     min_overall_length?: number;
     max_overall_length?: number;
@@ -26,7 +26,7 @@ const MainFiltres: React.FC<{
 }> = ({
     type,
     purpose,
-    class_formula_right,
+    class_formula,
     vessel_status,
     min_overall_length,
     max_overall_length,
@@ -36,7 +36,7 @@ const MainFiltres: React.FC<{
 }) => {
     return (
         <>
-            <Row className="pb-4">
+            <Row gutter={[16, 24]} className="pb-4">
                 <Col span={6}>
                     <p>Тип</p>
                     <Input 
@@ -54,8 +54,8 @@ const MainFiltres: React.FC<{
                 <Col span={6}>
                     <p>Класс</p>
                     <Input 
-                        value={class_formula_right}
-                        onChange={(event) => changeConfigProperty<string>('class_formula_right', event.target.value)}
+                        value={class_formula}
+                        onChange={(event) => changeConfigProperty<string>('class_formula', event.target.value)}
                     />
                 </Col>
                 <Col span={6}>
@@ -68,7 +68,7 @@ const MainFiltres: React.FC<{
                     />
                 </Col>
             </Row>
-            <Row className="pb-4">
+            <Row gutter={[16, 24]} className="pb-4">
                 <Col span={6}>
                     <p>Длинна судна</p>
                     <InputNumber

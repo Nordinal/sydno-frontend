@@ -11,9 +11,12 @@ const RegisterDeadline: React.FC<{
     changeConfigProperty
 }) => {
   return (
-    <DatePicker
-        style={{width: '100%'}}
-    />
+    <>
+      <p>Учет действует до</p>
+      <DatePicker
+          style={{width: '100%'}}
+      />
+    </>
   )
 }
 

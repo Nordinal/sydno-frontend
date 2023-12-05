@@ -17,13 +17,16 @@ const CorpusMaterial: React.FC<{
     changeConfigProperty
 }) => {
         return (
-            <Select
-                style={{ width: '100%' }}
-                value={material}
-                allowClear
-                onChange={(value) => changeConfigProperty<string>('material', value)}
-                options={OPTIONS}
-            />
+            <>
+                <p>Материал корпуса</p>
+                <Select
+                    style={{ width: '100%' }}
+                    value={material}
+                    allowClear
+                    onChange={(value) => changeConfigProperty<string>('material', value)}
+                    options={OPTIONS}
+                />
+            </>
         );
     }
 

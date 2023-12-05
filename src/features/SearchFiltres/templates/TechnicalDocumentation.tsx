@@ -16,7 +16,7 @@ const TechnicalDocumentation: React.FC<{
 }) => {
     return (
         <div>
-            <p>Надстройки</p>
+            <p>Техническая документация</p>
             <Select
                 value={technical_documentation}
                 style={{ width: '100%' }}

@@ -10,11 +10,14 @@ const BuildingCountry: React.FC<{
     changeConfigProperty
 }) => {
   return (
-    <Input
-        value={building_country}
-        style={{width: '100%'}}
-        onChange={(event) => changeConfigProperty<string>('building_country', event.target.value)}
-    />
+    <>
+      <p>Страна постройки</p>
+      <Input
+          value={building_country}
+          style={{width: '100%'}}
+          onChange={(event) => changeConfigProperty<string>('building_country', event.target.value)}
+      />
+    </>
   )
 }
 

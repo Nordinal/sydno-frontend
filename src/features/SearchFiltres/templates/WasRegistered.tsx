@@ -15,13 +15,16 @@ const WasRegistered: React.FC<{
     changeConfigProperty
 }) => {
   return (
-    <Select
-        style={{ width: '100%' }}
-        value={was_registered}
-        allowClear
-        onChange={(value) => changeConfigProperty<boolean>('was_registered', value)}
-        options={SELECT_OPTIONS}
-    />
+    <>
+      <p>Находилось ли на учете</p>
+      <Select
+          style={{ width: '100%' }}
+          value={was_registered}
+          allowClear
+          onChange={(value) => changeConfigProperty<boolean>('was_registered', value)}
+          options={SELECT_OPTIONS}
+      />
+    </>
   )
 }
 

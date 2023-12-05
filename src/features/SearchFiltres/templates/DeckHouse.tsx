@@ -16,7 +16,7 @@ const DeckHouse: React.FC<{
 }) => {
     return (
         <div>
-            <p>Надстройки</p>
+            <p>Рубки</p>
             <Select
                 value={deckhouses}
                 style={{ width: '100%' }}

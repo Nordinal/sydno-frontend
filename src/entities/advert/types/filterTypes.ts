@@ -15,19 +15,14 @@ export interface ILegalFilterOptions {
     exploitations_type?: 'коммерческое' | 'некоммерческое';
 
     /**
-     * левая часть формулы класса (высота волны) 0.6, 1.2 ,2.0 ,3.0 ,3.5 >3.5
+     * формулы класса
      */
-    class_formula_left?: string;
+    class_formula?: string;
 
     /**
      * Ледовое усиление
      */
     ice_power?: boolean;
-
-    /**
-     * правая часть формулы класса
-     */
-    class_formula_right?: string;
 
     /**
      * Тип судна

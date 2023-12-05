@@ -15,13 +15,16 @@ const IcePower: React.FC<{
     changeConfigProperty
 }) => {
   return (
-    <Select
+    <>
+      <p>Ледовое усиление</p>
+      <Select
         style={{width: '100%'}}
         value={ice_power}
         options={OPTIONS}
         allowClear
         onChange={(value) => changeConfigProperty<boolean>('ice_power', value)}
-    />
+      />
+    </>
   )
 }
 

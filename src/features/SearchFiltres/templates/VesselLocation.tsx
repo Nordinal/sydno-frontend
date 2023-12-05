@@ -12,24 +12,27 @@ const VesselLocation: React.FC<{
     changeConfigProperty
 }) => {
   return (
-    <div className='flex'>
-        <div className="">
-            <p>страна</p>
-            <Input
-                style={{width: '100%'}}
-                value={vessel_location_country}
-                onChange={(event) => changeConfigProperty<string>('vessel_location_country', event.target.value)}
-            />
+    <>
+        <p>Местонахождение судна</p>
+        <div className='flex'>
+            <div className="">
+                <p>страна</p>
+                <Input
+                    style={{width: '100%'}}
+                    value={vessel_location_country}
+                    onChange={(event) => changeConfigProperty<string>('vessel_location_country', event.target.value)}
+                />
+            </div>
+            <div className="">
+                <p>город</p>
+                <Input
+                    style={{width: '100%'}}
+                    value={vessel_location_city}
+                    onChange={(event) => changeConfigProperty<string>('vessel_location_city', event.target.value)}
+                />
+            </div>
         </div>
-        <div className="">
-            <p>город</p>
-            <Input
-                style={{width: '100%'}}
-                value={vessel_location_city}
-                onChange={(event) => changeConfigProperty<string>('vessel_location_city', event.target.value)}
-            />
-        </div>
-    </div>
+    </>
   )
 }
 

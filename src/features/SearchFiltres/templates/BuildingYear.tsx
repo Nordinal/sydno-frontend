@@ -10,9 +10,12 @@ const BuildingYear: React.FC<{
     changeConfigProperty
 }) => {
   return (
-    <DatePicker
-        style={{width: '100%'}}
-    />
+    <>
+      <p>Год постройки</p>
+      <DatePicker
+          style={{width: '100%'}}
+      />
+    </>
   )
 }
 
