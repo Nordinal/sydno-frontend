@@ -1,20 +1,71 @@
 'use client';
-import { UploadAvatars } from '@/shared/ui/UploadAvatars';
-import { Form, Button, Input, Typography, InputNumber, Timeline, Col, Row, Select, AutoComplete, Checkbox, DatePicker } from 'antd';
+import { Form, Input, Select, AutoComplete, Checkbox, DatePicker, InputNumber } from 'antd';
 import { onFinishStep } from '../ui';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
+import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
+import { instanceApi } from '@/shared/configs/instanceAxios';
+import { ICreateAdStepTwo, useCreateAd } from '@/entities/createAd/model';
+import moment, { Moment } from 'moment';
+import { useShallow } from 'zustand/react/shallow';
+
 
 export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
-    const [checkboxAccounting, setCheckboxAccounting] = useState(false);
-    const [statusVessel, setStatusVessel] = useState<string | null>(null);
+    const { advert_legal_information } = useCreateAd(useShallow(state => ({advert_legal_information: state.instance.advert_legal_information})))
+    const [checkboxAccounting, setCheckboxAccounting] = useState<boolean | undefined>(advert_legal_information?.was_registered);
+    const [statusVessel, setStatusVessel] = useState<string | undefined>(advert_legal_information?.vessel_status.toString());
+
+    const [vesseltypes, setVesseltypes] = useState<{value: string, label: string}[]>();
+    const [exploitationTypes, setExploitationTypes] = useState<{value: string, label: string}[]>();
 
     const _onFinish = (values) => {
-        onFinish({type: 'StepTwo', data: values})
+        const result = {...values}
+        if(values.register_valid_until)
+            result.register_valid_until = values.register_valid_until.format().split('T')[0]
+        if(values.building_year)
+            result.building_year = values.building_year.year()
+        if(values.port_address) {
+            result.port_address = {
+                value: values.port_address.value,
+                city: values.port_address.city,
+                country: values.port_address.country,
+                region: values.port_address.region
+            }
+        }
+        if(values.vessel_location) {
+            result.vessel_location = {
+                value: values.vessel_location.value,
+                city: values.vessel_location.city,
+                country: values.vessel_location.country,
+                region: values.vessel_location.region
+            }
+        }
+        onFinish({type: 'StepTwo', data: result})
     }
 
     const onStatusVesselChange = (value: string) => {
         setStatusVessel(value)
     }
+
+    useEffect(() => {
+        instanceApi.get('/api/selector?vesseltypes&exploitationtypes').then(res => {
+            const data = res.data.message
+            setVesseltypes(
+                Object.entries(data.vessel_types as {[x in string]: string})
+                    .map(([value, label] : [string, string]) => ({
+                        value,
+                        label
+                    }))
+            );
+            setExploitationTypes(
+                Object.entries(data.exploitation_types as {[x in string]: string})
+                    .map(([value, label] : [string, string]) => ({
+                        value,
+                        label
+                    }))
+            );
+        })
+    }, []);
 
     return (
         <Form
@@ -30,85 +81,81 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
                 label="Флаг"
                 labelAlign='left'
                 name="flag"
+                initialValue={ advert_legal_information?.flag }
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input />
+                <CountriesAutoComplete />
             </Form.Item>
 
             <Form.Item
                 label="Тип эксплуатации"
                 labelAlign='left'
-                name="dfsdfsd1"
+                name="exploitation_type"
+                initialValue={ advert_legal_information?.exploitation_type.toString() }
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 wrapperCol={{ span: 6, offset: 1 }}
             >
                 <Select
                     placeholder='Тип эксплуатации'
-                    options={[
-                        {
-                            value: '1',
-                            label: 'Коммерческое',
-                        },
-                        {
-                            value: '2',
-                            label: 'Некоммерческое',
-                        }
-                    ]}
+                    options={exploitationTypes}
                 />
+            </Form.Item>
+
+            <Form.Item
+                label="Формула класса"
+                labelAlign='left'
+                name="class_formula"
+                initialValue={ advert_legal_information?.class_formula }
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <Input placeholder='Формула класса'/>
+            </Form.Item>
+
+            <Form.Item
+                label="Ограничения по высоте волны"
+                labelAlign='left'
+                name="wave_limit"
+                initialValue={ advert_legal_information?.wave_limit }
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber step={0.1} max={3.5} min={0}/>
+            </Form.Item>
+
+            <Form.Item
+                label='Ледовое усиление'
+                labelAlign='left'
+                name='ice_strengthening'
+                initialValue={ advert_legal_information?.ice_strengthening }
+                valuePropName="checked"
+            >
+                <Checkbox />
             </Form.Item>
 
             <Form.Item
                 label="Тип и назначение"
                 labelAlign='left'
-                name='typeappointment'
                 required
             >
                 <Input.Group compact>
                     <Form.Item
                         name='type'
+                        initialValue={ advert_legal_information?.type.toString() }
                         noStyle
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
                         <Select
-                            style={{ width: '70%' }}
+                            style={{ width: '60%' }}
                             placeholder="Выбрать тип"
-                            options={[
-                                {
-                                    value: '1',
-                                    label: 'Полноразмерное самоходное',
-                                },
-                                {
-                                    value: '2',
-                                    label: 'Не полноразмерное самоходное',
-                                },
-                                {
-                                    value: '3',
-                                    label: 'Маломерное самоходное',
-                                },
-                                {
-                                    value: '4',
-                                    label: 'Не маломерное самоходное',
-                                }
-                            ]}
+                            options={vesseltypes}
                         />
                     </Form.Item>
                     <Form.Item
-                        name={'appointment'}
+                        name={'purpose'}
+                        initialValue={ advert_legal_information?.purpose }
                         noStyle
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <AutoComplete
-                            style={{ width: '30%' }}
-                            options={[
-                                { value: 'Баржа' },
-                                { value: 'Буксир' },
-                                { value: 'Танкер' },
-                            ]}
-                            placeholder="Выбрать назначение"
-                            filterOption={(inputValue, option) =>
-                                option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                            }
-                        />
+                        <Input style={{ width: '40%' }} placeholder='Назначение'/>
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -116,7 +163,8 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
             <Form.Item
                 label="Статус судна"
                 labelAlign='left'
-                name="dfsdfsd"
+                initialValue={ advert_legal_information?.vessel_status.toString() }
+                name="vessel_status"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -124,15 +172,15 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
                     onChange={onStatusVesselChange}
                     options={[
                         {
-                            value: '1',
+                            value: '0',
                             label: 'Действующие документы',
                         },
                         {
-                            value: '2',
+                            value: '1',
                             label: 'Без документов',
                         },
                         {
-                            value: '3',
+                            value: '2',
                             label: 'Холодный отстой',
                         }
                     ]}
@@ -140,22 +188,28 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
             </Form.Item>
 
             {
-                statusVessel === '2' &&
+                statusVessel === '1' &&
                 <Form.Item
                     label='Находилась ли на учете?'
                     labelAlign='left'
-                    name='sd'
+                    name='was_registered'
+                    initialValue={ advert_legal_information?.was_registered }
+                    valuePropName="checked"
                 >
                     <Checkbox onChange={() => setCheckboxAccounting(!checkboxAccounting)} checked={checkboxAccounting}/>
                 </Form.Item>
             }
 
             {
-                ((statusVessel === '2' && checkboxAccounting) || statusVessel !== '2' && statusVessel !== null) &&
+                ((statusVessel === '1' && checkboxAccounting) || statusVessel !== '1' && statusVessel !== null) &&
                 <Form.Item
                     label='Действие документов до'
                     labelAlign='left'
-                    name='sd1'
+                    name='register_valid_until'
+                    initialValue={
+                        advert_legal_information?.register_valid_until && 
+                        moment(advert_legal_information.register_valid_until)
+                    }
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <DatePicker />
@@ -163,52 +217,46 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
             }
 
             <Form.Item
-                name={'port'}
+                name={'port_address'}
+                initialValue={ advert_legal_information?.port_address }
                 label='Порт приписки'
                 labelAlign='left'
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <AutoComplete
-                    options={[
-                        { value: 'Сочи' },
-                        { value: 'Москва' },
-                        { value: 'хуй' },
-                    ]}
-                    placeholder="Порт приписки"
-                    filterOption={(inputValue, option) =>
-                        option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                    }
-                />
+                <RegionAutoComplete />
             </Form.Item>
 
             <Form.Item
-                name={'place'}
+                name={'vessel_location'}
+                initialValue={ advert_legal_information?.vessel_location }
+                label='Местонахождение судна'
+                labelAlign='left'
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <RegionAutoComplete placeholder='Местонахождение судна'/>
+            </Form.Item>
+
+            <Form.Item
                 label='Место и год постройки'
                 labelAlign='left'
             >
                 <Input.Group compact>
                     <Form.Item
-                        name={'place'}
+                        name={'building_country'}
+                        initialValue={ advert_legal_information?.building_country }
                         noStyle
                     >
-                        <AutoComplete
-                            style={{ width: '40%' }}
-                            options={[
-                                { value: 'Сочи' },
-                                { value: 'Москва' },
-                                { value: 'хуй' },
-                            ]}
-                            placeholder="Место постройки"
-                            filterOption={(inputValue, option) =>
-                                option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                            }
-                        />
+                        <CountriesAutoComplete style={{width: '50%'}} placeholder='Страна постройки'/>   
                     </Form.Item>
                     <Form.Item
-                        name={'place'}
+                        name={'building_year'}
+                        initialValue={
+                            advert_legal_information?.building_year &&
+                            moment(advert_legal_information?.building_year.toString())
+                        }
                         noStyle
                     >
-                        <DatePicker placeholder='Год постройки' picker="year"/>
+                        <DatePicker style={{width: '50%'}} placeholder='Год постройки' picker="year"/>
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -216,25 +264,28 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
             <Form.Item
                 label="Номер IMO"
                 labelAlign='left'
-                name="imo"
+                name="imo_number"
+                initialValue={ advert_legal_information?.imo_number }
             >
-                <Input />
+                <Input placeholder='Номер IMO'/>
             </Form.Item>
 
             <Form.Item
                 label="Номер проекта"
                 labelAlign='left'
-                name="project"
+                name="project_number"
+                initialValue={ advert_legal_information?.project_number }
             >
-                <Input />
+                <Input placeholder='Номер проекта'/>
             </Form.Item>
 
             <Form.Item
                 label="Строительный номер"
                 labelAlign='left'
-                name="project"
+                name="building_number"
+                initialValue={ advert_legal_information?.building_number }
             >
-                <Input />
+                <Input placeholder='Строительный номер'/>
             </Form.Item>
         </Form>
     )

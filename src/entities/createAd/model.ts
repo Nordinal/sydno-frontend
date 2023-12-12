@@ -12,8 +12,67 @@ export interface ICreateAdStepOne {
     images: UploadFile<any>[];
 }
 
+export interface ICreateAdStepTwo {
+    flag: string
+    exploitation_type: number
+    class_formula: string
+    wave_limit: number
+    type: number
+    purpose: string
+    was_registered: boolean
+    register_valid_until: string
+    vessel_status: number
+    project_number: string
+    building_number: string
+    building_year: number
+    building_country: string
+    port_address: {
+        region: string,
+        city: string
+    }
+    vessel_location: {
+        region: string,
+        city: string
+    }
+    imo_number: string
+    ice_strengthening: number
+    id?: number
+}
+
+export interface ICreateAdStepThree {
+    advert_id?: number
+    id: number
+    overall_length: number
+    overall_width: number
+    board_height: number
+    maximum_freeboard: number
+    material: number
+    deadweight: number
+    dock_weight: number
+    full_displacement: number
+    gross_tonnage: number
+    num_engines: number
+    power: number
+    max_speed_in_ballast: number
+    maximum_speed_when_loaded: number
+    cargo_tanks: number
+    total_capacity_cargo_tanks: number
+    second_bottom: number
+    second_sides: number
+    carrying: number
+    superstructures: number
+    deckhouses: number
+    liquid_tanks: number
+    total_capacity_liquid_tanks: number
+    passangers_avialable: number
+    num_passangers: number
+    technical_documentation: number
+}
+
 export interface IInstanceCreateAd extends Partial<ICreateAdStepOne> {
     id?: number
+    advert_legal_information?: ICreateAdStepTwo
+    adverts_technical_information?: ICreateAdStepThree
 }
 
 export interface ICreateAdData {
@@ -23,6 +82,9 @@ export interface ICreateAdData {
 
 export interface ICreateAdModel extends ICreateAdData {
     createStepOne: (payload: ICreateAdStepOne) => Promise<boolean>
+    createStepTwo: (payload: ICreateAdStepTwo) => Promise<boolean>
+    createStepThree: (payload: ICreateAdStepThree) => Promise<boolean>
+    setInstance: (payload: IInstanceCreateAd) => void
 };
 
 const initState: ICreateAdData = {
@@ -32,6 +94,11 @@ const initState: ICreateAdData = {
 
 export const useCreateAd = create<ICreateAdModel>((set, get) => ({
     ...initState,
+    setInstance: (payload: IInstanceCreateAd) =>  {
+        set({
+            instance: payload
+        })
+    },
     createStepOne: async (payload) => {
         try {
             const id = get().instance.id;
@@ -47,13 +114,85 @@ export const useCreateAd = create<ICreateAdModel>((set, get) => ({
             payload.images.forEach(image => {
                 formData.append('images[]', image.originFileObj as Blob);
             })
-            const result = await instanceApiFormData.post('/api/adverts', formData);
+
+            const result = id
+                ? await instanceApiFormData.post(`/api/adverts/${id}/edit`, formData)
+                : await instanceApiFormData.post('/api/adverts', formData);
+
             set({
                 instance: {
                     ...get().instance,
                     ...result.data
                 }
             })
+            return true;
+        }
+        catch (e) {
+            if(e instanceof AxiosError) set({error: e});
+            return false;
+        }
+    },
+    createStepTwo: async (payload) => {
+        try {
+            const advert_id = get().instance.id;
+            if(!advert_id) throw new Error('Не найден индификатор объявления');
+
+            const id = get().instance.advert_legal_information?.id;
+
+            const result = id
+                ? await instanceApi.post(`/api/advertslegalinformation/${id}/edit`, {
+                    advert_id,
+                    ...payload,
+                })
+                : await instanceApi.post('/api/advertslegalinformation', {
+                    advert_id: id,
+                    ...payload,
+                });
+
+            set({
+                instance: {
+                    ...get().instance,
+                    advert_legal_information: {
+                        ...(get().instance.advert_legal_information || {}),
+                        ...(!id ? result.data : payload)
+                    }
+                }
+            })
+
+            return true;
+        }
+        catch (e) {
+            if(e instanceof AxiosError) set({error: e});
+            return false;
+        }
+    },
+    createStepThree: async (payload) => {
+        try {
+            const advert_id = get().instance.id;
+            if(!advert_id) throw new Error('Не найден индификатор объявления');
+
+            const id = get().instance.adverts_technical_information?.id;
+
+            const result = id
+                ? await instanceApi.post(`/api/advertstechnicalinformation/${id}/edit`, {
+                    advert_id,
+                    ...payload,
+                })
+                : await instanceApi.post('/api/advertstechnicalinformation', {
+                    advert_id,
+                    ...payload,
+                });
+
+            set({
+                instance: {
+                    ...get().instance,
+                    adverts_technical_information: {
+                        ...(get().instance.adverts_technical_information || {}),
+                        ...(!id ? result.data : payload)
+                    }
+                }
+            })
+
             return true;
         }
         catch (e) {

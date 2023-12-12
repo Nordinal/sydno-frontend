@@ -2,16 +2,34 @@
 import { UploadAvatars } from '@/shared/ui/UploadAvatars';
 import { Form, Button, Input, Typography, InputNumber, Timeline, Col, Row, Select } from 'antd';
 import { onFinishStep } from '../ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ICreateAdStepThree } from '@/entities/createAd/model';
+import { instanceApi } from '@/shared/configs/instanceAxios';
 
 export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) {
     const [isTanks, setIsTanks] = useState(false);
     const [isBulkTanks, setIsBulkTanks] = useState(false);
     const [isCapacity, setIsCapacity] = useState(false);
 
-    const _onFinish = (values) => {
-        onFinish({type: 'StepThree', data: values})
+    const [materials, setMaterials] = useState<{value: string, label: string}[]>();
+
+    const _onFinish = (values: ICreateAdStepThree) => {
+        onFinish({type: 'StepThree', data: values});
     }
+
+    useEffect(() => {
+        instanceApi.get('/api/selector?materials').then(res => {
+            const data = res.data.message
+            setMaterials(
+                Object.entries(data.materials as {[x in string]: string})
+                    .map(([value, label] : [string, string]) => ({
+                        value,
+                        label
+                    }))
+            );
+        });
+    }, []);
+
     return (
         <Form
             id='StepThree'
@@ -25,23 +43,22 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Габариты"
                 labelAlign='left'
-                name="ds33452345"
                 required
             >
                 <Input.Group compact>
                     <Form.Item
                         noStyle
-                        name="vd"
+                        name="overall_length"
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <InputNumber style={{width: '30%'}} placeholder='Длина' step="0.01" />
+                        <InputNumber style={{width: '50%'}} placeholder='Длина' addonAfter='м.' step="0.01" />
                     </Form.Item>
                     <Form.Item
                         noStyle
-                        name="sdf"
+                        name="overall_width"
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <InputNumber style={{width: '30%'}} placeholder='Ширина' step="0.01" />
+                        <InputNumber style={{width: '50%'}} placeholder='Ширина' addonAfter='м.' step="0.01" />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -49,116 +66,110 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Высота борта"
                 labelAlign='left'
-                name="ds1444444"
+                name="board_height"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '40%'}} placeholder='Высота борта (метры)' step="0.01" />
+                <InputNumber style={{width: '100%'}} placeholder='Высота борта (метры)' addonAfter='метры' step="0.01" />
             </Form.Item>
 
             <Form.Item
                 label="Макс. надводный борт"
                 labelAlign='left'
-                name="ds21234235"
+                name="maximum_freeboard"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '40%'}} placeholder='Максимальный надводный борт' />
+                <InputNumber style={{width: '100%'}} placeholder='Максимальный надводный борт' addonAfter='метры' />
             </Form.Item>
 
             <Form.Item
                 label="Материал корпуса"
                 labelAlign='left'
-                name="dfsdfsd1234234"
+                name="material"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 6, offset: 1 }}
             >
                 <Select
                     placeholder='Материал корпуса'
-                    options={[
-                        {
-                            value: '1',
-                            label: 'Железобетонный',
-                        },
-                        {
-                            value: '2',
-                            label: 'Композитный материал',
-                        },
-                        {
-                            value: '3',
-                            label: 'Сталь',
-                        }
-                    ]}
+                    options={materials}
                 />
             </Form.Item>
 
             <Form.Item
                 label="Дедвейт"
                 labelAlign='left'
-                name="ds224"
+                name="deadweight"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '40%'}} placeholder='Дедвейт (тонны)' />
+                <InputNumber style={{width: '100%'}} placeholder='Дедвейт (тонны)' addonAfter='тонны' />
             </Form.Item>
 
             <Form.Item
                 label="Доковый вес"
                 labelAlign='left'
-                name="ds2123"
+                name="dock_weight"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '40%'}} placeholder='Доковый вес (тонны)' />
+                <InputNumber style={{width: '100%'}} placeholder='Доковый вес (тонны)' addonAfter='тонны'/>
             </Form.Item>
 
             <Form.Item
                 label="Водоизмещение полное"
                 labelAlign='left'
-                name="ds21117"
+                name="full_displacement"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '40%'}} placeholder='одоизмещение полное (Рег. тонны)' />
+                <InputNumber style={{width: '100%'}} placeholder='Водоизмещение полное (Рег. тонны)' addonAfter='рег. тонны' />
+            </Form.Item>
+
+            <Form.Item
+                label="Валовая вместимость"
+                labelAlign='left'
+                name="gross_tonnage"
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber style={{width: '100%'}}  placeholder='Количество двигателей (Рег. тонны)' addonAfter='рег. тонны' />
             </Form.Item>
 
             <Form.Item
                 label="Количество двигателей"
                 labelAlign='left'
-                name="ds211116"
+                name="num_engines"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber placeholder='Количество двигателей' min={1} max={8} />
+                <InputNumber style={{width: '100%'}}  placeholder='Количество двигателей' min={1} max={8} addonAfter='шт.' />
             </Form.Item>
 
             <Form.Item
                 label="Мощность двигателей"
                 labelAlign='left'
-                name="ds21111315"
+                name="power"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber placeholder='Мощность двигателей кВт' step="0.1"/>
+                <InputNumber style={{width: '100%'}}  placeholder='Мощность двигателей кВт' step="0.1" addonAfter='кВт' />
             </Form.Item>
 
             <Form.Item
                 label="Максимальная скорость в балласте"
                 labelAlign='left'
-                name="ds21111214"
+                name="max_speed_in_ballast"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '60%'}}  placeholder='Максимальная скорость в балласте (км/ч)' step="0.1"/>
+                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в балласте (км/ч)' addonAfter='км/ч' step="0.1"/>
             </Form.Item>
 
             <Form.Item
                 label="Максимальная скорость в грузу"
                 labelAlign='left'
-                name="ds21111113"
+                name="maximum_speed_when_loaded"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '60%'}}  placeholder='Максимальная скорость в грузу (км/ч)' step="0.1"/>
+                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в грузу (км/ч)' addonAfter='км/ч' step="0.1"/>
             </Form.Item>
 
             <Form.Item
                 label="Грузовые танки"
                 labelAlign='left'
-                name="dfsdfsd231123"
+                name="cargo_tanks"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Грузовые танки'
@@ -182,19 +193,18 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
                 <Form.Item
                     label="Суммарная вместимость"
                     labelAlign='left'
-                    name="ds21111112"
+                    name="total_capacity_cargo_tanks"
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <InputNumber placeholder='Суммарная вместимость'/>
+                    <InputNumber style={{width: '100%'}}  placeholder='Суммарная вместимость'/>
                 </Form.Item>
             }
 
             <Form.Item
                 label="Второе дно"
                 labelAlign='left'
-                name="dfsdfsd231211"
+                name="second_bottom"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Второе дно'
@@ -214,9 +224,8 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Вторые борта"
                 labelAlign='left'
-                name="dfsdfsd23139"
+                name="second_sides"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Вторые борта'
@@ -236,18 +245,17 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Грузоподъемность"
                 labelAlign='left'
-                name="ds21111128"
+                name="carrying"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber placeholder='Грузоподъемность'/>
+                <InputNumber style={{width: '100%'}}  placeholder='Грузоподъемность'/>
             </Form.Item>
 
             <Form.Item
                 label="Надстройки"
                 labelAlign='left'
-                name="dfsdfsd23137"
+                name="superstructures"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Надстройки'
@@ -267,9 +275,8 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Рубки"
                 labelAlign='left'
-                name="dfsdfsd23136"
+                name="deckhouses"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Рубки'
@@ -289,9 +296,8 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Наливные танки"
                 labelAlign='left'
-                name="dfsdfsd23135"
+                name="liquid_tanks"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Наливные танки'
@@ -315,19 +321,18 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
                 <Form.Item
                     label="Cуммарная вместимость"
                     labelAlign='left'
-                    name="ds211111234"
+                    name="total_capacity_liquid_tanks"
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <InputNumber placeholder='Cуммарная вместимость'/>
+                    <InputNumber style={{width: '100%'}} placeholder='Cуммарная вместимость'/>
                 </Form.Item>
             }
 
             <Form.Item
                 label="Пассажировместимость"
                 labelAlign='left'
-                name="dfsdfsd23132343"
+                name="passangers_avialable"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Пассажировместимость'
@@ -351,19 +356,18 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
                 <Form.Item
                     label="Количество человек"
                     labelAlign='left'
-                    name="ds2111112342"
+                    name="num_passangers"
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <InputNumber placeholder='Количество человек'/>
+                    <InputNumber style={{width: '100%'}} placeholder='Количество человек'/>
                 </Form.Item>
             }
 
             <Form.Item
                 label="Техническая документация"
                 labelAlign='left'
-                name="dfsdfsd231331"
+                name="technical_documentation"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                wrapperCol={{ span: 3, offset: 1 }}
             >
                 <Select
                     placeholder='Техническая документация'

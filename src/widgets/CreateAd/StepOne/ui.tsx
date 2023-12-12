@@ -32,7 +32,7 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
                 initialValue={instance.header}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input />
+                <Input placeholder='Заголовок объявления'/>
             </Form.Item>
 
             <Form.Item
@@ -43,7 +43,7 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 wrapperCol={{ span: 6, offset: 1 }}
             >
-                <Input />
+                <Input placeholder='Регистрационный номер'/>
             </Form.Item>
 
             <Form.Item
@@ -53,14 +53,14 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
                 initialValue={instance.price}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '40%'}}/>
+                <InputNumber placeholder='Цена' style={{width: '40%'}}/>
             </Form.Item>
 
             <Form.Item
                 label="Фото"
                 labelAlign='left'
             >
-                <UploadAvatars onChange={(images) => setImages(images)} />
+                <UploadAvatars defaultImages={instance.images} onChange={(images) => setImages(images)} />
             </Form.Item>
 
             <Form.Item
@@ -83,7 +83,7 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
                 name="description"
                 initialValue={instance.description}
             >
-                <Input.TextArea rows={8} />
+                <Input.TextArea placeholder='Описание' rows={8} />
             </Form.Item>
         </Form>
     )

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CreateAdStepTwo from './StepTwo/ui';
 import CreateAdStepThree from './StepThree/ui';
-import { ICreateAdStepOne, useCreateAd } from '@/entities/createAd/model';
+import { ICreateAdStepOne, ICreateAdStepThree, ICreateAdStepTwo, useCreateAd } from '@/entities/createAd/model';
 import { useShallow } from 'zustand/react/shallow';
 
 export type onFinishStep = ({
@@ -17,7 +17,7 @@ export type onFinishStep = ({
 }) => void
 
 export default function CreateAd() {
-    const { createStepOne } = useCreateAd(useShallow(state => ({createStepOne: state.createStepOne})))
+    const { createStepOne, createStepTwo, createStepThree } = useCreateAd(useShallow(state => ({createStepOne: state.createStepOne, createStepTwo: state.createStepTwo, createStepThree: state.createStepThree})))
     const steps: ['StepOne', 'StepTwo', 'StepThree'] = ['StepOne', 'StepTwo', 'StepThree']
     const [current, setCurrent] = useState<'StepOne' | 'StepTwo' | 'StepThree'>('StepOne');
     const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +40,15 @@ export default function CreateAd() {
         setLoading(true);
 
         if(type === 'StepOne') {
-            done = await createStepOne(data as ICreateAdStepOne)
+            done = await createStepOne(data as ICreateAdStepOne);
+        }
+
+        if(type === 'StepTwo') {
+            done = await createStepTwo(data as ICreateAdStepTwo);
+        }
+
+        if(type === 'StepThree') {
+            done = await createStepThree(data as ICreateAdStepThree);
         }
 
         setLoading(false);

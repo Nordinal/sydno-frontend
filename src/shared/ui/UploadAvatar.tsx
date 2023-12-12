@@ -2,21 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Modal, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload/interface';
-import axios from 'axios';
 import ImgCrop from 'antd-img-crop';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
-
-const getFile = async (url: string): Promise<RcFile | File | null> => {
-  const response = await axios.get(url, {
-    responseType: "blob"
-  });
-
-  const metadata = {
-    type: "image/jpeg,image/png"
-  }
-  const file = new File([response.data], 'Аватар', metadata);
-  return file;
-}
+import { getFile } from '../helpers/getFile';
 
 const beforeUpload = (file: RcFile) => {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
