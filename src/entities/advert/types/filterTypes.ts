@@ -218,12 +218,12 @@ export interface ITechnicalFilterOptions {
     /**
      * Наливные танки
      */
-    liquid_tanks?: boolean;
+    filling_tanks?: boolean;
 
     /**
      * Cуммарная вместимость если наливной танк
      */
-    total_capacity_liquid_tanks?: number;
+    total_capacity_filling_tanks?: number;
 
     /**
      * Второе дно

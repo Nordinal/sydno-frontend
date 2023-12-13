@@ -1,11 +1,11 @@
 'use client';
-import SearchLayout from "@/layout/SearchLayout/layout-client";
+import AdvertList from "@/widgets/AdvertList/ui";
 
 export default function Index() {
 
   return (
     <>
-      <SearchLayout/>
+      <AdvertList/>
     </>
   )
 }

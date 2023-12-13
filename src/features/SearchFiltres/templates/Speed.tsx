@@ -1,16 +1,10 @@
-import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import React from "react";
 
-const Speed: React.FC<{
-    max_speed_in_ballast?: number;
-    max_speed_in_load?: number;
-    changeConfigProperty: TChangeConfigProperty;
-}> = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+const Speed = () => {
+    return (
+        <>
+        </>
+    );
 }
 
 export default Speed;

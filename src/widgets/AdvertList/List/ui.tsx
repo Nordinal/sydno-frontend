@@ -8,7 +8,7 @@ import useQueryParamsObserver from "@/shared/helpers/useQueryParamsObserver";
 
 const PAGINATION_LIMIT_PAGE = 10;
 
-const SearchLayoutContent: React.FC = () => {
+const List: React.FC = () => {
     const router = useRouter();
     const { getAdvertList } = useAdvert(useShallow(state => ({ getAdvertList: state.getAdvertList })));
     const [advertList, setAdvertList] = useState<IAdvertListItem[]>([]);
@@ -77,4 +77,4 @@ const SearchLayoutContent: React.FC = () => {
     );
 }
 
-export default SearchLayoutContent;
+export default List;

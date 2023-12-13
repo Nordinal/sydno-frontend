@@ -3,14 +3,13 @@ import { TFilterOptions } from '@/entities/advert';
 import {
     Button,
     Col,
-    Input,
     Row,
     Typography 
 } from 'antd';
 import {
     CorpusMaterial,
-    Engine,
-    MainFiltres,
+    EnginePower,
+    NumEngines,
     ExploitationType,
     IcePower,
     WasRegistered,
@@ -32,6 +31,15 @@ import {
     DeckHouse,
     PassangersAvialable,
     TechnicalDocumentation,
+    FillingTanks,
+    Type,
+    Purpose,
+    Class,
+    VesselStatus,
+    OverallLength,
+    OverallWidth,
+    ProjectNumber,
+    BuildingNumber,
 } from '../../templates';
 import './styles.css';
 
@@ -94,185 +102,317 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
             <Typography.Title level={3}>
                 Фильтры
             </Typography.Title>
-            <MainFiltres
-                type={filterConfig.type}
-                purpose={filterConfig.purpose}
-                class_formula={filterConfig.class_formula}
-                vessel_status={filterConfig.vessel_status}
-                min_overall_length={filterConfig.min_overall_length}
-                max_overall_length={filterConfig.max_overall_length}
-                min_overall_width={filterConfig.min_overall_width}
-                max_overall_width={filterConfig.max_overall_width}
-                changeConfigProperty={changeConfigProperty}                  
-            />
+            <Row gutter={[16, 24]} className="pb-4">
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <Type
+                        type={filterConfig.type}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <Purpose
+                        purpose={filterConfig.purpose}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <Class
+                        class_formula={filterConfig.class_formula}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <VesselStatus
+                        vessel_status={filterConfig.vessel_status}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <OverallLength
+                        min_overall_length={filterConfig.min_overall_length}
+                        max_overall_length={filterConfig.max_overall_length}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <OverallWidth
+                        min_overall_width={filterConfig.min_overall_width}
+                        max_overall_width={filterConfig.max_overall_width}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <GrossTonnage
+                        min_gross_tonnage={filterConfig.min_gross_tonnage}
+                        max_gross_tonnage={filterConfig.max_gross_tonnage}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+            </Row>
             <div
                 className={showHiddenBlock ? 'sudno-SearhFiltres-hiddenBlock-active pb-4' : 'sudno-SearhFiltres-hiddenBlock'}
             >
                 <Row gutter={[16, 24]} className='pb-4'>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <ExploitationType
                             exploitations_type={filterConfig.exploitations_type}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <IcePower
                             ice_power={filterConfig.ice_power}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <WasRegistered
                             was_registered={filterConfig.was_registered}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <RegisterDeadline
                             register_valid_until={filterConfig.register_valid_until}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
-                        <p>Номер проекта</p>
-                        <Input
-                            value={filterConfig.project_number}
-                            onChange={(event) => changeConfigProperty<string>('project_number', event.target.value)}
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <ProjectNumber
+                            project_number={filterConfig.project_number}
+                            changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
-                        <p>Строительный номер</p>
-                        <Input
-                            value={filterConfig.building_number}
-                            onChange={(event) => changeConfigProperty<string>('building_number', event.target.value)}
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <BuildingNumber
+                            building_number={filterConfig.building_number}
+                            changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <BuildingYear
                             building_year={filterConfig.building_year}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <BuildingCountry
                             building_country={filterConfig.building_country}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <PortAdress
                             port_adress_city={filterConfig.port_adress_city}
                             port_adress_country={filterConfig.port_adress_country}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <VesselLocation
                             vessel_location_country={filterConfig.vessel_location_country}
                             vessel_location_city={filterConfig.vessel_location_city}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <CargoTanks
                             cargo_tanks={filterConfig.cargo_tanks}
                             total_capacity_cargo_tanks={filterConfig.total_capacity_cargo_tanks}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                </Row>
-                <Row className='pb-4'>
-                    <Col span={12}>
-                        <Engine
-                            min_power={filterConfig.min_power}
-                            max_power={filterConfig.max_power}
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <FillingTanks
+                            filling_tanks={filterConfig.filling_tanks}
+                            total_capacity_filling_tanks={filterConfig.total_capacity_filling_tanks}
+                            changeConfigProperty={changeConfigProperty}
+                        />
+                    </Col>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <NumEngines
                             num_engines={filterConfig.num_engines}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                </Row>
-                <Row className='pb-4' gutter={[16, 24]}>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <EnginePower
+                            min_power={filterConfig.min_power}
+                            max_power={filterConfig.max_power}
+                            changeConfigProperty={changeConfigProperty}
+                        />
+                    </Col>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <CorpusMaterial
                             material={filterConfig.material}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                </Row>
-                <Row gutter={[16, 24]}>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <BoardHeight
                             max_board_height={filterConfig.max_board_height}
                             min_board_height={filterConfig.min_board_height}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <MaximumFreeboard
                             max_maximum_freeboard={filterConfig.max_maximum_freeboard}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <Deadweight
                             min_deadweight={filterConfig.min_deadweight}
                             max_deadweight={filterConfig.max_deadweight}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <FullDisplacement
                             min_full_displacement={filterConfig.min_full_displacement}
                             max_full_displacement={filterConfig.max_full_displacement}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
-                        <GrossTonnage
-                            min_gross_tonnage={filterConfig.min_gross_tonnage}
-                            max_gross_tonnage={filterConfig.max_gross_tonnage}
-                            changeConfigProperty={changeConfigProperty}
-                        />
-                    </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <SeccondBottom
                             seccond_bottom={filterConfig.seccond_bottom}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <SecondSides
                             second_sides={filterConfig.second_sides}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <MaxCarrying
                             min_carrying={filterConfig.min_carrying}
                             max_carrying={filterConfig.max_carrying}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <SuperSctructures
                             superstructures={filterConfig.superstructures}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <DeckHouse
                             deckhouses={filterConfig.deckhouses}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <PassangersAvialable
                             min_passangers_avialable={filterConfig.min_passangers_avialable}
                             max_passangers_avialable={filterConfig.max_passangers_avialable}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
                         <TechnicalDocumentation
                             technical_documentation={filterConfig.technical_documentation}
                             changeConfigProperty={changeConfigProperty}

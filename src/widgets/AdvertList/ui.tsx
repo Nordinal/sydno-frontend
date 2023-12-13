@@ -1,22 +1,22 @@
 'use client';
 import { Col, Row } from "antd";
 import React from "react";
-import SearchLayoutContent from "./SearchLayoutContent";
-import SearchLayoutFilter from "./SearchLayoutFilter";
+import List from "./List/ui";
+import Filter from "./Filter/ui";
 
-const SearchLayout: React.FC = () => {
+const AdvertList: React.FC = () => {
     return (
         <>
             <Row className="pt-6 pb-16">
                 <Col className="pb-6" span={24}>
-                    <SearchLayoutFilter/>
+                    <Filter/>
                 </Col>
                 <Col span={24}>
-                    <SearchLayoutContent/>
+                    <List/>
                 </Col>
             </Row>
         </>
     );
 }
 
-export default SearchLayout;
+export default AdvertList;

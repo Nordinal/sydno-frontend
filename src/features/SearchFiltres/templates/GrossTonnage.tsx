@@ -20,7 +20,7 @@ const GrossTonnage: React.FC<{
             max={Infinity}
             step={0.01}
             onChange={(value) => changeConfigProperty<number | undefined>('min_gross_tonnage', value || undefined)}
-            formatter={(value) => value ? `${value} т` : ''}
+            formatter={(value) => value ? `${value} рег. т.` : ''}
         />
         <InputNumber
             value={max_gross_tonnage}
@@ -28,7 +28,7 @@ const GrossTonnage: React.FC<{
             max={Infinity}
             step={0.01}
             onChange={(value) => changeConfigProperty<number | undefined>('max_gross_tonnage', value || undefined)}
-            formatter={(value) => value ? `${value} т` : ''}
+            formatter={(value) => value ? `${value} рег. т.` : ''}
         />
     </div>
   )
