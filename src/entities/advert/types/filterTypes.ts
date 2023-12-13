@@ -15,19 +15,14 @@ export interface ILegalFilterOptions {
     exploitations_type?: 'коммерческое' | 'некоммерческое';
 
     /**
-     * левая часть формулы класса (высота волны) 0.6, 1.2 ,2.0 ,3.0 ,3.5 >3.5
+     * формулы класса
      */
-    class_formula_left?: string;
+    class_formula?: string;
 
     /**
      * Ледовое усиление
      */
     ice_power?: boolean;
-
-    /**
-     * правая часть формулы класса
-     */
-    class_formula_right?: string;
 
     /**
      * Тип судна
@@ -45,9 +40,9 @@ export interface ILegalFilterOptions {
     was_registered?: boolean;
 
     /**
-     * Учет действует до
+     * Учет действует до Date
      */
-    register_valid_until?: Date;
+    register_valid_until?: string;
 
     /**
      * статус судна
@@ -65,32 +60,30 @@ export interface ILegalFilterOptions {
     building_number?: string;
 
     /**
-     * год постройки
+     * год постройки Date
      */
-    building_year?: Date;
+    building_year?: string;
 
     /**
      * страна постройки
      */
     building_country?: string;
 
-    /**
-     * порт приписки
-     */
-    // страна и город
-    port_adress?: {
-        country: string;
-        city: string
-    };
+    // порт приписки
+    // страна
+    port_adress_country?: string;
+
+    // город
+    port_adress_city?: string;
 
     /**
      * местонахождение судна
      */
     // порт или в рейсе
-    vessel_location?: {
-        country: string;
-        city: string
-    } | 'в рейсе';
+    vessel_location_country?: string;
+
+    // порт или в рейсе
+    vessel_location_city?: string;
 
     /**
      * Номер IMO
@@ -210,7 +203,7 @@ export interface ITechnicalFilterOptions {
     /**
      * Максимальная скорость в грузу
      */
-    maximum_speed_in_ballast?: number;
+    max_speed_in_load?: number;
 
     /**
      * Грузовой танк
@@ -225,12 +218,12 @@ export interface ITechnicalFilterOptions {
     /**
      * Наливные танки
      */
-    liquid_tanks?: boolean;
+    filling_tanks?: boolean;
 
     /**
      * Cуммарная вместимость если наливной танк
      */
-    total_capacity_liquid_tanks?: number;
+    total_capacity_filling_tanks?: number;
 
     /**
      * Второе дно

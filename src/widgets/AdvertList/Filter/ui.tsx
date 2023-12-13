@@ -4,22 +4,22 @@ import { useRouter, useSearchParams } from "next/navigation";
 import convertObjectToPathname from "@/shared/helpers/convertObjectToPathname";
 import getUrlQueryParams from "@/shared/helpers/getUrlQueryParams";
 
-const SearchLayoutFilter: React.FC = () => {
+const Filter: React.FC = () => {
     const router = useRouter();
-    const searchParams = getUrlQueryParams(useSearchParams());
+    const searchParams = useSearchParams();
 
-    const changeUrlByOptions = (searchParams: object) => {
-        router.replace(location.pathname + '?' + convertObjectToPathname(searchParams));
+    const changeUrlByOptions = (filterParams: object) => {
+        router.push(location.pathname + '?' + convertObjectToPathname(filterParams));
     }
 
     return (
         <>
             <SearchFiltres
-                filterOptions={searchParams}
+                filterOptions={getUrlQueryParams(searchParams)}
                 onFindButtonClick={changeUrlByOptions}
             />
         </>
     );
 }
 
-export default SearchLayoutFilter;
+export default Filter;
