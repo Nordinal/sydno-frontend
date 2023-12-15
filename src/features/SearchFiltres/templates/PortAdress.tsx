@@ -1,6 +1,7 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
-import { Input } from 'antd';
+import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
+import { Col, Input, Row } from 'antd';
 
 const PortAdress: React.FC<{
     port_adress_country?: string;
@@ -14,24 +15,26 @@ const PortAdress: React.FC<{
   return (
     <>
         <p>Порт приписки</p>
-        <div className='flex'>
-            <div className="">
+        <Row>
+            <Col span={12}>
                 <p>страна</p>
-                <Input
-                    style={{width: '100%'}}
+                <CountriesAutoComplete
                     value={port_adress_country}
-                    onChange={(event) => changeConfigProperty<string>('port_adress_country', event.target.value)}
+                    style={{width: '100%'}}
+                    placeholder='Выберите страну'
+                    onChange={(value) => changeConfigProperty<string>('port_adress_country', value)}
+                    allowClear={true}
                 />
-            </div>
-            <div className="">
+            </Col>
+            <Col span={12}>
                 <p>город</p>
                 <Input
                     style={{width: '100%'}}
                     value={port_adress_city}
                     onChange={(event) => changeConfigProperty<string>('port_adress_city', event.target.value)}
                 />
-            </div>
-        </div>
+            </Col>
+        </Row>
     </>
   )
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
-import { Input } from 'antd';
+import { Col, Input, Row } from 'antd';
+import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
+import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
 
 const VesselLocation: React.FC<{
     vessel_location_country?: string;
@@ -14,24 +16,32 @@ const VesselLocation: React.FC<{
   return (
     <>
         <p>Местонахождение судна</p>
-        <div className='flex'>
-            <div className="">
+        <Row>
+            <Col span={12}>
                 <p>страна</p>
-                <Input
-                    style={{width: '100%'}}
+                <CountriesAutoComplete
                     value={vessel_location_country}
-                    onChange={(event) => changeConfigProperty<string>('vessel_location_country', event.target.value)}
+                    style={{width: '100%'}}
+                    placeholder='Выберите страну'
+                    onChange={(value) => changeConfigProperty<string>('vessel_location_country', value)}
+                    allowClear={true}
                 />
-            </div>
-            <div className="">
+            </Col>
+            <Col span={12}>
                 <p>город</p>
-                <Input
+                <RegionAutoComplete
+                    value={vessel_location_city}
+                    style={{width: '100%'}}
+                    allowClear={true}
+                    onChange={({city}) => changeConfigProperty<string>('vessel_location_city', city)}
+                />
+                {/* <Input
                     style={{width: '100%'}}
                     value={vessel_location_city}
                     onChange={(event) => changeConfigProperty<string>('vessel_location_city', event.target.value)}
-                />
-            </div>
-        </div>
+                /> */}
+            </Col>
+        </Row>
     </>
   )
 }

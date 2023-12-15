@@ -6,6 +6,7 @@ import isTouchDevice from "@/shared/helpers/isTouchDevice";
 import { IAdvertListItem } from "../../types/main";
 import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
+import { HeartOutlined } from '@ant-design/icons'
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
@@ -126,13 +127,12 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
                             title="Добавить в избранное"
                             color={'red'}
                         >
-                            <Button
-                                style={{ opacity: showDetails || isTouch || isLocalFavorite ? '1' : '0',
-                            width: 'auto' }}
+                            <HeartOutlined
                                 onClick={likeButtonClickhandler}
-                            >
-                                ♥
-                            </Button>
+                                style={{ opacity: showDetails || isTouch || isLocalFavorite ? '1' : '0', color: 'red'}}
+                                width={56}
+                                height={56}
+                            />
                         </Tooltip>
                     </div>
                 </Col>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
-import { Input } from 'antd';
+import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 
 const BuildingCountry: React.FC<{
     building_country?: string;
@@ -12,10 +12,12 @@ const BuildingCountry: React.FC<{
   return (
     <>
       <p>Страна постройки</p>
-      <Input
+      <CountriesAutoComplete
           value={building_country}
           style={{width: '100%'}}
-          onChange={(event) => changeConfigProperty<string>('building_country', event.target.value)}
+          placeholder='Выберите страну'
+          onChange={(value) => changeConfigProperty<string>('building_country', value)}
+          allowClear={true}
       />
     </>
   )

@@ -20,18 +20,21 @@ export const CountriesAutoComplete = ({
     placeholder,
     value,
     onChange,
-    style
+    style,
+    allowClear,
 }: {
     placeholder?: string,
     value?: string,
     onChange?: Function,
-    style?: CSSProperties
+    style?: CSSProperties,
+    allowClear?: boolean
 }) => {
 
     return (
         <Select
             value={value}
             onChange={onChange}
+            allowClear={allowClear}
             showSearch
             style={style}
             className='w-full'

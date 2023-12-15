@@ -10,7 +10,7 @@ export default [
             'https://hdpic.club/uploads/posts/2022-08/1660553027_41-hdpic-club-p-samii-ogromnii-tanker-49.jpg',
             'https://i07.fotocdn.net/s210/65575b78da75f122/public_pin_l/2660552460.jpg',
         ],
-        title: 'Название Корабля',
+        title: 'Танкер',
         price: 100000,
         tags: [ 'тип', 'назначение', 'класс', 'статус судна', 'флаг'],
         phone: '8-800-535-35-35',
