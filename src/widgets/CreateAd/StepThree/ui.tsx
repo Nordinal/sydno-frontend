@@ -150,7 +150,7 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Максимальная скорость в балласте"
                 labelAlign='left'
-                name="max_speed_in_ballast"
+                name="maximum_speed_in_ballast"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в балласте (км/ч)' addonAfter='км/ч' step="0.1"/>
