@@ -145,7 +145,7 @@ export const useCreateAd = create<ICreateAdModel>((set, get) => ({
                     ...payload,
                 })
                 : await instanceApi.post('/api/advertslegalinformation', {
-                    advert_id: id,
+                    advert_id,
                     ...payload,
                 });
 
