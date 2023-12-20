@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchAdvertList, addAdvertToFavorites, getAdvertById } from "./api";
+import { addAdvertToFavorites, getAdvertById } from "./api";
 import { TFilterOptions } from "./types/filterTypes";
 import { IAdvertListItem } from "./types/main";
 import convertObjectToPathname from "@/shared/helpers/convertObjectToPathname";
@@ -13,10 +13,14 @@ export interface IAdvertModel {
 
 export const useAdvert = create<IAdvertModel>(() => ({
     getAdvertList: async (options: TFilterOptions) => {
-        const searchString = convertObjectToPathname(options);
-        const res = await instanceApi.get('/api/alladverts?' + searchString);
+        try {
+            const searchString = convertObjectToPathname(options);
+            const res = await instanceApi.get('/api/alladverts?' + searchString);
 
-        return res.data.data as IAdvertListItem[];
+            return res.data.data as IAdvertListItem[];
+        } catch {
+            return [];
+        }
     },
     addToFavorites: async (id: number): Promise<boolean> => {
         return await addAdvertToFavorites(id);

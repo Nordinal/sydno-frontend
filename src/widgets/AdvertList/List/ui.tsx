@@ -5,6 +5,7 @@ import { Skeleton, Typography } from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { Pagination } from 'antd';
 import useQueryParamsObserver from "@/shared/helpers/useQueryParamsObserver";
+import { smoothScrollToAnchor } from "@/shared/helpers/scroll";
 
 const PAGINATION_LIMIT_PAGE = 10;
 
@@ -24,6 +25,7 @@ const List: React.FC = () => {
             setAdvertList(newAdvertList);
             setIsLoading(false);
             setIsErrorLoad(false);
+            console.log(newAdvertList[0]);
         }).catch(() => {
             setIsLoading(false);
             setIsErrorLoad(true);
@@ -64,7 +66,7 @@ const List: React.FC = () => {
                 />
             ))}
             {
-                advertList.length > 0 ?
+                advertList.length > PAGINATION_LIMIT_PAGE ?
                     <div className="flex justify-center pt-8">
                         <Pagination
                             defaultCurrent={1}

@@ -3,8 +3,8 @@ import { InputNumber } from 'antd';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
 
 const PassangersAvialable: React.FC<{
-    min_passangers_avialable?: number;
-    max_passangers_avialable?: number;
+    min_passangers_avialable?: number | null;
+    max_passangers_avialable?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_passangers_avialable,

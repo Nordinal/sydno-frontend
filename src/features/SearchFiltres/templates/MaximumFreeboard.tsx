@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { InputNumber } from 'antd';
 
 const MaximumFreeboard: React.FC<{
-    min_maximum_freeboard?: number;
-    max_maximum_freeboard?: number;
+    min_maximum_freeboard?: number | null;
+    max_maximum_freeboard?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_maximum_freeboard,

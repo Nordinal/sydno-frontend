@@ -8,7 +8,7 @@ const OPTIONS = [
 ];
 
 const TechnicalDocumentation: React.FC<{
-    technical_documentation?: boolean;
+    technical_documentation?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     technical_documentation,

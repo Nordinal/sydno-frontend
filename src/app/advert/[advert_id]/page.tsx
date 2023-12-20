@@ -42,11 +42,11 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
     return (
         <div className="pt-6">
             <Typography.Title level={1}>
-                {advertData?.title}
+                Скоро тут будет полноценная страница 
             </Typography.Title>
             <Row gutter={16}>
                 <Col span={12}>
-                    <Carousel>
+                    {/* <Carousel>
                         <div>
                             <h3 style={contentStyle}>1</h3>
                         </div>
@@ -65,13 +65,13 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                         <div>
                             <h3 style={contentStyle}>1</h3>
                         </div>
-                    </Carousel>
-                    {/* <SmallImageSlider
+                    </Carousel> */}
+                    <SmallImageSlider
                         items={advertData?.images || []}
                         maxItems={5}
                         showLabels={true}
                         imageClass='rounded-xl'
-                    /> */}
+                    />
                 </Col>
                 <Col span={12}>
                     <Typography.Title level={2}>

@@ -3,7 +3,7 @@ import React from "react";
 import { TChangeConfigProperty } from "../types";
 
 const BuildingNumber: React.FC<{
-    building_number?: string;
+    building_number?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     building_number,
@@ -13,7 +13,7 @@ const BuildingNumber: React.FC<{
         <>
             <p>Строительный номер</p>
             <Input
-                value={building_number}
+                value={building_number || undefined}
                 onChange={(event) => changeConfigProperty<string>('building_number', event.target.value)}
             />
         </>

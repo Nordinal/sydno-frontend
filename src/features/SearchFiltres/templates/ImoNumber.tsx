@@ -3,7 +3,7 @@ import { TChangeConfigProperty } from '../types';
 import { Input } from 'antd';
 
 const ImoNumber: React.FC<{
-    imo_number?: number;
+    imo_number?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     imo_number,
@@ -13,7 +13,7 @@ const ImoNumber: React.FC<{
         <>
             <p>Номер IMO</p>
             <Input
-                value={imo_number}
+                value={imo_number || undefined}
                 style={{width: '100%'}}
                 onChange={(e) => changeConfigProperty<string>('imo_number', e.target.value)}
             />

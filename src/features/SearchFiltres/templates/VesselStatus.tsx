@@ -4,7 +4,7 @@ import { Select } from 'antd';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 
 const VesselStatus: React.FC<{
-    vessel_status?: string;
+    vessel_status?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     vessel_status,

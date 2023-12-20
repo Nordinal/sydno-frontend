@@ -3,19 +3,21 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { Col, InputNumber, Row, Switch } from 'antd';
 
 const CargoTanks: React.FC<{
-    cargo_tanks?: boolean;
-    total_capacity_cargo_tanks?: number;
+    cargo_tanks?: boolean | null;
+    min_total_capacity_cargo_tanks?: number | null;
+    max_total_capacity_cargo_tanks?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     cargo_tanks,
-    total_capacity_cargo_tanks,
+    min_total_capacity_cargo_tanks,
+    max_total_capacity_cargo_tanks,
     changeConfigProperty
 }) => {
     const handleSwitchClick = (checked?: boolean) => {
-        // Если скрываем фильтр, то и значение лучше удалить
         if (!checked) {
-            changeConfigProperty<undefined>('cargo_tanks', undefined);
-            changeConfigProperty<undefined>('total_capacity_cargo_tanks', undefined);
+            changeConfigProperty<null>('min_total_capacity_cargo_tanks', null);
+            changeConfigProperty<null>('max_total_capacity_cargo_tanks', null);
+            changeConfigProperty<null>('cargo_tanks', null);
         } else {
             changeConfigProperty<boolean>('cargo_tanks', checked);
         }
@@ -27,7 +29,7 @@ const CargoTanks: React.FC<{
                 <p>Грузовой танк</p>
                 <Switch
                     onChange={handleSwitchClick}
-                    checked={cargo_tanks}
+                    checked={cargo_tanks || undefined}
                     size='small'
                 />
             </Col>
@@ -36,13 +38,19 @@ const CargoTanks: React.FC<{
                 <Col span={12}>
                     <p>Cуммарная вместимость</p>
                     <InputNumber
-                        value={total_capacity_cargo_tanks}
-                        min={0}
-                        max={Infinity}
-                        step={0.01}
-                        onChange={(value) => changeConfigProperty<number | undefined>('total_capacity_cargo_tanks', value || undefined)}
-                        formatter={(value) => value ? `${value} т ` : ''}
-                    /> 
+                        value={min_total_capacity_cargo_tanks}
+                        min={1}
+                        max={100000}
+                        onChange={(value) => changeConfigProperty<number | undefined>('min_total_capacity_cargo_tanks', value || undefined)}
+                        formatter={(value) => value ? `от ${value} т` : ''}
+                    />
+                    <InputNumber
+                        value={max_total_capacity_cargo_tanks}
+                        min={1}
+                        max={100000}
+                        onChange={(value) => changeConfigProperty<number | undefined>('max_total_capacity_cargo_tanks', value || undefined)}
+                        formatter={(value) => value ? `до ${value} т` : ''}
+                    />
                 </Col>
                 : <></>
             }

@@ -8,7 +8,7 @@ const OPTIONS = [
 ];
 
 const SuperSctructures: React.FC<{
-    superstructures?: boolean;
+    superstructures?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     superstructures,

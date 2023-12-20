@@ -8,7 +8,7 @@ const SELECT_OPTIONS = [
 ]
 
 const WasRegistered: React.FC<{
-    was_registered?: boolean;
+    was_registered?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     was_registered,

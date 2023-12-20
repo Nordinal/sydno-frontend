@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from "../ui/SearhFiltres";
 import { InputNumber } from "antd";
 
 const OverallWidth: React.FC<{
-    min_overall_width?: number;
-    max_overall_width?: number;
+    min_overall_width?: number | null;
+    max_overall_width?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_overall_width,

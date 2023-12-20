@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from "../ui/SearhFiltres";
 import { InputNumber } from "antd";
 
 const EnginePower: React.FC<{
-    min_power?: number;
-    max_power?: number;
+    min_power?: number | null;
+    max_power?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_power,

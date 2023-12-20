@@ -8,7 +8,7 @@ const OPTIONS = [
 ]
 
 const IcePower: React.FC<{
-    ice_power?: boolean;
+    ice_power?: boolean | null;
     changeConfigProperty: TChangeConfigProperty
 }> = ({
     ice_power,

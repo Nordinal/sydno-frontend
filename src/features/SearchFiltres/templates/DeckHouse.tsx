@@ -8,7 +8,7 @@ const OPTIONS = [
 ];
 
 const DeckHouse: React.FC<{
-    deckhouses?: boolean;
+    deckhouses?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     deckhouses,

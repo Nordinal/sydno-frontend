@@ -8,7 +8,7 @@ const OPTIONS = [
 ];
 
 const SeccondBottom: React.FC<{
-    seccond_bottom?: boolean;
+    seccond_bottom?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     seccond_bottom,

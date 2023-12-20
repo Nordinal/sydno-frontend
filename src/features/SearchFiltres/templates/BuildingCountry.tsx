@@ -3,7 +3,7 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 
 const BuildingCountry: React.FC<{
-    building_country?: string;
+    building_country?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     building_country,
@@ -13,10 +13,10 @@ const BuildingCountry: React.FC<{
     <>
       <p>Страна постройки</p>
       <CountriesAutoComplete
-          value={building_country}
+          value={building_country || undefined}
           style={{width: '100%'}}
           placeholder='Выберите страну'
-          onChange={(value) => changeConfigProperty<string>('building_country', value)}
+          onChange={(value: string) => changeConfigProperty<string>('building_country', value)}
           allowClear={true}
       />
     </>

@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { InputNumber } from 'antd';
 
 const FullDisplacement: React.FC<{
-    min_full_displacement?: number;
-    max_full_displacement?: number;
+    min_full_displacement?: number | null;
+    max_full_displacement?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_full_displacement,

@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from "../ui/SearhFiltres";
 import { InputNumber } from "antd";
 
 const OverallLength: React.FC<{
-    min_overall_length?: number;
-    max_overall_length?: number;
+    min_overall_length?: number | null;
+    max_overall_length?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_overall_length,

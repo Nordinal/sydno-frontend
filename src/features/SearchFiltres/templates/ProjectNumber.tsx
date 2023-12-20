@@ -3,7 +3,7 @@ import React from "react";
 import { TChangeConfigProperty } from "../types";
 
 const ProjectNumber: React.FC<{
-    project_number?: string;
+    project_number?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     project_number,
@@ -13,7 +13,7 @@ const ProjectNumber: React.FC<{
         <>
             <p>Номер проекта</p>
             <Input
-                value={project_number}
+                value={project_number || undefined}
                 onChange={(event) => changeConfigProperty<string>('project_number', event.target.value)}
             />
         </>

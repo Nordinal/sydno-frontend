@@ -6,7 +6,9 @@
 export default function (object: object) {
     let result = '';
     Object.entries(object).forEach(([key, value]) => {
-        result = result + '&' + key + '=' + value;
+        if (value !== undefined && value !== null) {
+            result = result + '&' + key + '=' + value;
+        }
     });
     return result.slice(1, result.length);
 }

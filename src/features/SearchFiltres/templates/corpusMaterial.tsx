@@ -1,21 +1,30 @@
 import { Select } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TChangeConfigProperty } from "../ui/SearhFiltres";
-
-const OPTIONS = [
-    { value: 'древесина', label: 'древесина' },
-    { value: 'сталь', label: 'сталь' },
-    { value: 'железобетонный', label: 'железобетонный' },
-    { value: 'композитный', label: 'композитный' },
-];
+import { instanceApi } from '@/shared/configs/instanceAxios';
 
 const CorpusMaterial: React.FC<{
-    material?: string;
+    material?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     material,
     changeConfigProperty
 }) => {
+        const [materialList, setMaterialList] = useState<{value: string, label: string}[]>();
+
+        useEffect(() => {
+            instanceApi.get('/api/selector?materials').then(res => {
+                const data = res.data.message
+                setMaterialList(
+                    Object.entries(data.materials as {[x in string]: string})
+                        .map(([value, label] : [string, string]) => ({
+                            value,
+                            label
+                        }))
+                );
+            });
+        }, []);
+
         return (
             <>
                 <p>Материал корпуса</p>
@@ -24,7 +33,7 @@ const CorpusMaterial: React.FC<{
                     value={material}
                     allowClear
                     onChange={(value) => changeConfigProperty<string>('material', value)}
-                    options={OPTIONS}
+                    options={materialList}
                 />
             </>
         );

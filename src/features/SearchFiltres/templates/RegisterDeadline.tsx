@@ -4,7 +4,7 @@ import { DatePicker, DatePickerProps } from 'antd';
 import moment from 'moment';
 
 const RegisterDeadline: React.FC<{
-    register_valid_until?: string;
+    register_valid_until?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     register_valid_until,

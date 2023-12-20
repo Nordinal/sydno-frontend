@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { InputNumber } from 'antd';
 
 const Deadweight: React.FC<{
-    min_deadweight?: number;
-    max_deadweight?: number;
+    min_deadweight?: number | null;
+    max_deadweight?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_deadweight,

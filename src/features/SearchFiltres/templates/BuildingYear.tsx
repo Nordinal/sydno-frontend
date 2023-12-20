@@ -4,7 +4,7 @@ import { DatePicker, DatePickerProps } from 'antd';
 import moment from 'moment';
 
 const BuildingYear: React.FC<{
-    building_year?: string;
+    building_year?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     building_year,

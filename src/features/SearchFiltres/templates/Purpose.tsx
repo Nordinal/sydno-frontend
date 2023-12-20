@@ -3,7 +3,7 @@ import { Input } from 'antd';
 import { TChangeConfigProperty } from "../ui/SearhFiltres";
 
 const Purpose: React.FC<{
-    purpose?: string;
+    purpose?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     purpose,
@@ -13,7 +13,7 @@ const Purpose: React.FC<{
         <>
             <p>Назначение</p>
             <Input 
-                value={purpose}
+                value={purpose || undefined}
                 onChange={(event) => changeConfigProperty<string>('purpose', event.target.value)}
             />
         </>

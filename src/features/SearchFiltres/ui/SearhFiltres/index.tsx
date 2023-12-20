@@ -42,6 +42,7 @@ import {
     BuildingNumber,
 } from '../../templates';
 import './styles.css';
+import { initialFilterOptions } from '../../utils';
 
 export interface ISearchFiltresProps {
     filterOptions: TFilterOptions;
@@ -58,7 +59,10 @@ export type TChangeConfigProperty = <T>(name: string, value: T | undefined) => v
  * @returns 
  */
 const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindButtonClick }) => {
-    const [filterConfig, setFilterConfig] = useState<TFilterOptions>(filterOptions);
+    const [filterConfig, setFilterConfig] = useState<TFilterOptions>({
+        ...initialFilterOptions,
+        ...filterOptions,
+    });
     const [showHiddenBlock, setShowHiddenBlock] = useState<boolean>(false);
 
     const onButtonClickHandler = () => {
@@ -66,32 +70,20 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
     }
 
     const resetFiltres = () => {
-        setFilterConfig({});
+        setFilterConfig(initialFilterOptions);
     }
 
     const toggleShowAll = () => {
         setShowHiddenBlock(!showHiddenBlock);
     }
 
-    /**
-     * Функция для изменения основного конфига, если вторым значением передать undefined, то свойство удалиться из конфига
-     * @param name название фильтра
-     * @param value новое значение
-     */
     const changeConfigProperty: TChangeConfigProperty = (name, value) => {
-        if (value === undefined) {
-            //@ts-ignore
-            delete filterConfig[name];
+        const newValue = (value === undefined || value === null) ? null : value;
 
-            setFilterConfig({
-                ...filterConfig,
-            });
-        } else {
-            setFilterConfig({
-                ...filterConfig,
-                [name]: value
-            });
-        }
+        setFilterConfig((prevValue) => ({
+            ...prevValue,
+            [name]: newValue
+        }));
     }
 
     return (
@@ -272,7 +264,8 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                     >
                         <CargoTanks
                             cargo_tanks={filterConfig.cargo_tanks}
-                            total_capacity_cargo_tanks={filterConfig.total_capacity_cargo_tanks}
+                            min_total_capacity_cargo_tanks={filterConfig.min_total_capacity_cargo_tanks}
+                            max_total_capacity_cargo_tanks={filterConfig.max_total_capacity_cargo_tanks}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
@@ -282,7 +275,8 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                     >
                         <FillingTanks
                             filling_tanks={filterConfig.filling_tanks}
-                            total_capacity_filling_tanks={filterConfig.total_capacity_filling_tanks}
+                            min_total_capacity_filling_tanks={filterConfig.min_total_capacity_filling_tanks}
+                            max_total_capacity_filling_tanks={filterConfig.max_total_capacity_filling_tanks}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
@@ -387,15 +381,6 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                     >
                         <SuperSctructures
                             superstructures={filterConfig.superstructures}
-                            changeConfigProperty={changeConfigProperty}
-                        />
-                    </Col>
-                    <Col
-                        xs={24}              
-                        sm={6}
-                    >
-                        <DeckHouse
-                            deckhouses={filterConfig.deckhouses}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>

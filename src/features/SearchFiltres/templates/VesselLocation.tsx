@@ -5,8 +5,8 @@ import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
 
 const VesselLocation: React.FC<{
-    vessel_location_country?: string;
-    vessel_location_city?: string;
+    vessel_location_country?: string | null;
+    vessel_location_city?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     vessel_location_country,
@@ -20,17 +20,17 @@ const VesselLocation: React.FC<{
             <Col span={12}>
                 <p>страна</p>
                 <CountriesAutoComplete
-                    value={vessel_location_country}
+                    value={vessel_location_country || undefined}
                     style={{width: '100%'}}
                     placeholder='Выберите страну'
-                    onChange={(value) => changeConfigProperty<string>('vessel_location_country', value)}
+                    onChange={(value: string) => changeConfigProperty<string>('vessel_location_country', value)}
                     allowClear={true}
                 />
             </Col>
             <Col span={12}>
                 <p>город</p>
                 <RegionAutoComplete
-                    value={vessel_location_city}
+                    value={vessel_location_city || undefined}
                     style={{width: '100%'}}
                     allowClear={true}
                     onChange={({city}) => changeConfigProperty<string>('vessel_location_city', city)}

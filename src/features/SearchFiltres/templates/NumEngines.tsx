@@ -3,7 +3,7 @@ import { TChangeConfigProperty } from "../ui/SearhFiltres";
 import { InputNumber } from "antd";
 
 const NumEngines: React.FC<{
-    num_engines?: number;
+    num_engines?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     num_engines,

@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { InputNumber } from 'antd';
 
 const GrossTonnage: React.FC<{
-    min_gross_tonnage?: number;
-    max_gross_tonnage?: number;
+    min_gross_tonnage?: number | null;
+    max_gross_tonnage?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_gross_tonnage,

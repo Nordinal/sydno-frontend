@@ -3,8 +3,8 @@ import { InputNumber } from 'antd';
 import { TChangeConfigProperty } from '../ui/SearhFiltres';
 
 const MaxCarrying: React.FC<{
-    min_carrying?: number;
-    max_carrying?: number;
+    min_carrying?: number | null;
+    max_carrying?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_carrying,

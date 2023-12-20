@@ -8,7 +8,7 @@ const OPTIONS = [
 ];
 
 const SecondSides: React.FC<{
-    second_sides?: boolean;
+    second_sides?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     second_sides,

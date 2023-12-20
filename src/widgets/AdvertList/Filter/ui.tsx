@@ -9,7 +9,14 @@ const Filter: React.FC = () => {
     const searchParams = useSearchParams();
 
     const changeUrlByOptions = (filterParams: object) => {
-        router.push(location.pathname + '?' + convertObjectToPathname(filterParams));
+        const currentSearchParams = getUrlQueryParams(searchParams);
+
+        const newSearchParams = {
+            ...currentSearchParams,
+            ...filterParams
+        }
+
+        router.push(location.pathname + '?' + convertObjectToPathname(newSearchParams), { scroll: false });
     }
 
     return (

@@ -4,8 +4,8 @@ import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { Col, Input, Row } from 'antd';
 
 const PortAdress: React.FC<{
-    port_adress_country?: string;
-    port_adress_city?: string;
+    port_adress_country?: string | null;
+    port_adress_city?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     port_adress_country,
@@ -19,10 +19,10 @@ const PortAdress: React.FC<{
             <Col span={12}>
                 <p>страна</p>
                 <CountriesAutoComplete
-                    value={port_adress_country}
+                    value={port_adress_country || undefined}
                     style={{width: '100%'}}
                     placeholder='Выберите страну'
-                    onChange={(value) => changeConfigProperty<string>('port_adress_country', value)}
+                    onChange={(value: string) => changeConfigProperty<string>('port_adress_country', value)}
                     allowClear={true}
                 />
             </Col>
@@ -30,7 +30,7 @@ const PortAdress: React.FC<{
                 <p>город</p>
                 <Input
                     style={{width: '100%'}}
-                    value={port_adress_city}
+                    value={port_adress_city || undefined}
                     onChange={(event) => changeConfigProperty<string>('port_adress_city', event.target.value)}
                 />
             </Col>

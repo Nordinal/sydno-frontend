@@ -3,8 +3,8 @@ import { TChangeConfigProperty } from '../ui/SearhFiltres';
 import { InputNumber } from 'antd';
 
 const BoardHeight: React.FC<{
-    min_board_height?: number;
-    max_board_height?: number;
+    min_board_height?: number | null;
+    max_board_height?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     min_board_height,
