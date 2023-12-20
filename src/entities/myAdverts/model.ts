@@ -16,7 +16,6 @@ export interface IMyAdvertsData {
 
 export interface IMyAdvertsModel extends IMyAdvertsData {
     getInfo: () => Promise<boolean>;
-    getMyDrafts: (page?: number) => Promise<object>;
 };
 
 const initState: IMyAdvertsData = {
@@ -37,16 +36,6 @@ export const useMyAdverts = create<IMyAdvertsModel>((set, get) => ({
         catch (e) {
             if(e instanceof AxiosError) set({error: e});
             return false;
-        }
-    },
-    getMyDrafts: async (page) => {
-        try {
-            const res = await instanceApi.get(`/api/myadverts/draft${page ? '?page=' + page : ''}`);
-            return res.data;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
-            return {};
         }
     }
 }));
