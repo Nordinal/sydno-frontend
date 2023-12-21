@@ -76,9 +76,9 @@ const ContentModal = ({
         resetError();
     }
 
-    if(mode === 'singin') return <SingInForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
-    if(mode === 'singout') return <SingOutForm handleCancel={handleCancel} errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode}/>
-    if(mode === 'forgotpass') return <ForgotPasswordForm errorMessage={error?.response?.data?.message} onToggleForm={onChangeMode} />
+    if(mode === 'singin') return <SingInForm errorMessage={(error?.response?.data as {message: string})?.message} onToggleForm={onChangeMode}/>
+    if(mode === 'singout') return <SingOutForm handleCancel={handleCancel} errorMessage={(error?.response?.data as {message: string})?.message} onToggleForm={onChangeMode}/>
+    if(mode === 'forgotpass') return <ForgotPasswordForm errorMessage={(error?.response?.data as {message: string})?.message} onToggleForm={onChangeMode} />
     return null;
 }
 

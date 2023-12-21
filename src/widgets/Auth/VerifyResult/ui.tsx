@@ -41,7 +41,7 @@ export const VerifyResult = (props: {
             title="Ой, что-то пошло не так!"
             subTitle="Проверьте что-нибудь"
             extra={[
-                <Link href='/'><Button type='primary'>На главную</Button></Link>
+                <div key="unique"><Link href='/'><Button type='primary'>На главную</Button></Link></div>
             ]}
         />
     );

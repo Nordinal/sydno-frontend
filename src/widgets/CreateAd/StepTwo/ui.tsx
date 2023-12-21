@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
 import { instanceApi } from '@/shared/configs/instanceAxios';
-import { ICreateAdStepTwo, useCreateAd } from '@/entities/createAd/model';
+import { ICreateAdStepThree, ICreateAdStepTwo, useCreateAd } from '@/entities/createAd/model';
 import moment, { Moment } from 'moment';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -18,7 +18,7 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
     const [vesseltypes, setVesseltypes] = useState<{value: string, label: string}[]>();
     const [exploitationTypes, setExploitationTypes] = useState<{value: string, label: string}[]>();
 
-    const _onFinish = (values) => {
+    const _onFinish = (values: any) => {
         const result = {...values}
         if(values.register_valid_until)
             result.register_valid_until = values.register_valid_until.format().split('T')[0]
