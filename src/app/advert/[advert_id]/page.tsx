@@ -72,7 +72,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                         </div>
                     </Carousel> */}
                     <SmallImageSlider
-                        items={advertData?.images || []}
+                        items={(advertData as any)?.images || []}
                         maxItems={5}
                         showLabels={true}
                         imageClass='rounded-xl'
@@ -83,7 +83,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                         <Price
                             locale={PRICE_LOCALE}
                             options={NUMBER_FORMAT_OPTIONS}
-                            price={advertData?.price || 0}
+                            price={(advertData as any)?.price || 0}
                         />
                     </Typography.Title>
                 </Col>

@@ -36,7 +36,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
     const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
-    const { addToFavorites } = useAdvert(useShallow(state => ({ addToFavorites: state.addToFavorites })));
+    const { addToFavorites } = useAdvert(useShallow(state => ({ addToFavorites: (state as any).addToFavorites })));
     const isTouch = isTouchDevice();
 
     const showNumberBtnHandler = (e: SyntheticEvent) => {

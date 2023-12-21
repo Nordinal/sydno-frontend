@@ -30,10 +30,10 @@ export const PortAdress: React.FC<{
             <Col span={12}>
                 <p>город</p>
                 <RegionAutoComplete
-                    value={port_adress_city || undefined}
+                    value={(port_adress_city as any) || undefined}
                     style={{width: '100%'}}
                     allowClear={true}
-                    onChange={({city}) => changeConfigProperty<string>('port_adress_city', city)}
+                    onChange={({city}: {city: any}) => changeConfigProperty<string>('port_adress_city', city)}
                 />
             </Col>
         </Row>

@@ -30,10 +30,10 @@ export const VesselLocation: React.FC<{
             <Col span={12}>
                 <p>город</p>
                 <RegionAutoComplete
-                    value={vessel_location_city || undefined}
+                    value={vessel_location_city as any || undefined}
                     style={{width: '100%'}}
                     allowClear={true}
-                    onChange={({city}) => changeConfigProperty<string>('vessel_location_city', city)}
+                    onChange={({city}: any) => changeConfigProperty<string>('vessel_location_city', city)}
                 />
             </Col>
         </Row>

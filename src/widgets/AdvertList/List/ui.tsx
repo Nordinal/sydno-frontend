@@ -18,7 +18,7 @@ const List: React.FC = () => {
     const paginationChange = (page: number) => {
         const params = getUrlQueryParams(searchParams);
 
-        params.page = page;
+        (params as any).page = page;
 
         router.push(location.pathname + '?' + convertObjectToPathname(params), {scroll: false});
     }
@@ -27,7 +27,7 @@ const List: React.FC = () => {
         <>
             <BasicList
                 action="/api/alladverts"
-                filters={getUrlQueryParams(searchParams)}
+                filters={getUrlQueryParams(searchParams) as any}
                 pagination={{
                     onChange: paginationChange
                 }}

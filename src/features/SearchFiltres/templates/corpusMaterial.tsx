@@ -17,7 +17,7 @@ export const CorpusMaterial: React.FC<{
                 style={{ width: '100%' }}
                 value={material}
                 allowClear
-                onChange={(value) => changeConfigProperty<string>('material', value)}
+                onChange={(value) => changeConfigProperty<string>('material', value as any)}
             />
         </>
     );

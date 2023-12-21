@@ -24,7 +24,7 @@ export const CountriesAutoComplete = ({
 }: {
     placeholder?: string,
     value?: string,
-    onChange?: Function,
+    onChange?: any,
     style?: CSSProperties,
     allowClear?: boolean
 }) => {
