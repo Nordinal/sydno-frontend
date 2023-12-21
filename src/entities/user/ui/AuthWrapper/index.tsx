@@ -28,7 +28,7 @@ export const AuthWrapper = ({children, invert}: {children: React.ReactNode, inve
                 status="warning"
                 title="Необходимо авторизоваться на сайте"
                 extra={[
-                    <SingButton caption="Вход" type="primary" key='sing'/>
+                    <div key="unique"><SingButton caption="Вход" type="primary" key='sing'/></div>
                 ]}
             />
         );
@@ -39,7 +39,7 @@ export const AuthWrapper = ({children, invert}: {children: React.ReactNode, inve
                 status="warning"
                 title="Вы уже авторизованы на сайте"
                 extra={[
-                    <Link href='/'><Button type='primary'>На главную</Button></Link>
+                    <div key="unique"><Link href='/'><Button type='primary'>На главную</Button></Link></div>
                 ]}
             />
         );

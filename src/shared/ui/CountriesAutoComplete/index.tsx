@@ -1,7 +1,6 @@
 import { AutoComplete, Select } from 'antd';
 import countriesJson from './countries.json';
-import { useState } from 'react';
-import { CSSProperties } from '@ant-design/cssinjs/lib/hooks/useStyleRegister';
+import { CSSProperties, useState } from 'react';
 
 const countriesSelectOptions = Object.entries(countriesJson.data).map(item => {
     return ({

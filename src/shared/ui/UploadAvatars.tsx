@@ -15,7 +15,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
 
 export const UploadAvatars: React.FC<{
   onChange: (images: UploadFile<any>[]) => void,
-  defaultImages: string[]
+  defaultImages?: any[]
 }> = ({onChange, defaultImages}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
