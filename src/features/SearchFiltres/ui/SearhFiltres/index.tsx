@@ -28,10 +28,8 @@ import {
     SecondSides,
     MaxCarrying,
     SuperSctructures,
-    DeckHouse,
     PassangersAvialable,
     TechnicalDocumentation,
-    FillingTanks,
     Type,
     Purpose,
     Class,
@@ -40,16 +38,19 @@ import {
     OverallWidth,
     ProjectNumber,
     BuildingNumber,
+    Flag,
+    SpeedInBallast,
+    SpeedInLoad,
+    NumAdditionalEngines
 } from '../../templates';
 import './styles.css';
 import { initialFilterOptions } from '../../utils';
+import { TChangeConfigProperty } from '../../types';
 
 export interface ISearchFiltresProps {
     filterOptions: TFilterOptions;
     onFindButtonClick: (filterOptions: TFilterOptions) => void;
 }
-
-export type TChangeConfigProperty = <T>(name: string, value: T | undefined) => void;
 
 /**
  * Фича для изменения параметров фильтров.
@@ -78,7 +79,7 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
     }
 
     const changeConfigProperty: TChangeConfigProperty = (name, value) => {
-        const newValue = (value === undefined || value === null) ? null : value;
+        const newValue = value === undefined ? null : value;
 
         setFilterConfig((prevValue) => ({
             ...prevValue,
@@ -158,6 +159,15 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                     <GrossTonnage
                         min_gross_tonnage={filterConfig.min_gross_tonnage}
                         max_gross_tonnage={filterConfig.max_gross_tonnage}
+                        changeConfigProperty={changeConfigProperty}
+                    />
+                </Col>
+                <Col
+                    xs={24}              
+                    sm={6}
+                >
+                    <Flag
+                        flag={filterConfig.flag}
                         changeConfigProperty={changeConfigProperty}
                     />
                 </Col>
@@ -273,10 +283,9 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                         xs={24}              
                         sm={6}
                     >
-                        <FillingTanks
-                            filling_tanks={filterConfig.filling_tanks}
-                            min_total_capacity_filling_tanks={filterConfig.min_total_capacity_filling_tanks}
-                            max_total_capacity_filling_tanks={filterConfig.max_total_capacity_filling_tanks}
+                        <NumEngines
+                            min_num_engines={filterConfig.min_num_engines}
+                            max_num_engines={filterConfig.max_num_engines}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
@@ -284,8 +293,9 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                         xs={24}              
                         sm={6}
                     >
-                        <NumEngines
-                            num_engines={filterConfig.num_engines}
+                        <NumAdditionalEngines
+                            min_num_additional_engines={filterConfig.min_num_additional_engines}
+                            max_num_additional_engines={filterConfig.max_num_additional_engines}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>
@@ -296,6 +306,26 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                         <EnginePower
                             min_power={filterConfig.min_power}
                             max_power={filterConfig.max_power}
+                            changeConfigProperty={changeConfigProperty}
+                        />
+                    </Col>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <SpeedInBallast
+                            min_maximum_speed_in_ballast={filterConfig.min_maximum_speed_in_ballast}
+                            max_maximum_speed_in_ballast={filterConfig.max_maximum_speed_in_ballast}
+                            changeConfigProperty={changeConfigProperty}
+                        />
+                    </Col>
+                    <Col
+                        xs={24}              
+                        sm={6}
+                    >
+                        <SpeedInLoad
+                            min_maximum_speed_in_load={filterConfig.min_maximum_speed_in_load}
+                            max_maximum_speed_in_load={filterConfig.max_maximum_speed_in_load}
                             changeConfigProperty={changeConfigProperty}
                         />
                     </Col>

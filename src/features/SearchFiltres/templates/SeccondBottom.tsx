@@ -1,5 +1,5 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
@@ -7,7 +7,7 @@ const OPTIONS = [
     {value: false, label: 'нет'}
 ];
 
-const SeccondBottom: React.FC<{
+export const SeccondBottom: React.FC<{
     seccond_bottom?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -27,5 +27,3 @@ const SeccondBottom: React.FC<{
         </div>
     )
 }
-
-export default SeccondBottom;

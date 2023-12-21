@@ -1,8 +1,8 @@
 import React from 'react';
 import { Input } from 'antd';
-import { TChangeConfigProperty } from "../ui/SearhFiltres";
+import { TChangeConfigProperty } from "../types";
 
-const Class: React.FC<{
+export const Class: React.FC<{
     class_formula?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -19,5 +19,3 @@ const Class: React.FC<{
         </>
     )
 }
-
-export default Class;

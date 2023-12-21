@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 
-const VesselStatus: React.FC<{
+export const VesselStatus: React.FC<{
     vessel_status?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -38,5 +38,3 @@ const VesselStatus: React.FC<{
         </>
     )
 }
-
-export default VesselStatus;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { DatePicker, DatePickerProps } from 'antd';
 import moment from 'moment';
 
-const RegisterDeadline: React.FC<{
+export const RegisterDeadline: React.FC<{
     register_valid_until?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -29,5 +29,3 @@ const RegisterDeadline: React.FC<{
     </>
   )
 }
-
-export default RegisterDeadline;

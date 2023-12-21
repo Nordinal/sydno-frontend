@@ -1,8 +1,8 @@
 import React from 'react';
 import { Input } from 'antd';
-import { TChangeConfigProperty } from "../ui/SearhFiltres";
+import { TChangeConfigProperty } from "../types";
 
-const Purpose: React.FC<{
+export const Purpose: React.FC<{
     purpose?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -19,5 +19,3 @@ const Purpose: React.FC<{
         </>
     )
 }
-
-export default Purpose;

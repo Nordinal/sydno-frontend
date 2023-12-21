@@ -2,7 +2,7 @@ import { Input } from "antd";
 import React from "react";
 import { TChangeConfigProperty } from "../types";
 
-const ProjectNumber: React.FC<{
+export const ProjectNumber: React.FC<{
     project_number?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -19,5 +19,3 @@ const ProjectNumber: React.FC<{
         </>
     );
 }
-
-export default ProjectNumber;

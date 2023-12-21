@@ -2,7 +2,7 @@ import { Input } from "antd";
 import React from "react";
 import { TChangeConfigProperty } from "../types";
 
-const BuildingNumber: React.FC<{
+export const BuildingNumber: React.FC<{
     building_number?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -19,5 +19,3 @@ const BuildingNumber: React.FC<{
         </>
     );
 }
-
-export default BuildingNumber;

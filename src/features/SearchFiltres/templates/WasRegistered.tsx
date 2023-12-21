@@ -1,13 +1,13 @@
 import React from 'react';
 import { Select } from 'antd';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 
 const SELECT_OPTIONS = [
     {value: true, label: 'да'},
     {value: false, label: 'нет'},
 ]
 
-const WasRegistered: React.FC<{
+export const WasRegistered: React.FC<{
     was_registered?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -27,5 +27,3 @@ const WasRegistered: React.FC<{
     </>
   )
 }
-
-export default WasRegistered;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { DatePicker, DatePickerProps } from 'antd';
 import moment from 'moment';
 
-const BuildingYear: React.FC<{
+export const BuildingYear: React.FC<{
     building_year?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -28,5 +28,3 @@ const BuildingYear: React.FC<{
     </>
   )
 }
-
-export default BuildingYear;

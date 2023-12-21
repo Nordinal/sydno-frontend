@@ -1,5 +1,5 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
@@ -7,7 +7,7 @@ const OPTIONS = [
     {value: false, label: 'нет'}
 ];
 
-const SuperSctructures: React.FC<{
+export const SuperSctructures: React.FC<{
     superstructures?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -27,5 +27,3 @@ const SuperSctructures: React.FC<{
         </div>
     )
 }
-
-export default SuperSctructures;

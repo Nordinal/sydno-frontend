@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 
-const Type: React.FC<{
+export const Type: React.FC<{
     type?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -38,5 +38,3 @@ const Type: React.FC<{
         </>
     )
 }
-
-export default Type;

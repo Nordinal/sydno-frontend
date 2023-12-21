@@ -2,7 +2,7 @@ import React from 'react';
 import { TChangeConfigProperty } from '../types';
 import { Input } from 'antd';
 
-const ImoNumber: React.FC<{
+export const ImoNumber: React.FC<{
     imo_number?: number | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -20,5 +20,3 @@ const ImoNumber: React.FC<{
         </>
     )
 }
-
-export default ImoNumber;

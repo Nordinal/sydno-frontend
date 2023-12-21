@@ -1,8 +1,8 @@
 import React from "react";
-import { TChangeConfigProperty } from "../ui/SearhFiltres";
-import { InputNumber } from "antd";
+import { TChangeConfigProperty } from "../types";
+import { Col, InputNumber, Row } from "antd";
 
-const OverallWidth: React.FC<{
+export const OverallWidth: React.FC<{
     min_overall_width?: number | null;
     max_overall_width?: number | null;
     changeConfigProperty: TChangeConfigProperty;
@@ -14,22 +14,28 @@ const OverallWidth: React.FC<{
     return (
         <>
             <p>Ширина судна</p>
-            <InputNumber
-                value={min_overall_width}
-                min={1}
-                max={100000}
-                onChange={(value) => changeConfigProperty<number | undefined>('min_overall_width', value || undefined)}
-                formatter={(value) => value ? `от ${value} м` : ''}
-            />
-            <InputNumber
-                value={max_overall_width}
-                min={1}
-                max={100000}
-                onChange={(value) => changeConfigProperty<number | undefined>('max_overall_width', value || undefined)}
-                formatter={(value) => value ? `до ${value} м` : ''}
-            />
+            <Row>
+                <Col span={12}>
+                    <InputNumber
+                        value={min_overall_width}
+                        min={1}
+                        max={100000}
+                        style={{width: '100%'}}
+                        onChange={(value) => changeConfigProperty<number | undefined>('min_overall_width', value || undefined)}
+                        formatter={(value) => value ? `от ${value} м` : ''}
+                    />
+                </Col>
+                <Col span={12}>
+                    <InputNumber
+                        value={max_overall_width}
+                        min={1}
+                        max={100000}
+                        style={{width: '100%'}}
+                        onChange={(value) => changeConfigProperty<number | undefined>('max_overall_width', value || undefined)}
+                        formatter={(value) => value ? `до ${value} м` : ''}
+                    />
+                </Col>
+            </Row>
         </>
     );
 }
-
-export default OverallWidth;

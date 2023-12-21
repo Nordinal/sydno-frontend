@@ -1,8 +1,8 @@
 import React from 'react';
-import { InputNumber } from 'antd';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { Col, InputNumber, Row } from 'antd';
+import { TChangeConfigProperty } from '../types';
 
-const MaxCarrying: React.FC<{
+export const MaxCarrying: React.FC<{
     min_carrying?: number | null;
     max_carrying?: number | null;
     changeConfigProperty: TChangeConfigProperty;
@@ -14,24 +14,30 @@ const MaxCarrying: React.FC<{
     return (
         <div>
             <p>Грузоподъемность</p>
-            <InputNumber
-                value={min_carrying}
-                min={0}
-                step={0.01}
-                max={Infinity}
-                onChange={(value) => changeConfigProperty<number | undefined>('min_carrying', value || undefined)}
-                formatter={(value) => value ? `от ${value} т` : ''}
-            />
-            <InputNumber
-                value={max_carrying}
-                min={0}
-                step={0.01}
-                max={Infinity}
-                onChange={(value) => changeConfigProperty<number | undefined>('max_carrying', value || undefined)}
-                formatter={(value) => value ? `до ${value} т` : ''}
-            />
+            <Row>
+                <Col span={12}>
+                    <InputNumber
+                        value={min_carrying}
+                        min={0}
+                        step={0.01}
+                        max={Infinity}
+                        style={{width: '100%'}}
+                        onChange={(value) => changeConfigProperty<number | undefined>('min_carrying', value || undefined)}
+                        formatter={(value) => value ? `от ${value} т` : ''}
+                    />
+                </Col>
+                <Col span={12}>
+                    <InputNumber
+                        value={max_carrying}
+                        min={0}
+                        step={0.01}
+                        max={Infinity}
+                        style={{width: '100%'}}
+                        onChange={(value) => changeConfigProperty<number | undefined>('max_carrying', value || undefined)}
+                        formatter={(value) => value ? `до ${value} т` : ''}
+                    />
+                </Col>
+            </Row>
         </div>
     );
 }
-
-export default MaxCarrying;

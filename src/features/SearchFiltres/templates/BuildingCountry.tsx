@@ -1,8 +1,8 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 
-const BuildingCountry: React.FC<{
+export const BuildingCountry: React.FC<{
     building_country?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
@@ -22,5 +22,3 @@ const BuildingCountry: React.FC<{
     </>
   )
 }
-
-export default BuildingCountry;

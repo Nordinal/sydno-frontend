@@ -1,5 +1,3 @@
-import { IntRange } from "@/shared/types"
-
 /**
  * Юридические опции
  */
@@ -181,9 +179,24 @@ export interface ITechnicalFilterOptions {
     max_gross_tonnage?: number | null;
 
     /**
-     * Количество главных двигателей 1 - 8
+     * Минимальное количество вспомогательных двигателей
      */
-    num_engines?: IntRange<1, 9> | null;
+    min_num_additional_engines?: number | null;
+
+    /**
+     * Максимальное количество вспомогательных двигателей
+     */
+    max_num_additional_engines?: number | null;
+
+    /**
+     * Минимальное количество главных двигателей 1 - 8
+     */
+    min_num_engines?: number | null;
+
+    /**
+     * Максимальное количество главных двигателей 1 - 8
+     */
+    max_num_engines?: number | null;
 
     /**
      * Мощность двигателей 0
@@ -229,21 +242,6 @@ export interface ITechnicalFilterOptions {
      * Максимальная суммарная вместимость если Грузовой танк
      */
     max_total_capacity_cargo_tanks?: number | null;
-
-    /**
-     * Наливные танки
-     */
-    filling_tanks?: boolean | null;
-
-    /**
-     * Минимальная суммарная вместимость если наливной танк
-     */
-    min_total_capacity_filling_tanks?: number | null;
-
-    /**
-     * Максимальная суммарная вместимость если наливной танк
-     */
-    max_total_capacity_filling_tanks?: number | null;
 
     /**
      * Второе дно

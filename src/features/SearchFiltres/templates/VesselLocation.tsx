@@ -1,10 +1,10 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Col, Input, Row } from 'antd';
 import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
 
-const VesselLocation: React.FC<{
+export const VesselLocation: React.FC<{
     vessel_location_country?: string | null;
     vessel_location_city?: string | null;
     changeConfigProperty: TChangeConfigProperty;
@@ -35,15 +35,8 @@ const VesselLocation: React.FC<{
                     allowClear={true}
                     onChange={({city}) => changeConfigProperty<string>('vessel_location_city', city)}
                 />
-                {/* <Input
-                    style={{width: '100%'}}
-                    value={vessel_location_city}
-                    onChange={(event) => changeConfigProperty<string>('vessel_location_city', event.target.value)}
-                /> */}
             </Col>
         </Row>
     </>
   )
 }
-
-export default VesselLocation;

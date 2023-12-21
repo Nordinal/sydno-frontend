@@ -1,8 +1,8 @@
 import React from "react";
-import { TChangeConfigProperty } from "../ui/SearhFiltres";
-import { InputNumber } from "antd";
+import { TChangeConfigProperty } from "../types";
+import { Col, InputNumber, Row } from "antd";
 
-const EnginePower: React.FC<{
+export const EnginePower: React.FC<{
     min_power?: number | null;
     max_power?: number | null;
     changeConfigProperty: TChangeConfigProperty;
@@ -14,22 +14,28 @@ const EnginePower: React.FC<{
     return (
         <>
             <p>Мощность двигателей</p>
-            <InputNumber
-                value={min_power}
-                min={1}
-                max={100000}
-                onChange={(value) => changeConfigProperty<number | undefined>('min_power', value || undefined)}
-                formatter={(value) => value ? `от ${value} кВт` : ''}
-            />
-            <InputNumber
-                value={max_power}
-                min={1}
-                max={100000}
-                onChange={(value) => changeConfigProperty<number | undefined>('max_power', value || undefined)}
-                formatter={(value) => value ? `до ${value} кВт` : ''}
-            />
+            <Row>
+                <Col span={12}>
+                    <InputNumber
+                        value={min_power}
+                        min={1}
+                        max={100000}
+                        style={{width: '100%'}}
+                        onChange={(value) => changeConfigProperty<number | undefined>('min_power', value || undefined)}
+                        formatter={(value) => value ? `от ${value} кВт` : ''}
+                    />
+                </Col>
+                <Col span={12}>
+                    <InputNumber
+                        value={max_power}
+                        min={1}
+                        max={100000}
+                        style={{width: '100%'}}
+                        onChange={(value) => changeConfigProperty<number | undefined>('max_power', value || undefined)}
+                        formatter={(value) => value ? `до ${value} кВт` : ''}
+                    />
+                </Col>
+            </Row>
         </>
     );
 }
-
-export default EnginePower;

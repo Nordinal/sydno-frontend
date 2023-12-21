@@ -1,8 +1,8 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Col, InputNumber, Row, Switch } from 'antd';
 
-const CargoTanks: React.FC<{
+export const CargoTanks: React.FC<{
     cargo_tanks?: boolean | null;
     min_total_capacity_cargo_tanks?: number | null;
     max_total_capacity_cargo_tanks?: number | null;
@@ -57,5 +57,3 @@ const CargoTanks: React.FC<{
         </Row>
     );
 }
-
-export default CargoTanks;

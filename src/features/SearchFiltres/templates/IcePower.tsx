@@ -1,5 +1,5 @@
 import React from 'react';
-import { TChangeConfigProperty } from '../ui/SearhFiltres';
+import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
@@ -7,7 +7,7 @@ const OPTIONS = [
   {value: false, label: 'Нет'},
 ]
 
-const IcePower: React.FC<{
+export const IcePower: React.FC<{
     ice_power?: boolean | null;
     changeConfigProperty: TChangeConfigProperty
 }> = ({
@@ -27,5 +27,3 @@ const IcePower: React.FC<{
     </>
   )
 }
-
-export default IcePower;
