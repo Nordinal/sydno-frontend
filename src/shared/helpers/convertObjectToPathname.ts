@@ -3,10 +3,13 @@
  * @param object 
  * @returns 
  */
-export default function (object: object) {
-    let result = '';
-    Object.entries(object).forEach(([key, value]) => {
-        result = result + '&' + key + '=' + value;
-    });
-    return result.slice(1, result.length);
+export function convertObjectToPathname(object: object) {
+    return Object.entries(object)
+        .filter(([_, value]) => {
+            return value !== undefined && value !== null;
+        })
+        .map(([key, value]) => {
+            return `${key}=${value}`
+        })
+        .join('&');
 }

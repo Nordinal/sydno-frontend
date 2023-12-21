@@ -6,7 +6,7 @@ import { CSSProperties, useEffect, useState } from "react";
 const TOKEN = 'ee0b1f2261bdb7bf2866d601059950bdb1e39792';
 
 
-export const RegionAutoComplete = ({placeholder, value, onChange, style}: {placeholder?: string, value?: {value: string}, onChange?: Function, style?: CSSProperties}) => {
+export const RegionAutoComplete = ({placeholder, value, onChange, style}: {placeholder?: string, value?: {value: string}, onChange?: Function, style?: CSSProperties, , allowClear?: boolean}) => {
     const [options, setOptions] = useState<{value: string, data: {
         city: string,
         country: string,
@@ -70,6 +70,7 @@ export const RegionAutoComplete = ({placeholder, value, onChange, style}: {place
             showSearch
             value={value?.value}
             style={style}
+            allowClear={allowClear}
             filterOption={false}
             onChange={handleChange}
             onSearch={onSearch}

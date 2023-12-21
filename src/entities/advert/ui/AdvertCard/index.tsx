@@ -6,6 +6,8 @@ import isTouchDevice from "@/shared/helpers/isTouchDevice";
 import { IAdvertListItem } from "../../types/main";
 import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
+import { HeartOutlined } from '@ant-design/icons';
+import Price from "@/shared/ui/Price";
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
@@ -20,10 +22,20 @@ const NUMBER_FORMAT_OPTIONS = {
     currency: 'RUB'
 }
 
-const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone, addres, images, isFavorite, id }) => {
+const AdvertCard: React.FC<IAdvertCard> = ({
+    onClick,
+    header, 
+    price,
+    advert_legal_information,
+    advert_technical_information,
+    description,
+    phone_number,
+    images,
+    id
+}) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
-    const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(isFavorite || false);
+    const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
     const { addToFavorites } = useAdvert(useShallow(state => ({ addToFavorites: state.addToFavorites })));
     const isTouch = isTouchDevice();
 
@@ -51,7 +63,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className="sudno-AdvertCard rounded-xl"
+            className="sudno-AdvertCard"
             onClick={onClick}
         >
             <Row>
@@ -76,24 +88,22 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
                         <Typography.Title
                             level={3}
                         >
-                            {title}
+                            {header}
                         </Typography.Title>
-                        <div className="flex flex-col flex-auto justify-between">
+                        <div className="flex flex-col flex-auto">
                             <Typography.Paragraph
                                 className="sudno-AdvertCard-labels flex a-items-center"
                             >
                                 <Space size={[0, 8]} wrap>
-                                    {tags && tags.map(item => (
-                                        <Tag
-                                            key={item}
-                                        >
-                                            {item}
-                                        </Tag>
-                                    ))}
+                                    <Tag>{advert_legal_information.type}</Tag>
+                                    <Tag>{advert_legal_information.class_formula}</Tag>
+                                    <Tag>{advert_legal_information.purpose}</Tag>
+                                    <Tag>{advert_legal_information.exploitation_type}</Tag>
+                                    <Tag>{advert_legal_information.building_year}</Tag>
                                 </Space>
                             </Typography.Paragraph>
                             <Typography.Paragraph>
-                                {addres}
+                                {description}
                             </Typography.Paragraph>
                         </div>
                     </div>
@@ -108,32 +118,35 @@ const AdvertCard: React.FC<IAdvertCard> = ({ onClick, title, price, tags, phone,
                             <Typography.Title
                                 level={4}
                             >
-                                {new Intl.NumberFormat(PRICE_LOCALE, NUMBER_FORMAT_OPTIONS).format(price)}
+                                <Price
+                                    locale={PRICE_LOCALE}
+                                    options={NUMBER_FORMAT_OPTIONS}
+                                    price={price}                                
+                                />
                             </Typography.Title>
                             <Typography.Paragraph style={{
                                 opacity: showDetails || isTouch ? '1' : '0'
                             }}>
                                 {
                                     showNumber ?
-                                        phone :
+                                        phone_number :
                                         <Button onClick={showNumberBtnHandler}>
                                             Показать телефон
                                         </Button>
                                 }
                             </Typography.Paragraph>
                         </div>
-                        <Tooltip
+                        {/* <Tooltip
                             title="Добавить в избранное"
                             color={'red'}
                         >
-                            <Button
-                                style={{ opacity: showDetails || isTouch || isLocalFavorite ? '1' : '0',
-                            width: 'auto' }}
+                            <HeartOutlined
                                 onClick={likeButtonClickhandler}
-                            >
-                                ♥
-                            </Button>
-                        </Tooltip>
+                                style={{ opacity: showDetails || isTouch || isLocalFavorite ? '1' : '0', color: 'red'}}
+                                width={56}
+                                height={56}
+                            />
+                        </Tooltip> */}
                     </div>
                 </Col>
             </Row>

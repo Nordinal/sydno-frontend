@@ -1,6 +1,7 @@
 import { instanceApi } from '@/shared/configs/instanceAxios';
 import { List, ListProps, notification } from 'antd';
 import { useEffect, useState } from 'react';
+import {convertObjectToPathname} from '@/shared/helpers/convertObjectToPathname';
 
 export interface IBasicList<T> extends ListProps<T> {
     action: string;
@@ -40,12 +41,7 @@ export const BasicList = <T, >(props: IBasicList<T>) => {
             }
             if(page) filtersObj.page = page;
 
-            const filters = Object.entries(filtersObj)
-                .map(item => {
-                    return `${item[0]}=${item[1]}`;
-                })
-                .join('&')
-            const result = await instanceApi.get<IBasicListService<T>>(props.action + '?' + filters);
+            const result = await instanceApi.get<IBasicListService<T>>(props.action + '?' + convertObjectToPathname(filtersObj));
             setService(result.data);
         }
         catch (e) {

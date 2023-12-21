@@ -1,18 +1,18 @@
 import { create } from "zustand";
-import { fetchAdvertList, addAdvertToFavorites } from "./api";
-import { TFilterOptions } from "./types/filterTypes";
 import { IAdvertListItem } from "./types/main";
+import { instanceApi } from '@/shared/configs/instanceAxios';
 
 export interface IAdvertModel {
-    getAdvertList: (options: TFilterOptions) => Promise<IAdvertListItem[]>;
-    addToFavorites: (id: number) => Promise<boolean>;
+    getAdvert: (id: number) => Promise<IAdvertListItem | false>;
 }
 
 export const useAdvert = create<IAdvertModel>(() => ({
-    getAdvertList: (options: TFilterOptions) => {
-        return fetchAdvertList(options);
-    },
-    addToFavorites: (id: number): Promise<boolean> => {
-        return addAdvertToFavorites(id);
+    getAdvert: async (id: number) => {
+        try {
+            const data = await instanceApi.get('/api/adverts/' + id);
+            return data.data;
+        } catch {
+            return false;
+        }
     }
 }));

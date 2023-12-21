@@ -19,7 +19,7 @@ const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaul
         setActiveIndex(defaultIndex);
     }, [showLabels]);
 
-    useEffect(() => {
+    const onImageErrorLoad = () => {
         if (imageRef.current) {
             imageRef.current.onerror = () => {
                 if (imageRef.current) {
@@ -27,7 +27,7 @@ const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaul
                 }
             }
         }
-    }, [activeIndex]);
+    }
 
     const onMouseMoveHandler = (index: number) => {
         setActiveIndex(index);
@@ -37,8 +37,10 @@ const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaul
         <div className="sudno-SmallImageSlider flex items-center">
             <img
                 ref={imageRef}
-                className={'sudno-SmallImageSlider-image ' + imageClass}
                 src={items[activeIndex]}
+                className={'sudno-SmallImageSlider-image ' + imageClass}
+                onError={onImageErrorLoad}
+                alt=""
             />
             <div
                 className="sudno-SmallImageSlider-backgroundItems"

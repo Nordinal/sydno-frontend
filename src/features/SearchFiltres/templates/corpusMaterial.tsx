@@ -1,30 +1,24 @@
-import { Select } from "antd";
 import React from "react";
-import { TChangeConfigProperty } from "../ui/SearhFiltres";
+import { TChangeConfigProperty } from "../types";
+import BackendSelector from "@/shared/ui/BackendSelector";
 
-const OPTIONS = [
-    { value: 'древесина', label: 'древесина' },
-    { value: 'сталь', label: 'сталь' },
-    { value: 'железобетонный', label: 'железобетонный' },
-    { value: 'композитный', label: 'композитный', },
-];
-
-const CorpusMaterial: React.FC<{
-    material?: string;
+export const CorpusMaterial: React.FC<{
+    material?: string | null;
     changeConfigProperty: TChangeConfigProperty;
 }> = ({
     material,
     changeConfigProperty
 }) => {
-        return (
-            <Select
-                placeholder={material || 'Материал корпуса'}
+    return (
+        <>
+            <p>Материал корпуса</p>
+            <BackendSelector
+                selector="materials"
                 style={{ width: '100%' }}
                 value={material}
+                allowClear
                 onChange={(value) => changeConfigProperty<string>('material', value)}
-                options={OPTIONS}
             />
-        );
-    }
-
-export default CorpusMaterial;
+        </>
+    );
+}

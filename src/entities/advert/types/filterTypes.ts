@@ -1,5 +1,3 @@
-import { IntRange } from "@/shared/types";
-
 /**
  * Юридические опции
  */
@@ -7,95 +5,88 @@ export interface ILegalFilterOptions {
     /**
      * Флаг корабля (локаль)
      */
-    flag?: string;
+    flag?: string | null;
 
     /**
      * Тип эксплуатации
      */
-    exploitations_type?: 'коммерческое' | 'некоммерческое';
+    exploitations_type?: 'коммерческое' | 'некоммерческое' | null;
 
     /**
-     * левая часть формулы класса (высота волны) 0.6, 1.2 ,2.0 ,3.0 ,3.5 >3.5
+     * формулы класса
      */
-    class_formula_left?: string;
+    class_formula?: string | null;
 
     /**
      * Ледовое усиление
      */
-    ice_power?: boolean;
-
-    /**
-     * правая часть формулы класса
-     */
-    class_formula_right?: string;
+    ice_power?: boolean | null;
 
     /**
      * Тип судна
      */
-    type?: string;
+    type?: string | null;
 
     /**
      * Назначение
      */
-    purpose?: string;
+    purpose?: string | null;
 
     /**
      * Находилось ли на учете
      */
-    was_registered?: boolean;
+    was_registered?: boolean | null;
 
     /**
-     * Учет действует до
+     * Учет действует до Date
      */
-    register_valid_until?: Date;
+    register_valid_until?: string | null;
 
     /**
      * статус судна
      */
-    vessel_status?: 'эксплуатируется' | 'на холодном отстое' | 'прекращено действие документов';
+    vessel_status?: string | null;
 
     /**
      * номер проекта
      */
-    project_number?: string;
+    project_number?: string | null;
 
     /**
      * строительный номер
      */
-    building_number?: string;
+    building_number?: string | null;
 
     /**
-     * год постройки
+     * год постройки Date
      */
-    building_year?: Date;
+    building_year?: string | null;
 
     /**
      * страна постройки
      */
-    building_country?: string;
+    building_country?: string | null;
 
-    /**
-     * порт приписки
-     */
-    // страна и город
-    port_adress?: {
-        country: string;
-        city: string
-    };
+    // порт приписки
+    // страна
+    port_adress_country?: string | null;
+
+    // город
+    port_adress_city?: string | null;
 
     /**
      * местонахождение судна
      */
     // порт или в рейсе
-    vessel_location?: {
-        country: string;
-        city: string
-    } | 'в рейсе';
+    vessel_location_country?: string | null;
+
+    // порт или в рейсе
+    vessel_location_city?: string | null;
 
     /**
      * Номер IMO
      */
-    imo_number?: number;
+    imo_number?: number | null;
 }
 
 /**
@@ -105,182 +96,197 @@ export interface ITechnicalFilterOptions {
     /**
      * Минимальное длинна судна 60см
      */
-    min_overall_length?: number;
+    min_overall_length?: number | null;
 
     /**
      * Максималдьная длинна судна 458.5м
      */
-    max_overall_length?: number;
+    max_overall_length?: number | null;
 
     /**
      * Ширина судна 30см
      */
-    min_overall_width?: number;
+    min_overall_width?: number | null;
 
     /**
      * Ширина судна 70м
      */
-    max_overall_width?: number;
+    max_overall_width?: number | null;
 
     /**
      * Высота борта 5см
      */
-    min_board_height?: number;
+    min_board_height?: number | null;
 
     /**
      * Высота борта 74м
      */
-    max_board_height?: number;
+    max_board_height?: number | null;
 
     /**
      * Максимальный надводный борт 0
      */
-    min_maximum_freeboard?: number;
+    min_maximum_freeboard?: number | null;
 
     /**
      * Максимальный надводный борт 47м
      */
-    max_maximum_freeboard?: number;
+    max_maximum_freeboard?: number | null;
 
     /**
      * Материал корпуса
      */
-    material?: 'древесина' | 'сталь' | 'железобетонный' | 'композитный',
+    material?: string | null;
 
     /**
      * Предельная масса (дедвейт) 0 
      */
-    min_deadweight?: number,
+    min_deadweight?: number | null;
 
     /**
      * Предельная масса (дедвейт) 600 000 т. 
      */
-    max_deadweight?: number,
+    max_deadweight?: number | null;
 
     /**
      * Доковый вес 0
      */
-    min_dock_weight?: number;
+    min_dock_weight?: number | null;
 
     /**
      * Доковый вес 600 000 т.
      */
-    max_dock_weight?: number;
+    max_dock_weight?: number | null;
 
     /**
      * Водоизмещение полное 0
      */
-    min_full_displacement?: number;
+    min_full_displacement?: number | null;
 
     /**
      * Водоизмещение полное Infinity
      */
-    max_full_displacement?: number;
+    max_full_displacement?: number | null;
 
     /**
      * Валовая вместимость 0
      */
-    min_gross_tonnage?: number;
+    min_gross_tonnage?: number | null;
 
     /**
      * Валовая вместимость Infinity
      */
-    max_gross_tonnage?: number;
+    max_gross_tonnage?: number | null;
 
     /**
-     * Количество главных двигателей 1 - 8
+     * Минимальное количество вспомогательных двигателей
      */
-    num_engines?: IntRange<1, 9>;
+    min_num_additional_engines?: number | null;
+
+    /**
+     * Максимальное количество вспомогательных двигателей
+     */
+    max_num_additional_engines?: number | null;
+
+    /**
+     * Минимальное количество главных двигателей 1 - 8
+     */
+    min_num_engines?: number | null;
+
+    /**
+     * Максимальное количество главных двигателей 1 - 8
+     */
+    max_num_engines?: number | null;
 
     /**
      * Мощность двигателей 0
      */
-    min_power?: number;
+    min_power?: number | null;
 
     /**
      * Мощность двигателей Infinty
      */
-    max_power?: number;
+    max_power?: number | null;
 
     /**
-     * Максимальная скорость в балласте км/ч
+     * Минимальная Максимальная скорость в балласте км/ч
      */
-    max_speed_in_ballast?: number;
+    min_maximum_speed_in_ballast?: number | null;
 
     /**
-     * Максимальная скорость в грузу
+     * Максимальная Максимальная скорость в балласте км/ч
      */
-    maximum_speed_in_ballast?: number;
+    max_maximum_speed_in_ballast?: number | null;
+
+    /**
+     * Минимальная Максимальная скорость в грузу
+     */
+    min_maximum_speed_in_load?: number | null;
+
+    /**
+     * Максимальная Максимальная скорость в грузу
+     */
+    max_maximum_speed_in_load?: number | null;
 
     /**
      * Грузовой танк
      */
-    cargo_tanks?: boolean;
+    cargo_tanks?: boolean | null;
 
     /**
-     * Cуммарная вместимость если грузовой танк
+     * Минимальная суммарная вместимость если Грузовой танк
      */
-    total_capacity_cargo_tanks?: number;
+    min_total_capacity_cargo_tanks?: number | null;
 
     /**
-     * Наливные танки
+     * Максимальная суммарная вместимость если Грузовой танк
      */
-    liquid_tanks?: boolean;
-
-    /**
-     * Cуммарная вместимость если наливной танк
-     */
-    total_capacity_liquid_tanks?: number;
+    max_total_capacity_cargo_tanks?: number | null;
 
     /**
      * Второе дно
      */
-    seccond_bottom?: boolean;
+    seccond_bottom?: boolean | null;
 
     /**
      * Вторые борта
      */
-    second_sides?: boolean;
+    second_sides?: boolean | null;
 
     /**
      * Грузоподъемность 0
      */
-    min_carrying?: number;
+    min_carrying?: number | null;
 
     /**
      * Грузоподъемность Infinty
      */
-    max_carrying?: number;
+    max_carrying?: number | null;
 
     /**
      * Надстройки
      */
-    superstructures?: boolean;
-
-    /**
-     * Рубки
-     */
-    deckhouses?: boolean;
+    superstructures?: boolean | null;
 
     /**
      * Пассажировмещаемость 0 шаг в 1
      */
-    min_passangers_avialable?: number;
+    min_passangers_avialable?: number | null;
 
     /**
      * Пассажировмещаемость Infinity 
      */
-    max_passangers_avialable?: number;
+    max_passangers_avialable?: number | null;
 
     /**
      * Техническая документация
      */
-    technical_documentation?: boolean;
+    technical_documentation?: boolean | null;
 }
 
 export type TFilterOptions = ILegalFilterOptions & ITechnicalFilterOptions & {
     /**
      * Лимит для получения с бэка
      */
-    limit?: number;
+    limit?: number | null;
 };
