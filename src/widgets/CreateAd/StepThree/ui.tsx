@@ -130,15 +130,6 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             </Form.Item>
 
             <Form.Item
-                label="Количество  главных двигателей"
-                labelAlign='left'
-                name="num_engines"
-                rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <InputNumber style={{width: '100%'}}  placeholder='Количество двигателей' min={1} max={8} addonAfter='шт.' />
-            </Form.Item>
-
-            <Form.Item
                 label="Количество главных двигателей"
                 labelAlign='left'
                 name="num_engines"
@@ -149,7 +140,7 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             <Form.Item
                 label="Количество вспомогательных двигателей"
                 labelAlign='left'
-                name="num_auxiliary_engines"
+                name="num_additional_engines"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{width: '100%'}}  placeholder='Количество вспомогательных двигателей' min={1} max={8} addonAfter='шт.' />
