@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchFiltres } from "@/features/SearchFiltres";
 import { useRouter, useSearchParams } from "next/navigation";
-import convertObjectToPathname from "@/shared/helpers/convertObjectToPathname";
+import {convertObjectToPathname} from "@/shared/helpers/convertObjectToPathname";
 import getUrlQueryParams from "@/shared/helpers/getUrlQueryParams";
 
 const Filter: React.FC = () => {

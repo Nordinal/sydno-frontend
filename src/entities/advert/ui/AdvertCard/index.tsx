@@ -63,7 +63,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className="sudno-AdvertCard rounded-xl"
+            className="sudno-AdvertCard"
             onClick={onClick}
         >
             <Row>

@@ -219,7 +219,7 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
             <Form.Item
                 name={'port_address'}
                 initialValue={ advert_legal_information?.port_address }
-                label='Порт приписки'
+                label='Страна приписки'
                 labelAlign='left'
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >

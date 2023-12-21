@@ -1,80 +1,46 @@
-import React, { useState } from "react";
-import { AdvertCard, useAdvert, IAdvertListItem } from "@/entities/advert";
-import { useRouter } from "next/navigation";
-import { Skeleton, Typography } from "antd";
-import { useShallow } from "zustand/react/shallow";
-import { Pagination } from 'antd';
-import useQueryParamsObserver from "@/shared/helpers/useQueryParamsObserver";
+import React from "react";
+import { AdvertCard } from "@/entities/advert";
+import { useRouter, useSearchParams } from "next/navigation";
 import { smoothScrollToAnchor } from "@/shared/helpers/scroll";
-
-const PAGINATION_LIMIT_PAGE = 10;
+import { BasicList } from "@/shared/ui/BasicList";
+import getUrlQueryParams from "@/shared/helpers/getUrlQueryParams";
+import { IAdvertCard } from "@/entities/advert/ui/AdvertCard";
+import {convertObjectToPathname} from "@/shared/helpers/convertObjectToPathname";
 
 const List: React.FC = () => {
     const router = useRouter();
-    const { getAdvertList } = useAdvert(useShallow(state => ({ getAdvertList: state.getAdvertList })));
-    const [advertList, setAdvertList] = useState<IAdvertListItem[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isErrorLoad, setIsErrorLoad] = useState<boolean>(false);
-
-    useQueryParamsObserver((queryParams) => {
-        setIsLoading(true);
-        getAdvertList({
-            ...queryParams,
-            limit: PAGINATION_LIMIT_PAGE,
-        }).then((newAdvertList) => {
-            setAdvertList(newAdvertList);
-            setIsLoading(false);
-            setIsErrorLoad(false);
-            console.log(newAdvertList[0]);
-        }).catch(() => {
-            setIsLoading(false);
-            setIsErrorLoad(true);
-        });
-    });
+    const searchParams = useSearchParams();
 
     const onAdvertCardClick = (id: number) => {
         router.push('/advert/' + id);
     }
 
-    if (isLoading) {
-        return <Skeleton />
-    }
+    const paginationChange = (page: number) => {
+        const params = getUrlQueryParams(searchParams);
 
-    if (isErrorLoad) {
-        return (
-            <>
-                Ошибка загрузки, повторите позже
-            </>
-        );
-    }
+        params.page = page;
 
-    if (advertList.length === 0) {
-        return (
-            <Typography.Title level={3}>
-                По вашему запросу ничего не нашлось
-            </Typography.Title>
-        );
+        router.push(location.pathname + '?' + convertObjectToPathname(params), {scroll: false});
     }
 
     return (
         <>
-            {advertList && advertList.map((item) => (
-                <AdvertCard
-                    key={item.id}
-                    {...item}
-                    onClick={() => onAdvertCardClick(item.id)}
-                />
-            ))}
-            {
-                advertList.length > PAGINATION_LIMIT_PAGE ?
-                    <div className="flex justify-center pt-8">
-                        <Pagination
-                            defaultCurrent={1}
-                            total={50}
+            <BasicList
+                action="/api/alladverts"
+                filters={getUrlQueryParams(searchParams)}
+                pagination={{
+                    onChange: paginationChange
+                }}
+                renderItem={(item: IAdvertCard) => {
+                    return (
+                        <AdvertCard
+                            key={item.id}
+                            {...item}
+                            onClick={() => onAdvertCardClick(item.id)}
                         />
-                    </div>
-                    : <></>
-            }
+                    );
+                }}
+            />
         </>
     );
 }

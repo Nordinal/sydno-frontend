@@ -5,15 +5,17 @@ import { instanceApi } from '@/shared/configs/instanceAxios';
 const BackendSelector: React.FC<{
     selector: string;
     value: unknown;
-    onChange: () => void;
+    onChange: (value: unknown) => void;
     style?: React.CSSProperties;
     allowClear?: boolean;
+    className?: string;
 }> = ({
     selector,
     value,
     onChange,
     style,
     allowClear,
+    className,
 }) => {
     const [selectorList, setSelectorList] = useState<{value: string, label: string}[]>();
 
@@ -35,6 +37,7 @@ const BackendSelector: React.FC<{
             <Select
                 value={value}
                 style={style}
+                className={className}
                 onChange={onChange}
                 allowClear={allowClear}
                 options={selectorList}

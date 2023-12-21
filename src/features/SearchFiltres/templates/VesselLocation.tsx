@@ -1,6 +1,6 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
-import { Col, Input, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
 

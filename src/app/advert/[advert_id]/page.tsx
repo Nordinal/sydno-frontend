@@ -31,12 +31,17 @@ const contentStyle: React.CSSProperties = {
 
 const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
     const { getAdvert } = useAdvert(useShallow(state => ({ getAdvert: state.getAdvert })));
-    const [advertData, setAdvertData] = useState<IAdvertListItem>();
+    const [advertData, setAdvertData] = useState<IAdvertListItem | false>();
 
     useEffect(() => {
-        getAdvert(Number(params?.advert_id)).then((data) => {
-            setAdvertData(data);
-        });
+        getAdvert(Number(params?.advert_id))
+            .then((data) => {
+                if (data === false) {
+
+                } else {
+                    setAdvertData(data);
+                }
+            });
     }, []);
 
     return (

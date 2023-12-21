@@ -130,12 +130,29 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             </Form.Item>
 
             <Form.Item
-                label="Количество двигателей"
+                label="Количество  главных двигателей"
                 labelAlign='left'
                 name="num_engines"
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{width: '100%'}}  placeholder='Количество двигателей' min={1} max={8} addonAfter='шт.' />
+            </Form.Item>
+
+            <Form.Item
+                label="Количество главных двигателей"
+                labelAlign='left'
+                name="num_engines"
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber style={{width: '100%'}}  placeholder='Количество главных двигателей' min={1} max={8} addonAfter='шт.' />
+            </Form.Item>
+            <Form.Item
+                label="Количество вспомогательных двигателей"
+                labelAlign='left'
+                name="num_auxiliary_engines"
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber style={{width: '100%'}}  placeholder='Количество вспомогательных двигателей' min={1} max={8} addonAfter='шт.' />
             </Form.Item>
 
             <Form.Item
@@ -259,27 +276,6 @@ export default function CreateAdStepThree({onFinish}: {onFinish: onFinishStep}) 
             >
                 <Select
                     placeholder='Надстройки'
-                    options={[
-                        {
-                            value: true,
-                            label: 'Да',
-                        },
-                        {
-                            value: false,
-                            label: 'Нет',
-                        }
-                    ]}
-                />
-            </Form.Item>
-
-            <Form.Item
-                label="Рубки"
-                labelAlign='left'
-                name="deckhouses"
-                rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <Select
-                    placeholder='Рубки'
                     options={[
                         {
                             value: true,

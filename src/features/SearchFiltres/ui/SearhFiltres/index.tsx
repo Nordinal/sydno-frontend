@@ -89,8 +89,8 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
 
     return (
         <div
-            className="rounded-xl p-4" 
-            style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden' }}
+            className="p-4" 
+            style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden', borderRadius: '2px' }}
         >
             <Typography.Title level={3}>
                 Фильтры
@@ -453,7 +453,6 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                 <div>
                     <Button
                         onClick={onButtonClickHandler}
-                        shape="round"
                         type="primary"
                     >
                         Показать результаты
