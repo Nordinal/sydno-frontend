@@ -1,24 +1,16 @@
 'use client';
 import { useEffect } from 'react';
-import { Layout, ConfigProvider } from 'antd';
+import { Layout, ConfigProvider, ThemeConfig } from 'antd';
 import { Header } from '@/layout/MainLayout/Header/ui';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 import s from './styles.module.css';
 import ruRU from 'antd/lib/locale/ru_RU';
-import 'antd/dist/antd.variable.min.css';
 import '@/app/globals.css';
 
-// ConfigProvider.config({
-//     theme: {
-//         primaryColor: '#34A8FF'
-//     }
-// })
-
-const theme = {
+const theme: ThemeConfig = {
     token: {
-      fontSize: 38,
-      colorPrimary: '#52c41a',
+      colorPrimary: '#34A8FF',
     },
   };
 

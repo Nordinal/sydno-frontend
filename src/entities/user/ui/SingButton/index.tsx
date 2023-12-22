@@ -9,7 +9,7 @@ export const SingButton = ({
     type = 'link',
     caption = 'Вход/Регистрация'
 }: {
-    type?: "link" | "text" | "ghost" | "default" | "primary" | "dashed" | undefined;
+    type?: "link" | "text" | "default" | "primary" | "dashed" | undefined
     caption?: string;
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);

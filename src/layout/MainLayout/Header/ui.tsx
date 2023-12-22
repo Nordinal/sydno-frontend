@@ -24,7 +24,7 @@ export const Header = () => {
 
     return (
         <div className={s['sydno-header']}>
-            <div className={s['sydno-container'] + ' flex justify-between items-center'} style={{margin: '0 auto'}}>
+            <div className={s['sydno-container'] + ' flex justify-between items-center h-full'} style={{margin: '0 auto'}}>
                 <div>
                     <Link href={'/'}>
                         <div className='flex items-center'>

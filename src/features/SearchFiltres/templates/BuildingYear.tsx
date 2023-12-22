@@ -2,6 +2,7 @@ import React from 'react';
 import { TChangeConfigProperty } from '../types';
 import { DatePicker, DatePickerProps } from 'antd';
 import moment from 'moment';
+import dayjs from 'dayjs';
 
 export const BuildingYear: React.FC<{
     building_year?: string | null;
@@ -21,7 +22,7 @@ export const BuildingYear: React.FC<{
       <p>Год постройки</p>
       <DatePicker
           picker="year"
-          value={building_year ? moment(building_year) : undefined}
+          value={building_year ? dayjs(building_year) : undefined}
           onChange={onDateChanged}
           style={{width: '100%'}}
       />

@@ -6,8 +6,8 @@ import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 import { ICreateAdStepThree, ICreateAdStepTwo, useCreateAd } from '@/entities/createAd/model';
-import moment, { Moment } from 'moment';
 import { useShallow } from 'zustand/react/shallow';
+import dayjs from 'dayjs';
 
 
 export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
@@ -208,7 +208,7 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
                     name='register_valid_until'
                     initialValue={
                         advert_legal_information?.register_valid_until && 
-                        moment(advert_legal_information.register_valid_until)
+                        dayjs(advert_legal_information.register_valid_until)
                     }
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
@@ -252,7 +252,7 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
                         name={'building_year'}
                         initialValue={
                             advert_legal_information?.building_year &&
-                            moment(advert_legal_information?.building_year.toString())
+                            dayjs(advert_legal_information?.building_year.toString())
                         }
                         noStyle
                     >

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
 import { DatePicker, DatePickerProps } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export const RegisterDeadline: React.FC<{
     register_valid_until?: string | null;
@@ -21,7 +21,7 @@ export const RegisterDeadline: React.FC<{
     <>
       <p>Учет действует до</p>
       <DatePicker
-        value={ register_valid_until ? moment(register_valid_until) : undefined}
+        value={ register_valid_until ? dayjs(register_valid_until) : undefined}
         onChange={onDateChanged}
         allowClear
         style={{width: '100%'}}
