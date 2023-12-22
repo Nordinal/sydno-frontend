@@ -59,7 +59,7 @@ export const Profile = () => {
 
 const TabLabel = ({label, count}: {label: string, count: number}) => {
     return (
-        <Typography.Text className="text-xl">
+        <Typography.Text style={{fontSize: 18}}>
             {label} <span className="font-bold opacity-30">{count}</span>
         </Typography.Text>
     )
