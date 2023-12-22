@@ -32,7 +32,7 @@
 }
 
 .sudno-SmallImageSlider-backgroundItems-label.active {
-    border: 2px solid var(--ant-primary-color);
+    border: 2px solid #34A8FF;
 }
 
 .sudno-SmallImageSlider-backgroundItems-label-wrapper {
