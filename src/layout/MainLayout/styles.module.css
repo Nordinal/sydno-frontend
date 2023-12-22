@@ -1,4 +1,10 @@
-.sudno-Header {
+.sydno-container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 48px auto 0 auto;
+}
+
+.sydno-header {
     background-color: #202124;
     height: 48px;
     line-height: 48px;

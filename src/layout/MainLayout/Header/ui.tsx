@@ -6,8 +6,7 @@ import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 import { ProfileButton } from '@/features/ProfileButton';
 import { LoadingOutlined } from '@ant-design/icons';
-import Image from 'next/image';
-import './styles.css';
+import s from '../styles.module.css';
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -24,12 +23,12 @@ export const Header = () => {
     }, [pathname]);
 
     return (
-        <div className="sudno-Header">
-            <div className='sudno-container flex justify-between items-center' style={{margin: '0 auto'}}>
+        <div className={s['sydno-header']}>
+            <div className={s['sydno-container'] + ' flex justify-between items-center'} style={{margin: '0 auto'}}>
                 <div>
                     <Link href={'/'}>
                         <div className='flex items-center'>
-                            <Image className='mr-2' src={'/min-logo.svg'}  width={28} height={28} alt='Судно логотип'/>
+                            <img className='mr-2' src={'/min-logo.svg'}  width={28} height={28} alt='Судно логотип'/>
                             <Typography.Title level={4} style={{marginBottom: 0, color: 'white'}}>Sydno</Typography.Title >
                         </div>
                     </Link>

@@ -125,7 +125,7 @@ export default function CreateAdStepTwo({onFinish}: {onFinish: onFinishStep}) {
                 label='Ледовое усиление'
                 labelAlign='left'
                 name='ice_strengthening'
-                initialValue={ advert_legal_information?.ice_strengthening }
+                initialValue={ advert_legal_information?.ice_strengthening || false }
                 valuePropName="checked"
             >
                 <Checkbox />

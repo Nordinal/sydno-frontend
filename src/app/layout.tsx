@@ -1,7 +1,5 @@
 
 import { Metadata } from 'next';
-import './globals.css';
-import 'antd/dist/antd.variable.min.css';
 import { StyledComponentsRegistry } from '@/shared/ui/AntdRegistry';
 import { instanceApi } from '@/shared/configs/instanceAxios';
 import { AxiosError, AxiosPromise } from 'axios';
@@ -20,9 +18,6 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(props: {
   children: React.ReactNode;
-  params: {
-    user: object
-  }
 }) {
 
   return (

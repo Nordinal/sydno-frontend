@@ -4,6 +4,7 @@ import { Tabs, Typography } from "antd";
 import { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { MyDrafts } from "./MyAdverts/MyDrafts/ui";
+import { MyModeration } from "./MyAdverts/MyModeration/ui";
 
 export const Profile = () => {
     const { info, getInfo } = useMyAdverts(useShallow(state => ({info: state.info, getInfo: state.getInfo})));
@@ -20,21 +21,21 @@ export const Profile = () => {
         if(info.moderation) {
             items.push({
                 label: <TabLabel label='На проверке' count={info.moderation}/>,
-                key: '1',
-                children: `Активные`,
+                key: '2',
+                children: <MyModeration />,
             })
         }
         if(info.draft) {
             items.push({
                 label: <TabLabel label='Черновики' count={info.draft}/>,
-                key: '1',
+                key: '3',
                 children: <MyDrafts />,
             })
         }
         if(info.inactive) {
             items.push({
                 label: <TabLabel label='Архив' count={info.inactive}/>,
-                key: '1',
+                key: '4',
                 children: `Активные`,
             })
         }
@@ -44,15 +45,13 @@ export const Profile = () => {
     useEffect(() => {
         getInfo();
     }, []);
-
-    const items = getItems(info);
     
     return (
         <div>
             <Typography.Title level={2}>Мои объявления</Typography.Title>
             <Tabs
                 defaultActiveKey="1"
-                items={items}
+                items={getItems(info)}
             />
         </div>
     )

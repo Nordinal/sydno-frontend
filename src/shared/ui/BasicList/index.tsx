@@ -56,9 +56,9 @@ export const BasicList = <T, >(props: IBasicList<T>) => {
 
     return (
         <List
-            {...props}
+            {...{...props, action: null}}
             loading={props.loading || loading}
-            pagination={{
+            pagination={Number(service?.total) > 10 && {
                 total: service?.total,
                 ...(props.pagination || {}),
                 defaultCurrent: props.filters?.page,

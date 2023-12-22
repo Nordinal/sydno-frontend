@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = 'http://localhost';
+export const baseURL = process.env.NEXT_PUBLIC_API_BACKEND;
 
 export const instanceApi = axios.create({
   baseURL,
@@ -20,11 +20,12 @@ export const instanceApiFormData = axios.create({
   withCredentials: true,
 });
 
-instanceApi.interceptors.request.use(async (config) => {
-  try {
-    await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true});
-  }
-  finally {
-    return config;
-  }
-})
+// Включить по необходимости
+// instanceApi.interceptors.request.use(async (config) => {
+//   try {
+//     await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true});
+//   }
+//   finally {
+//     return config;
+//   }
+// })

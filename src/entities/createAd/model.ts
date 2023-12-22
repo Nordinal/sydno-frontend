@@ -52,6 +52,7 @@ export interface ICreateAdStepThree {
     full_displacement: number
     gross_tonnage: number
     num_engines: number
+    num_additional_engines: number
     power: number
     maximum_speed_in_ballast: number
     maximum_speed_when_loaded: number

@@ -53,7 +53,7 @@ export default function CreateAdStepOne({onFinish}: {onFinish: onFinishStep}) {
                 initialValue={instance.price}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber placeholder='Цена' style={{width: '40%'}}/>
+                <InputNumber min={0} placeholder='Цена' style={{width: '40%'}}/>
             </Form.Item>
 
             <Form.Item
