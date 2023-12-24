@@ -1,15 +1,18 @@
 'use client';
 import { useUser } from "@/entities/user/model";
+import { StaticContext } from "@/shared/helpers/staticContext";
 import { Button, Divider, Form, Input, Modal, Typography } from "antd";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export const ForgotPassword = ({email, token}: { email: string, token: string}) => {
     const { resetPassword } = useUser(useShallow((state) => ({ resetPassword: state.resetPassword })));
     const router = useRouter();
+    const { modal } = useContext(StaticContext);
 
     const openSuccessResetModal = () => {
-        Modal.success({
+        modal?.success({
             title: 'Пароль успешно сброшен',
             okText: 'Продолжить',
             onOk: () => {
