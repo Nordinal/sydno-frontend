@@ -13,7 +13,7 @@ export const MaximumFreeboard: React.FC<{
 }) => {
   return (
     <>
-      <p>Максимальный надводный борт</p>
+      <p>Максимальный надводный борт, м</p>
         <Row>
           <Col span={12}>
             <InputNumber
@@ -23,7 +23,7 @@ export const MaximumFreeboard: React.FC<{
                 step={0.01}
                 style={{width: '100%'}}
                 onChange={(value) => changeConfigProperty<number | undefined>('min_maximum_freeboard', value || undefined)}
-                formatter={(value) => value ? `${value} м` : ''}
+                formatter={(value) => value ? `от ${value}` : ''}
             />
           </Col>
           <Col span={12}>
@@ -34,7 +34,7 @@ export const MaximumFreeboard: React.FC<{
                 step={0.01}
                 style={{width: '100%'}}
                 onChange={(value) => changeConfigProperty<number | undefined>('max_maximum_freeboard', value || undefined)}
-                formatter={(value) => value ? `${value} м` : ''}
+                formatter={(value) => value ? `до ${value}` : ''}
             />
           </Col>
         </Row>

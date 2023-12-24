@@ -13,7 +13,7 @@ export const NumEngines: React.FC<{
 }) => {
     return (
         <>
-            <p>Количество главных двигателей</p>
+            <p>Количество главных двигателей, шт</p>
             <Row>
                 <Col span={12}>
                     <InputNumber
@@ -22,7 +22,7 @@ export const NumEngines: React.FC<{
                         style={{width: '100%'}}
                         max={8}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_num_engines', value || undefined)}
-                        formatter={(value) => value ? `от ${value} шт` : ''}
+                        formatter={(value) => value ? `от ${value}` : ''}
                     />
                 </Col>
                 <Col span={12}>
@@ -32,7 +32,7 @@ export const NumEngines: React.FC<{
                         max={8}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_num_engines', value || undefined)}
-                        formatter={(value) => value ? `до ${value} шт` : ''}
+                        formatter={(value) => value ? `до ${value}` : ''}
                     />
                 </Col>
             </Row>

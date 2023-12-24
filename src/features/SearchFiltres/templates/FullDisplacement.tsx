@@ -13,7 +13,7 @@ export const FullDisplacement: React.FC<{
 }) => {
   return (
     <>
-      <p>Водоизмещение полное</p>
+      <p>Водоизмещение полное, т</p>
       <Row>
         <Col span={12}>
           <InputNumber
@@ -23,7 +23,7 @@ export const FullDisplacement: React.FC<{
               step={0.01}
               style={{width: '100%'}}
               onChange={(value) => changeConfigProperty<number | undefined>('min_full_displacement', value || undefined)}
-              formatter={(value) => value ? `${value} т` : ''}
+              formatter={(value) => value ? `от ${value}` : ''}
           />
         </Col>
         <Col span={12}>
@@ -34,7 +34,7 @@ export const FullDisplacement: React.FC<{
               step={0.01}
               style={{width: '100%'}}
               onChange={(value) => changeConfigProperty<number | undefined>('max_full_displacement', value || undefined)}
-              formatter={(value) => value ? `${value} т` : ''}
+              formatter={(value) => value ? `до ${value}` : ''}
           />
         </Col>
       </Row>

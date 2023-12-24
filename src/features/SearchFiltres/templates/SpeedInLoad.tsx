@@ -13,7 +13,7 @@ export const SpeedInLoad: React.FC<{
 }) => {
     return (
         <>
-            <p>Максимальная скорость в грузу</p>
+            <p>Максимальная скорость в грузу, кн</p>
             <Row>
                 <Col span={12}>
                     <InputNumber
@@ -23,7 +23,7 @@ export const SpeedInLoad: React.FC<{
                         step={0.01}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_maximum_speed_in_load', value || undefined)}
-                        formatter={(value) => value ? `${value} ` : ''}
+                        formatter={(value) => value ? `от ${value}` : ''}
                     />
                 </Col>
                 <Col span={12}>
@@ -34,7 +34,7 @@ export const SpeedInLoad: React.FC<{
                         step={0.01}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_maximum_speed_in_load', value || undefined)}
-                        formatter={(value) => value ? `${value}` : ''}
+                        formatter={(value) => value ? `до ${value}` : ''}
                     />
                 </Col>
             </Row>

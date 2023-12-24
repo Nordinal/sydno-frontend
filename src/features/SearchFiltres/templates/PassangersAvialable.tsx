@@ -13,7 +13,7 @@ export const PassangersAvialable: React.FC<{
 }) => {
     return (
         <div>
-            <p>Пассажировмещаемость</p>
+            <p>Пассажировмещаемость, чел.</p>
             <Row>
                 <Col span={12}>
                     <InputNumber
@@ -23,7 +23,7 @@ export const PassangersAvialable: React.FC<{
                         step={1}
                         max={Infinity}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_passangers_avialable', value || undefined)}
-                        formatter={(value) => value ? `от ${value} чел.` : ''}
+                        formatter={(value) => value ? `от ${value}` : ''}
                     />
                 </Col>
                 <Col span={12}>
@@ -34,7 +34,7 @@ export const PassangersAvialable: React.FC<{
                         max={Infinity}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_passangers_avialable', value || undefined)}
-                        formatter={(value) => value ? `до ${value} чел.` : ''}
+                        formatter={(value) => value ? `до ${value}` : ''}
                     />
                 </Col>
             </Row>

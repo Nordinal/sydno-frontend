@@ -1,12 +1,11 @@
 import React, { SyntheticEvent, useState } from "react";
-import { Row, Col, Typography, Space, Tag, Button, Tooltip } from "antd";
+import { Row, Col, Typography, Space, Tag} from "antd";
 import './styles.css';
 import SmallImageSlider from "@/shared/ui/SmallImageSlider";
 import isTouchDevice from "@/shared/helpers/isTouchDevice";
 import { IAdvertListItem } from "../../types/main";
 import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
-import { HeartOutlined } from '@ant-design/icons';
 import Price from "@/shared/ui/Price";
 
 export interface IAdvertCard extends IAdvertListItem {
@@ -81,8 +80,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                     />
                 </Col>
                 <Col
-                    xs={24}
-                    sm={14}
+                    flex={'auto'}
                 >
                     <div className="flex flex-col h-full">
                         <Typography.Title
@@ -130,23 +128,12 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                                 {
                                     showNumber ?
                                         phone_number :
-                                        <Button onClick={showNumberBtnHandler}>
+                                        <div onClick={showNumberBtnHandler}>
                                             Показать телефон
-                                        </Button>
+                                        </div>
                                 }
                             </Typography.Paragraph>
                         </div>
-                        {/* <Tooltip
-                            title="Добавить в избранное"
-                            color={'red'}
-                        >
-                            <HeartOutlined
-                                onClick={likeButtonClickhandler}
-                                style={{ opacity: showDetails || isTouch || isLocalFavorite ? '1' : '0', color: 'red'}}
-                                width={56}
-                                height={56}
-                            />
-                        </Tooltip> */}
                     </div>
                 </Col>
             </Row>

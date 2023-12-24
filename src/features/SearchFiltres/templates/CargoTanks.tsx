@@ -36,20 +36,20 @@ export const CargoTanks: React.FC<{
             {
                 cargo_tanks ? 
                 <Col span={12}>
-                    <p>Cуммарная вместимость</p>
+                    <p>Cуммарная вместимость, т</p>
                     <InputNumber
                         value={min_total_capacity_cargo_tanks}
                         min={1}
                         max={100000}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_total_capacity_cargo_tanks', value || undefined)}
-                        formatter={(value) => value ? `от ${value} т` : ''}
+                        formatter={(value) => value ? `от ${value}` : ''}
                     />
                     <InputNumber
                         value={max_total_capacity_cargo_tanks}
                         min={1}
                         max={100000}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_total_capacity_cargo_tanks', value || undefined)}
-                        formatter={(value) => value ? `до ${value} т` : ''}
+                        formatter={(value) => value ? `до ${value}` : ''}
                     />
                 </Col>
                 : <></>

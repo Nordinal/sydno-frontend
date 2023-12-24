@@ -13,7 +13,7 @@ export const EnginePower: React.FC<{
 }) => {
     return (
         <>
-            <p>Мощность двигателей</p>
+            <p>Мощность двигателей, кВт</p>
             <Row>
                 <Col span={12}>
                     <InputNumber
@@ -22,7 +22,7 @@ export const EnginePower: React.FC<{
                         max={100000}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_power', value || undefined)}
-                        formatter={(value) => value ? `от ${value} кВт` : ''}
+                        formatter={(value) => value ? `от ${value}` : ''}
                     />
                 </Col>
                 <Col span={12}>
@@ -32,7 +32,7 @@ export const EnginePower: React.FC<{
                         max={100000}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_power', value || undefined)}
-                        formatter={(value) => value ? `до ${value} кВт` : ''}
+                        formatter={(value) => value ? `до ${value}` : ''}
                     />
                 </Col>
             </Row>

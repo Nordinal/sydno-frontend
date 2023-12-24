@@ -13,7 +13,7 @@ export const GrossTonnage: React.FC<{
 }) => {
   return (
     <div>
-        <p>Валовая вместимость</p>
+        <p>Валовая вместимость, рег. т.</p>
         <Row>
             <Col span={12}>
                 <InputNumber
@@ -23,7 +23,7 @@ export const GrossTonnage: React.FC<{
                     step={0.01}
                     style={{width: '100%'}}
                     onChange={(value) => changeConfigProperty<number | undefined>('min_gross_tonnage', value || undefined)}
-                    formatter={(value) => value ? `${value} рег. т.` : ''}
+                    formatter={(value) => value ? `от ${value}` : ''}
                 />
             </Col>
             <Col span={12}>
@@ -34,7 +34,7 @@ export const GrossTonnage: React.FC<{
                     step={0.01}
                     style={{width: '100%'}}
                     onChange={(value) => changeConfigProperty<number | undefined>('max_gross_tonnage', value || undefined)}
-                    formatter={(value) => value ? `${value} рег. т.` : ''}
+                    formatter={(value) => value ? `до ${value}` : ''}
                 />
             </Col>
         </Row>

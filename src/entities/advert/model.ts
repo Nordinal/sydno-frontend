@@ -3,16 +3,16 @@ import { IAdvertListItem } from "./types/main";
 import { instanceApi } from '@/shared/configs/instanceAxios';
 
 export interface IAdvertModel {
-    getAdvert: (id: number) => Promise<IAdvertListItem | false>;
+    getAdvert: (id: number | string) => Promise<IAdvertListItem | null>;
 }
 
 export const useAdvert = create<IAdvertModel>(() => ({
-    getAdvert: async (id: number) => {
+    getAdvert: async (id) => {
         try {
             const data = await instanceApi.get('/api/adverts/' + id);
             return data.data;
         } catch {
-            return false;
+            return null;
         }
     }
 }));

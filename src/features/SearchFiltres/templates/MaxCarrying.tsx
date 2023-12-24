@@ -13,7 +13,7 @@ export const MaxCarrying: React.FC<{
 }) => {
     return (
         <div>
-            <p>Грузоподъемность</p>
+            <p>Грузоподъемность, т</p>
             <Row>
                 <Col span={12}>
                     <InputNumber
@@ -23,7 +23,7 @@ export const MaxCarrying: React.FC<{
                         max={Infinity}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_carrying', value || undefined)}
-                        formatter={(value) => value ? `от ${value} т` : ''}
+                        formatter={(value) => value ? `от ${value}` : ''}
                     />
                 </Col>
                 <Col span={12}>
@@ -34,7 +34,7 @@ export const MaxCarrying: React.FC<{
                         max={Infinity}
                         style={{width: '100%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_carrying', value || undefined)}
-                        formatter={(value) => value ? `до ${value} т` : ''}
+                        formatter={(value) => value ? `до ${value}` : ''}
                     />
                 </Col>
             </Row>
