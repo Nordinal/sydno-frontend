@@ -7,9 +7,11 @@ import { IAdvertListItem } from "../../types/main";
 import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
 import Price from "@/shared/ui/Price";
+import Link from "next/link";
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
+    size?: 'small' | 'big';
 }
 
 const FALLBACK_IMAGE_SRC = 'https://upload.wikimedia.org/wikipedia/commons/a/ab/European_shorthair_TUROK_cat_show_Turku_2010-03-27.JPG';
@@ -21,6 +23,27 @@ const NUMBER_FORMAT_OPTIONS = {
     currency: 'RUB'
 }
 
+const leftColBigMode = {
+    className: 'sm:pr-4 sm:pb-0 pb-4',
+    xs: 24,
+    sm: 6,
+}
+
+const middleColBigMode = {
+    flex: '1',
+}
+
+const rightColBigMode = {
+    className: 'sm:pl-4',
+    xs: 24,
+    sm: 4,
+}
+
+const leftColSmallMode = {
+    className: 'pb-4',
+    span: 24
+}
+
 const AdvertCard: React.FC<IAdvertCard> = ({
     onClick,
     header, 
@@ -30,7 +53,8 @@ const AdvertCard: React.FC<IAdvertCard> = ({
     description,
     phone_number,
     images,
-    id
+    id,
+    size,
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -66,11 +90,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({
             onClick={onClick}
         >
             <Row>
-                <Col
-                    className="sm:pr-4 sm:pb-0 pb-4"
-                    xs={24}
-                    sm={6}
-                >
+                <Col {...leftColBigMode} >
                     <SmallImageSlider
                         items={images}
                         maxItems={5}
@@ -79,14 +99,25 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                         imageClass='rounded-xl'
                     />
                 </Col>
-                <Col
-                    flex={'auto'}
-                >
+                <Col {...middleColBigMode}>
                     <div className="flex flex-col h-full">
                         <Typography.Title
                             level={3}
                         >
-                            {header}
+
+                            <Link href={'advert/' + id}>
+                                {header}
+                           </Link>
+                        </Typography.Title>
+                        <Typography.Title
+                            level={4}
+                            style={{marginTop: 0}}
+                        >
+                            <Price
+                                locale={PRICE_LOCALE}
+                                options={NUMBER_FORMAT_OPTIONS}
+                                price={price}                                
+                            />
                         </Typography.Title>
                         <div className="flex flex-col flex-auto">
                             <Typography.Paragraph
@@ -100,28 +131,17 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                                     <Tag>{advert_legal_information.building_year}</Tag>
                                 </Space>
                             </Typography.Paragraph>
-                            <Typography.Paragraph>
+                            <Typography.Paragraph
+                                className="sudno-AdvertCard-description"
+                            >
                                 {description}
                             </Typography.Paragraph>
                         </div>
                     </div>
                 </Col>
-                <Col
-                    className="sm:pl-4"
-                    xs={24}
-                    sm={4}
-                >
+                <Col {...rightColBigMode}>
                     <div className="flex flex-col justify-between h-full">
                         <div>
-                            <Typography.Title
-                                level={4}
-                            >
-                                <Price
-                                    locale={PRICE_LOCALE}
-                                    options={NUMBER_FORMAT_OPTIONS}
-                                    price={price}                                
-                                />
-                            </Typography.Title>
                             <Typography.Paragraph style={{
                                 opacity: showDetails || isTouch ? '1' : '0'
                             }}>
