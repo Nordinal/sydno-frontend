@@ -1,9 +1,18 @@
 .sudno-SearhFiltres-hiddenBlock {
-    max-height: 0;
     overflow: hidden;
+    max-height: 0px;
+    transition: max-height 0.5s;
+    height: max-content;
 }
 
 .sudno-SearhFiltres-hiddenBlock-active {
-    max-height: 99999999px;
     overflow: hidden;
+    max-height: 1140px;
+    transition: max-height 1s;
+}
+
+@media (max-width: 640px) {
+    .width-full-sm {
+        width: 100%;
+    }
 }

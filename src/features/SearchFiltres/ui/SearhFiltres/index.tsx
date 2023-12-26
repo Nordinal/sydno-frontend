@@ -90,7 +90,7 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
     return (
         <div
             className="p-4" 
-            style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden', borderRadius: '2px' }}
+            style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden', borderRadius: 'var(--main-app-br)' }}
         >
             <Typography.Title level={3}>
                 Фильтры
@@ -435,8 +435,8 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                     </Col>
                 </Row>
             </div>
-            <div className="flex items-end justify-between">
-                <div>
+            <div className="flex items-end justify-between flex-wrap">
+                <div className='sm:pb-0 pb-2 width-full-sm flex justify-between'>
                     <Button
                         onClick={toggleShowAll}
                         type="link"
@@ -450,10 +450,11 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                         Сбросить фильтры
                     </Button>
                 </div>
-                <div>
+                <div className='width-full-sm'>
                     <Button
                         onClick={onButtonClickHandler}
                         type="primary"
+                        className='w-full'
                     >
                         Показать результаты
                     </Button>

@@ -1,5 +1,5 @@
-import React, { SyntheticEvent, useState } from "react";
-import { Row, Col, Typography, Space, Tag} from "antd";
+import React, { SyntheticEvent, useLayoutEffect, useState } from "react";
+import { Row, Col, Typography } from "antd";
 import './styles.css';
 import SmallImageSlider from "@/shared/ui/SmallImageSlider";
 import isTouchDevice from "@/shared/helpers/isTouchDevice";
@@ -8,6 +8,8 @@ import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
 import Price from "@/shared/ui/Price";
 import Link from "next/link";
+import { Flag } from "@/shared/ui/Flag";
+import { ICreateAdStepTwo as ILegalInformation } from "@/entities/createAd/model";
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
@@ -23,25 +25,36 @@ const NUMBER_FORMAT_OPTIONS = {
     currency: 'RUB'
 }
 
-const leftColBigMode = {
-    className: 'sm:pr-4 sm:pb-0 pb-4',
-    xs: 24,
-    sm: 6,
+const leftCol = {
+    'small': {
+        className: 'pb-4',
+        span: 24
+    },
+    'big': {
+        className: 'sm:pr-4 sm:pb-0 pb-4',
+        xs: 24,
+        sm: 6,
+    }
 }
 
-const middleColBigMode = {
-    flex: '1',
+const middleCol = {
+    'small': {
+        flex: '1',
+    },
+    'big': {
+        flex: '1',
+    }
 }
 
-const rightColBigMode = {
-    className: 'sm:pl-4',
-    xs: 24,
-    sm: 4,
-}
-
-const leftColSmallMode = {
-    className: 'pb-4',
-    span: 24
+const rightCol =  {
+    'small': {
+        span: 24
+    },
+    'big': {
+        className: 'sm:pl-4',
+        xs: 24,
+        sm: 4,
+    }
 }
 
 const AdvertCard: React.FC<IAdvertCard> = ({
@@ -90,16 +103,16 @@ const AdvertCard: React.FC<IAdvertCard> = ({
             onClick={onClick}
         >
             <Row>
-                <Col {...leftColBigMode} >
+                <Col {...leftCol[size || 'big']} >
                     <SmallImageSlider
                         items={images}
                         maxItems={5}
                         showLabels={showDetails}
                         fallbackImageSrc={FALLBACK_IMAGE_SRC}
-                        imageClass='rounded-xl'
+                        imageStyle={{ borderRadius: 'var(--main-app-br)' }}
                     />
                 </Col>
-                <Col {...middleColBigMode}>
+                <Col {...middleCol[size || 'big']}>
                     <div className="flex flex-col h-full">
                         <Typography.Title
                             level={3}
@@ -123,13 +136,10 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                             <Typography.Paragraph
                                 className="sudno-AdvertCard-labels flex a-items-center"
                             >
-                                <Space size={[0, 8]} wrap>
-                                    <Tag>{advert_legal_information.type}</Tag>
-                                    <Tag>{advert_legal_information.class_formula}</Tag>
-                                    <Tag>{advert_legal_information.purpose}</Tag>
-                                    <Tag>{advert_legal_information.exploitation_type}</Tag>
-                                    <Tag>{advert_legal_information.building_year}</Tag>
-                                </Space>
+                                <DetailsInfo
+                                    size={size || 'big'}
+                                    {...advert_legal_information}
+                                />
                             </Typography.Paragraph>
                             <Typography.Paragraph
                                 className="sudno-AdvertCard-description"
@@ -139,7 +149,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                         </div>
                     </div>
                 </Col>
-                <Col {...rightColBigMode}>
+                <Col {...rightCol[size || 'big']}>
                     <div className="flex flex-col justify-between h-full">
                         <div>
                             <Typography.Paragraph style={{
@@ -157,6 +167,45 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                     </div>
                 </Col>
             </Row>
+        </div>
+    );
+}
+
+const DetailsItem: React.FC<{
+    label: string;
+    children: React.ReactNode;
+    
+}> = ({
+    label,
+    children,
+}) => {
+        return (
+            <div className="flex pr-4">
+                <div className="sudno-AdvertCard-details-label pr-2">
+                    {label}:
+                </div>
+                <div className="sudno-AdvertCard-details-value flex justify-center content-center">
+                    {children}
+                </div>
+            </div>
+        );
+}
+
+const DetailsInfo: React.FC<ILegalInformation & {
+    size: 'small' | 'big';
+}> = (props) => {
+    return (
+        <div className={'flex flex-wrap justify-start content-center ' + (props.size === 'small' ? 'flex-col' : '')}>
+            <DetailsItem label="Тип">{props.type}</DetailsItem>
+            <DetailsItem label="Класс">{props.class_formula}</DetailsItem>
+            <DetailsItem label="Назначение">{props.purpose}</DetailsItem>
+            <DetailsItem label="Тип эксплуатации">{props.exploitation_type}</DetailsItem>
+            <DetailsItem label="Год постройки">{props.building_year}</DetailsItem>
+            <DetailsItem label="Флаг">
+                <Flag
+                    country_code={props.flag}
+                />
+            </DetailsItem>
         </div>
     );
 }

@@ -3,7 +3,7 @@ import { IAdvertCard } from "@/entities/advert/ui/AdvertCard";
 import { useCreateAd } from "@/entities/createAd/model";
 import { useMyAdverts } from "@/entities/myAdverts/model";
 import { BasicList } from "@/shared/ui/BasicList";
-import { Button, List } from "antd";
+import { Button, Col, List } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -21,11 +21,13 @@ export const MyModeration = () => {
             action="/api/myadverts/moderation"
             renderItem={(item: IAdvertCard) => {
                 return (
-                    <AdvertCard
-                        key={item.id}
-                        {...item}
-                        onClick={() => onAdvertCardClick(item.id)}
-                    />
+                    <Col key={item.id} span={12}>
+                        <AdvertCard
+                            {...item}
+                            size="small"
+                            onClick={() => onAdvertCardClick(item.id)}
+                        />
+                    </Col>
                 );
             }}
         />

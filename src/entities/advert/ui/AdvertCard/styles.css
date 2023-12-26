@@ -1,6 +1,7 @@
 .sudno-AdvertCard {
     transition: 0.2s;
     padding: 15px;
+    border-radius: var(--main-app-br);
 }
 
 .sudno-AdvertCard:hover {
@@ -12,7 +13,12 @@
     -webkit-line-clamp: 3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    overflow: hidden; 
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.45) !important;
+}
+
+.sudno-AdvertCard-details-label {
+    color: rgba(0, 0, 0, 0.45);
 }
 
 @media (max-width: 576px) {

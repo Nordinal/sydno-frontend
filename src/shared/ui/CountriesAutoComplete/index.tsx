@@ -1,6 +1,7 @@
 import { AutoComplete, Select } from 'antd';
 import countriesJson from './countries.json';
 import { CSSProperties, useState } from 'react';
+import { Flag } from '@/shared/ui/Flag';
 
 const countriesSelectOptions = Object.entries(countriesJson.data).map(item => {
     return ({
@@ -8,7 +9,10 @@ const countriesSelectOptions = Object.entries(countriesJson.data).map(item => {
         value: item[0],
         label:
         <span className='flex items-center'>
-            <img alt={`флаг ${item[1]}`} width={30} height={20} src={'/flags/' + item[0] + '.svg'} />
+            <Flag
+                country_code={item[0]}
+                alt={`флаг ${item[1]}`}
+            />
             <span className='ml-2'>{item[1]}</span>
         </span>
     })

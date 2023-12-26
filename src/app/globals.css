@@ -3,7 +3,9 @@
 @tailwind utilities;
 /* @import '~antd/dist/antd.css'; */
 
-:root {}
+:root {
+  --main-app-br: 6px;
+}
 
 * {
   margin: 0;
