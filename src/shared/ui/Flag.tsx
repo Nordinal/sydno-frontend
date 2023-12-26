@@ -1,5 +1,12 @@
 import React from "react";
 
+/**
+ * Компонент-хелпер для отображения флага
+ * Передаются всё те же параметры что и для обычной картинки, но вместо src - country_code - двухбуквенный код страны
+ * @param country_code - код страны 
+ * @author Burtsev Ilysha
+ * @returns 
+ */
 export const Flag: React.FC<{
     alt?: string;
     country_code: string;

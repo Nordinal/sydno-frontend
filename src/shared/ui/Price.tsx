@@ -8,7 +8,7 @@ export interface IPriceProps {
 
 /**
  * Компонент для отображения отформатированной цены, в зависимости от валюты
- * @param param0 
+ * @author Burtsev Ilysha
  * @returns 
  */
 const Price: React.FC<IPriceProps> = ({locale, options, price}) => {

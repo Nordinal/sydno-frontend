@@ -12,6 +12,11 @@ export interface ISmallImageSlider {
     imageStyle?: React.CSSProperties;
 }
 
+/**
+ * Слайдер картинок как на avito.ru - перелистывает картинки при наведении на определнную область
+ * @author Burtsev Ilysha
+ * @returns 
+ */
 const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaultIndex = 0, showLabels = true, fallbackImageSrc = '', imageClass, imageStyle }) => {
     const [activeIndex, setActiveIndex] = useState<number>(defaultIndex);
     const imageRef = useRef<HTMLImageElement>(null);

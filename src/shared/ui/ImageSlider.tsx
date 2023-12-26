@@ -12,6 +12,10 @@ export interface IImageSliderProps {
     styles?: React.CSSProperties;
 }
 
+/**
+ * Слайдер для картинок на основе Carousel из antd
+ * @author Burtsev Ilysha
+ */
 export const ImageSlider: React.FC<IImageSliderProps> = ({
     images,
     itemStyles,
