@@ -1,0 +1,49 @@
+.favorite-star {
+    color: rgb(149, 148, 148) !important;
+    cursor: pointer;
+    margin-right: 8px;
+    height: 40px;
+    transition: color 0.3s;
+}
+
+.favorite-star:hover {
+    color: rgb(82, 154, 226) !important;
+}
+
+.ant-carousel .slick-slide div {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ant-carousel .slick-slide div img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.field {
+    display: flex;
+    align-items: start;
+}
+.price-phone {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    margin-left: 10px;
+    justify-content: start;
+}
+.description {
+    margin-top: 10px;
+}
+.info-title {
+    margin: 5px 0 15px 10px;
+}
+
+.ant-btn[href^="tel"] {
+    color: white;
+}
+.all-button {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

@@ -1,4 +1,3 @@
-
 import { Metadata } from 'next';
 import { StyledComponentsRegistry } from '@/shared/ui/AntdRegistry';
 import { MainLayoutServer } from '@/layout/MainLayout/layout-server';
