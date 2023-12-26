@@ -10,7 +10,7 @@ import s from '../styles.module.css';
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const dontShowCreateAdUrls = ['/create-ad'];
+const dontShowCreateAdUrls = ['/create'];
 
 export const Header = () => {
     const { auth } = useUser(useShallow(state => ({auth: state.auth})));
@@ -18,7 +18,7 @@ export const Header = () => {
     const pathname = usePathname();
 
     useEffect(() => {
-        if(dontShowCreateAdUrls.includes(pathname)) setShowCreateAdButton(false);
+        if(dontShowCreateAdUrls.some(item => pathname.includes(item))) setShowCreateAdButton(false);
         else setShowCreateAdButton(true);
     }, [pathname]);
 
@@ -40,7 +40,7 @@ export const Header = () => {
                     }
                     {
                         showCreateAdButton &&
-                        <Link href={'/create-ad'}><Button type='primary'>Разместить объявление</Button></Link>
+                        <Link href={'/create'}><Button type='primary'>Разместить объявление</Button></Link>
                     }
                 </div>
             </div>

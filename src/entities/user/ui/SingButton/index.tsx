@@ -1,9 +1,10 @@
 'use client';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import { Button, Typography, Modal, Form, Input, Tabs, Checkbox  } from "antd";
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 import { MailOutlined } from '@ant-design/icons';
+import { StaticContext } from '@/shared/helpers/staticContext';
 
 export const SingButton = ({
     type = 'link',
@@ -183,9 +184,10 @@ const SingOutForm = ({
     handleCancel: Function
 }) => {
     const { registration } = useUser(useShallow((state) => ({ registration: state.registration })));
+    const { modal } = useContext(StaticContext);
 
     const openSuccessRegisterModal = () => {
-        Modal.success({
+        modal?.success({
             title: 'На вашу почту отправлено письмо',
             content: (
                 <Typography.Text type='secondary'>Перейдите по ссылке в письме для подтверждения своего email</Typography.Text>
@@ -295,7 +297,7 @@ const SingOutForm = ({
                         Зарегистрироваться
                     </Button>
                     <Button type='link' onClick={() => onToggleForm('singin')}>
-                        или войдите
+                        или войти
                     </Button>
                 </Form.Item>
 
@@ -306,9 +308,10 @@ const SingOutForm = ({
 
 const ForgotPasswordForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' | 'singout' | 'forgotpass') => void, errorMessage: string}) => {
     const { forgotPassword } = useUser(useShallow((state) => ({ forgotPassword: state.forgotPassword })));
+    const { modal } = useContext(StaticContext);
 
     const openSuccessForgotModal = () => {
-        Modal.success({
+        modal?.success({
             title: 'На вашу почту отправлено письмо',
             content: (
                 <Typography.Text type='secondary'>Перейдите по ссылке в письме для смены пароля</Typography.Text>

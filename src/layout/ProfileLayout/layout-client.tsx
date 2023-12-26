@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useUser } from '@/entities/user/model';
 import { useShallow } from 'zustand/react/shallow';
 import { AuthWrapper } from '@/entities/user/ui/AuthWrapper';
+import { useContext } from 'react';
+import { StaticContext } from '@/shared/helpers/staticContext';
 
 
 export const ProfileLayoutClient = ({children}: {children: React.ReactNode}) => {
@@ -15,9 +17,10 @@ export const ProfileLayoutClient = ({children}: {children: React.ReactNode}) => 
         avatar: state.instance?.avatar
     })));
     const pathname = usePathname();
+    const { modal } = useContext(StaticContext);
 
     const openExitModal = () => {
-        Modal.confirm({
+        modal?.confirm({
             title: 'Вы дейстительно хотите выйти?',
             cancelText: 'Нет',
             okText: 'Да',

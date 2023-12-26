@@ -1,113 +1,54 @@
 'use client';
-import { Button, Col, Modal, Row, Steps } from 'antd';
-import CreateAdStepOne from './StepOne/ui';
-import { useState } from 'react';
+import { Card, Col, Row, Typography, notification } from "antd"
 import { useRouter } from 'next/navigation';
-import CreateAdStepTwo from './StepTwo/ui';
-import CreateAdStepThree from './StepThree/ui';
-import { ICreateAdStepOne, ICreateAdStepThree, ICreateAdStepTwo, useCreateAd } from '@/entities/createAd/model';
-import { useShallow } from 'zustand/react/shallow';
+import { HistoryOutlined, KeyOutlined } from '@ant-design/icons';
 
-export type onFinishStep = ({
-    type,
-    data
-}: {
-    type: 'StepOne' | 'StepTwo' | 'StepThree'
-    data: object
-}) => void
 
-export default function CreateAd() {
-    const { createStepOne, createStepTwo, createStepThree } = useCreateAd(useShallow(state => ({createStepOne: state.createStepOne, createStepTwo: state.createStepTwo, createStepThree: state.createStepThree})))
-    const steps: ['StepOne', 'StepTwo', 'StepThree'] = ['StepOne', 'StepTwo', 'StepThree']
-    const [current, setCurrent] = useState<'StepOne' | 'StepTwo' | 'StepThree'>('StepOne');
-    const [loading, setLoading] = useState<boolean>(false);
+export const CreateAd = () => {
     const router = useRouter();
-    const index = steps.indexOf(current);
-
-    const openErrorModal = () => {
-        Modal.error({
-            title: 'Произошла какая-то ошибка',
-            okText: 'Продолжить',
-        });
-    }
-
-    const onFinishStep: onFinishStep = async ({
-        type,
-        data
-    }) => {
-        let done = false;
-
-        setLoading(true);
-
-        if(type === 'StepOne') {
-            done = await createStepOne(data as ICreateAdStepOne);
-        }
-
-        if(type === 'StepTwo') {
-            done = await createStepTwo(data as ICreateAdStepTwo);
-        }
-
-        if(type === 'StepThree') {
-            done = await createStepThree(data as ICreateAdStepThree);
-        }
-
-        setLoading(false);
-
-        if(!done) {
-            openErrorModal()
-            return;
-        }
-
-        const index = steps.indexOf(type);
-        if(index < 2) setCurrent(steps[index + 1]);
-        else router.push('/profile')
-    };
-
-    const onBack = () => {
-        const index = steps.indexOf(current);
-        if(index >= 1) setCurrent(steps[index - 1]);
-    }
 
     return (
         <div>
-            <Steps
+            <Typography.Title 
+                level={2}
                 style={{
+                    marginTop: '18px',
                     marginBottom: '48px'
                 }}
-                current={index}
-                items={[
-                    {
-                        title: 'Основная информация',
-                    },
-                    {
-                        title: 'Юридическая информация',
-                    },
-                    {
-                        title: 'Техническая информация'
-                    },
-                ]}
-            />
-            {
-                index === 0
-                    ? <CreateAdStepOne onFinish={onFinishStep}/>
-                    : index === 1
-                        ? <CreateAdStepTwo onFinish={onFinishStep}/>
-                        : index === 2
-                            ? <CreateAdStepThree onFinish={onFinishStep}/>
-                            : null
-            }
-            <Row>
-                <Col span={6}>
-                    <Button loading={loading} disabled={index === 0} onClick={onBack} className='mr-4 w-full' type="default">
-                        Назад
-                    </Button>
+            >
+                Создать
+            </Typography.Title>
+            <Row gutter={[16, 16]}>
+                <Col span={8}>
+                    <Card
+                        className='w-full'
+                        bordered={false}
+                        hoverable
+                        onClick={() => router.push('/create/sale')}
+                    >
+                        <Card.Meta
+                            avatar={<KeyOutlined style={{fontSize: 28}}/>}
+                            title="Объявление о продаже сунда"
+                            description="Тысячи людей увидят объявление о продаже твоего сунда"
+                        />
+                    </Card>
                 </Col>
-                <Col offset={1} span={15}>
-                    <Button loading={loading} form={current} type="primary" className='mr-4 w-full' htmlType="submit">
-                        {index === 2 ? 'Создать объявление' : 'Перейти к следующему шагу'}
-                    </Button>
+                <Col span={8}>
+                    <Card
+                        className='w-full'
+                        bordered={false}
+                        hoverable
+                        onClick={() => notification.warning({message: 'Функционал будет доступен позже', placement: 'bottomRight', duration: 3})}
+                        style={{ border: '0 solid white' }}
+                    >
+                        <Card.Meta
+                            avatar={<HistoryOutlined style={{fontSize: 28}}/>}
+                            title="Объявление об аренде сунда"
+                            description="Тысячи людей увидят объявление о аренде твоего сунда"
+                        />
+                    </Card>
                 </Col>
             </Row>
         </div>
-    );
+    )
 }

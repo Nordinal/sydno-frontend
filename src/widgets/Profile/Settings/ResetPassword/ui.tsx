@@ -1,21 +1,24 @@
 'use client';
 import { useUser } from "@/entities/user/model";
+import { StaticContext } from "@/shared/helpers/staticContext";
 import { Button, Divider, Form, Input, Modal, Typography } from "antd";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export const ResetPassword = () => {
     const { resetPassword } = useUser(useShallow((state) => ({ resetPassword: state.resetPassword })));
+    const { modal } = useContext(StaticContext);
 
     const openSuccessResetModal = () => {
-        Modal.success({
+        modal?.success({
             title: 'Пароль успешно изменен',
             okText: 'Продолжить',
         });
     }
 
     const openErrorResetModal = () => {
-        Modal.error({
+        modal?.error({
             title: 'Произошла какая-то ошибка',
             okText: 'Продолжить',
         });
@@ -113,7 +116,7 @@ export const ResetPassword = () => {
                 >
                     <Input.Password
                         readOnly
-                        placeholder='Повторите новый пароль пароль'
+                        placeholder='Повторите новый пароль'
                         spellCheck='false'
                         autoCorrect='off'
                         autoComplete='off'
