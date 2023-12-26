@@ -21,13 +21,12 @@ export const MyModeration = () => {
             action="/api/myadverts/moderation"
             renderItem={(item: IAdvertCard) => {
                 return (
-                    <Col key={item.id} span={12}>
-                        <AdvertCard
-                            {...item}
-                            size="small"
-                            onClick={() => onAdvertCardClick(item.id)}
-                        />
-                    </Col>
+                    <AdvertCard
+                        key={item.id}
+                        {...item}
+                        size="small"
+                        onClick={() => onAdvertCardClick(item.id)}
+                    />
                 );
             }}
         />
