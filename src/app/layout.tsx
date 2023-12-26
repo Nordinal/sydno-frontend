@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 import { StyledComponentsRegistry } from "@/shared/ui/AntdRegistry";
-import { instanceApi } from "@/shared/configs/instanceAxios";
-import { AxiosError, AxiosPromise } from "axios";
 import { MainLayoutServer } from "@/layout/MainLayout/layout-server";
-import { cookies } from "next/headers";
+import "antd/dist/reset.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Главная страница",
-  description: "123",
+  description: "Продажа и аренда судна",
   icons: {
     icon: ["/favicon.ico?v=4"],
     apple: ["/apple-touch-icon.png?v=4"],
@@ -23,7 +22,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <StyledComponentsRegistry>
           <MainLayoutServer>{props.children}</MainLayoutServer>
         </StyledComponentsRegistry>
-        <div id="portal" />
       </body>
     </html>
   );
