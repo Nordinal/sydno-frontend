@@ -1,10 +1,11 @@
 'use client';
 import { useUser } from "@/entities/user/model";
+import { StaticContext } from "@/shared/helpers/staticContext";
 import { UploadAvatar } from "@/shared/ui/UploadAvatar";
 import { Button, Divider, Form, Input, Modal, Typography } from "antd";
 import { MaskedInput } from "antd-mask-input";
 import { RcFile } from "antd/lib/upload";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export const ProfileInfo= () => {
@@ -19,16 +20,17 @@ export const ProfileInfo= () => {
     })));
 
     const [avatar, setAvatar] = useState<string | RcFile | Blob | null>(null);
+    const { modal } = useContext(StaticContext);
 
     const openSuccessModal = () => {
-        Modal.success({
+        modal?.success({
             title: 'Персональные данные изменены',
             okText: 'Продолжить',
         });
     }
 
     const openErrorModal = () => {
-        Modal.error({
+        modal?.error({
             title: 'Произошла какая-то ошибка',
             okText: 'Продолжить',
         });

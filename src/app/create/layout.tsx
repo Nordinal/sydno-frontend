@@ -1,4 +1,4 @@
-import CreateAdLayoutClient from "@/layout/CreateAdLayout/layout-client";
+import { AuthWrapper } from "@/entities/user/ui/AuthWrapper";
 import { Metadata } from "next";
 
 
@@ -12,6 +12,8 @@ export default function RootLayout({
     children: React.ReactNode;
   }) {
     return (
-      <CreateAdLayoutClient>{children}</CreateAdLayoutClient>
+      <AuthWrapper>
+            {children}
+      </AuthWrapper>
     );
   }

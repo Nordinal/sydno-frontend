@@ -3,18 +3,24 @@ import { useUser } from "@/entities/user/model";
 import { Button, Divider, Modal, Typography } from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { MailOutlined } from '@ant-design/icons';
+import { useContext } from "react";
+import { StaticContext } from "@/shared/helpers/staticContext";
 
 export const VerifyMail = () => {
     const { isVerify, sendVerifyMail } = useUser(useShallow((state) => ({
         isVerify: !!state.instance?.email_verified_at,
         sendVerifyMail: state.sendVerifyMail
     })));
+    const { modal } = useContext(StaticContext);
 
     const openSuccessVerifyModal = () => {
-        Modal.success({
+        modal?.success({
             title: 'На вашу почту отправлено письмо',
             content: (
+                <>
                 <Typography.Text type='secondary'>Перейдите по ссылке в письме для смены пароля</Typography.Text>
+                <Button type='primary'>324234234</Button>
+                </>
             ),
             okText: 'Продолжить',
             icon: <MailOutlined />
@@ -22,7 +28,7 @@ export const VerifyMail = () => {
     }
 
     const openErrorVerifyModal = () => {
-        Modal.error({
+        modal?.error({
             title: 'Произошла какая-то ошибка',
             okText: 'Продолжить',
         });
