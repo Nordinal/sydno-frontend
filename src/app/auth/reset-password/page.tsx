@@ -1,6 +1,6 @@
-import { AuthWrapper } from "@/entities/user/ui/AuthWrapper";
-import { NotFoundQueryParams } from "@/shared/ui/NotFoundQueryParams";
-import { ForgotPassword } from "@/widgets/Auth/ForgotPassword/ui";
+import { AuthWrapper } from "Auth/entities";
+import { ForgotPassword } from "Auth/pages";
+import { NotFoundQueryParams } from "SydnoComponents/commons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,11 +1,11 @@
 import React from "react";
 import { AdvertCard } from "@/entities/advert";
 import { useRouter, useSearchParams } from "next/navigation";
-import { smoothScrollToAnchor } from "@/shared/helpers/scroll";
-import { BasicList } from "@/shared/ui/BasicList";
-import getUrlQueryParams from "@/shared/helpers/getUrlQueryParams";
+import { smoothScrollToAnchor } from "SydnoHelpers/commons";
+import { BasicList } from "SydnoComponents/lists";
+import {getUrlQueryParams} from "SydnoHelpers/commons";
 import { IAdvertCard } from "@/entities/advert/ui/AdvertCard";
-import {convertObjectToPathname} from "@/shared/helpers/convertObjectToPathname";
+import {convertObjectToPathname} from "SydnoHelpers/commons";
 
 const List: React.FC = () => {
     const router = useRouter();

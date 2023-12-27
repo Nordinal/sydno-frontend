@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
-import { instanceApi } from '@/shared/configs/instanceAxios';
+import { sydnoServiceJson } from 'SydnoService/service';
 
 export const Type: React.FC<{
     type?: string | null;
@@ -13,7 +13,7 @@ export const Type: React.FC<{
     const [typeList, setTypeList] = useState<{value: string, label: string}[]>();
 
     useEffect(() => {
-        instanceApi.get('/api/selector?vesseltypes').then(res => {
+        sydnoServiceJson.get('/api/selector?vesseltypes').then(res => {
             const data = res.data.message
             setTypeList(
                 Object.entries(data.vessel_types as {[x in string]: string})

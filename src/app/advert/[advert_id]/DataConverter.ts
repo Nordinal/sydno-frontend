@@ -1,5 +1,5 @@
 import { IAdvertListItem } from "@/entities/advert/types/main";
-import countriesJson from "../../../shared/ui/CountriesAutoComplete/countries.json";
+import countriesJson from "../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json";
 
 export function ConvertData(advertData: IAdvertListItem) {
   const legalInformation = advertData.advert_legal_information;

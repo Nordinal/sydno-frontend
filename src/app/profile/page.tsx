@@ -1,4 +1,4 @@
-import { Profile } from "@/widgets/Profile/ui";
+import { Profile } from "Profile/pages";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

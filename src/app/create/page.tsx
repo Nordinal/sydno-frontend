@@ -1,9 +1,7 @@
-'use client';
-
-import {CreateAd} from "@/widgets/CreateAd/ui";
+import { CreateAdvert } from 'CreateAdvert/pages';
 
 export default function CreateAdPage() {
     return (
-        <CreateAd />
+        <CreateAdvert />
     );
 };

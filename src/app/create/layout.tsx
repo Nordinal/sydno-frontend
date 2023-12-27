@@ -1,4 +1,4 @@
-import { AuthWrapper } from "@/entities/user/ui/AuthWrapper";
+import { AuthWrapper } from "Auth/entities";
 import { Metadata } from "next";
 
 

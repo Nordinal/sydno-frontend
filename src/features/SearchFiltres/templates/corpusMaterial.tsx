@@ -1,6 +1,6 @@
 import React from "react";
 import { TChangeConfigProperty } from "../types";
-import BackendSelector from "@/shared/ui/BackendSelector";
+import { BackendSelector } from "SydnoComponents/selectors";
 
 export const CorpusMaterial: React.FC<{
     material?: string | null;

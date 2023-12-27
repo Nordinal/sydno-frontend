@@ -1,7 +1,3 @@
-import {
-  ICreateAdStepTwo as ILegalInformation,
-  ICreateAdStepThree as ITechnicalInformation,
-} from "@/entities/createAd/model";
 
 export interface IAdvertListItem {
   id: number;
@@ -14,6 +10,7 @@ export interface IAdvertListItem {
   registration_number: string;
   phone_number: string;
   images: string[];
-  advert_legal_information: ILegalInformation;
-  advert_technical_information: ITechnicalInformation;
+  // Илья, мои типы только для создания объявления, у меня хранятся первичные ключи из бд в полях, у вас должен текст быть
+  advert_legal_information: any;
+  advert_technical_information: any;
 }

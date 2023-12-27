@@ -1,9 +1,8 @@
-'use client';
+import { CreateSaleAdvert } from 'CreateAdvert/pages';
 
-import { CreateSaleAdContainer } from "@/widgets/CreateAd/sail/ui";
 
 export default function CreateAdPage() {
     return (
-        <CreateSaleAdContainer />
+        <CreateSaleAdvert />
     );
 };

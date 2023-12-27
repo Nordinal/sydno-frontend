@@ -1,6 +1,6 @@
 import React from "react";
 import { TChangeConfigProperty } from "../types";
-import { CountriesAutoComplete } from "@/shared/ui/CountriesAutoComplete";
+import { CountriesSelector } from "SydnoComponents/selectors";
 
 export const Flag: React.FC<{
     flag?: string | null;
@@ -12,7 +12,7 @@ export const Flag: React.FC<{
     return (
         <>
             <p>Флаг</p>
-            <CountriesAutoComplete
+            <CountriesSelector
                 value={flag || undefined}
                 style={{width: '100%'}}
                 placeholder='Выберите флаг'

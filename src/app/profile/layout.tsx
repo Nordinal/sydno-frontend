@@ -1,4 +1,4 @@
-import { ProfileLayoutClient } from "@/layout/ProfileLayout/layout-client";
+import { ProfileLayoutClient } from "Profile/layouts";
 
 export default function RootLayout({
     children,

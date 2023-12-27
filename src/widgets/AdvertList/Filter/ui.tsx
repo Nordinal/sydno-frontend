@@ -1,8 +1,8 @@
 import React from "react";
 import { SearchFiltres } from "@/features/SearchFiltres";
 import { useRouter, useSearchParams } from "next/navigation";
-import {convertObjectToPathname} from "@/shared/helpers/convertObjectToPathname";
-import getUrlQueryParams from "@/shared/helpers/getUrlQueryParams";
+import { convertObjectToPathname } from "SydnoHelpers/commons";
+import { getUrlQueryParams } from "SydnoHelpers/commons";
 
 const Filter: React.FC = () => {
     const router = useRouter();

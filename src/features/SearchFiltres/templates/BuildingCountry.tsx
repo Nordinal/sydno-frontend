@@ -1,6 +1,6 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
-import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
+import { CountriesSelector } from 'SydnoComponents/selectors';
 
 export const BuildingCountry: React.FC<{
     building_country?: string | null;
@@ -12,7 +12,7 @@ export const BuildingCountry: React.FC<{
   return (
     <>
       <p>Страна постройки</p>
-      <CountriesAutoComplete
+      <CountriesSelector
           value={building_country || undefined}
           style={{width: '100%'}}
           placeholder='Выберите страну'

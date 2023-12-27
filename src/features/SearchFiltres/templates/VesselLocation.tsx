@@ -1,8 +1,7 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
 import { Col, Row } from 'antd';
-import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
-import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
+import { CountriesSelector, RegionSelector } from 'SydnoComponents/selectors';
 
 export const VesselLocation: React.FC<{
     vessel_location_country?: string | null;
@@ -19,7 +18,7 @@ export const VesselLocation: React.FC<{
         <Row>
             <Col span={12}>
                 <p>страна</p>
-                <CountriesAutoComplete
+                <CountriesSelector
                     value={vessel_location_country || undefined}
                     style={{width: '100%'}}
                     placeholder='Выберите страну'
@@ -29,7 +28,7 @@ export const VesselLocation: React.FC<{
             </Col>
             <Col span={12}>
                 <p>город</p>
-                <RegionAutoComplete
+                <RegionSelector
                     value={vessel_location_city as any || undefined}
                     style={{width: '100%'}}
                     allowClear={true}

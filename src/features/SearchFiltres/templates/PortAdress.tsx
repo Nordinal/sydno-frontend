@@ -1,8 +1,7 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
-import { CountriesAutoComplete } from '@/shared/ui/CountriesAutoComplete';
 import { Col, Row } from 'antd';
-import { RegionAutoComplete } from '@/shared/ui/RegionAutoComplete';
+import { CountriesSelector, RegionSelector } from 'SydnoComponents/selectors';
 
 export const PortAdress: React.FC<{
     port_adress_country?: string | null;
@@ -19,7 +18,7 @@ export const PortAdress: React.FC<{
         <Row>
             <Col span={12}>
                 <p>страна</p>
-                <CountriesAutoComplete
+                <CountriesSelector
                     value={port_adress_country || undefined}
                     style={{width: '100%'}}
                     placeholder='Выберите страну'
@@ -29,7 +28,7 @@ export const PortAdress: React.FC<{
             </Col>
             <Col span={12}>
                 <p>город</p>
-                <RegionAutoComplete
+                <RegionSelector
                     value={(port_adress_city as any) || undefined}
                     style={{width: '100%'}}
                     allowClear={true}

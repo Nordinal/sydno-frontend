@@ -1,5 +1,5 @@
-import { NotFoundQueryParams } from "@/shared/ui/NotFoundQueryParams";
-import { VerifyResult } from "@/widgets/Auth/VerifyResult/ui";
+import { VerifyResult } from "Auth/pages";
+import { NotFoundQueryParams } from "SydnoComponents/commons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
-import { instanceApi } from '@/shared/configs/instanceAxios';
+import { sydnoServiceJson } from 'SydnoService/service';
 
 export const VesselStatus: React.FC<{
     vessel_status?: string | null;
@@ -13,7 +13,7 @@ export const VesselStatus: React.FC<{
     const [statusList, setStatusList] = useState<{value: string, label: string}[]>();
 
     useEffect(() => {
-        instanceApi.get('/api/selector?vesselstatuses').then(res => {
+        sydnoServiceJson.get('/api/selector?vesselstatuses').then(res => {
             const data = res.data.message
             setStatusList(
                 Object.entries(data.vessel_statuses as {[x in string]: string})

@@ -1,13 +1,13 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Row, Col, Typography, Space, Tag, Button, Tooltip } from "antd";
 import './styles.css';
-import SmallImageSlider from "@/shared/ui/SmallImageSlider";
-import isTouchDevice from "@/shared/helpers/isTouchDevice";
+import {SmallImageSlider} from "SydnoComponents/sliders";
+import {isTouchDevice} from "SydnoHelpers/commons";
 import { IAdvertListItem } from "../../types/main";
 import { useAdvert } from "../../model";
 import { useShallow } from "zustand/react/shallow";
 import { HeartOutlined } from '@ant-design/icons';
-import Price from "@/shared/ui/Price";
+import {Price} from "SydnoComponents/commons";
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;

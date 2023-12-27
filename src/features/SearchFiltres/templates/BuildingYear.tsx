@@ -1,7 +1,6 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
 import { DatePicker, DatePickerProps } from 'antd';
-import moment from 'moment';
 import dayjs from 'dayjs';
 
 export const BuildingYear: React.FC<{
