@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useLayoutEffect, useState } from "react";
-import { Row, Col, Typography } from "antd";
+import { Row, Col, Typography, Button } from "antd";
 import './styles.css';
 import SmallImageSlider from "@/shared/ui/SmallImageSlider";
 import isTouchDevice from "@/shared/helpers/isTouchDevice";
@@ -14,6 +14,12 @@ import { ICreateAdStepTwo as ILegalInformation } from "@/entities/createAd/model
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
     size?: 'small' | 'big';
+    featureWrapperClass?: string;
+    customFeature?: React.ReactNode;
+    disableNumberButton?: boolean;
+    // rightColStyles?: React.CSSProperties;
+    // leftColStyles?: React.CSSProperties;
+    // middleColStyles?: React.CSSProperties;
 }
 
 const FALLBACK_IMAGE_SRC = 'https://upload.wikimedia.org/wikipedia/commons/a/ab/European_shorthair_TUROK_cat_show_Turku_2010-03-27.JPG';
@@ -53,7 +59,7 @@ const rightCol =  {
     'big': {
         className: 'sm:pl-4',
         xs: 24,
-        sm: 4,
+        sm: 5,
     }
 }
 
@@ -68,6 +74,12 @@ const AdvertCard: React.FC<IAdvertCard> = ({
     images,
     id,
     size,
+    customFeature,
+    featureWrapperClass,
+    disableNumberButton,
+    // rightColStyles,
+    // leftColStyles,
+    // middleColStyles,
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -134,7 +146,7 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                         </Typography.Title>
                         <div className="flex flex-col flex-auto">
                             <Typography.Paragraph
-                                className="sudno-AdvertCard-labels flex a-items-center"
+                                className="sudno-AdvertCard-labels flex items-center"
                             >
                                 <DetailsInfo
                                     size={size || 'big'}
@@ -150,20 +162,26 @@ const AdvertCard: React.FC<IAdvertCard> = ({
                     </div>
                 </Col>
                 <Col {...rightCol[size || 'big']}>
-                    <div className="flex flex-col justify-between h-full">
-                        <div>
-                            <Typography.Paragraph style={{
-                                opacity: showDetails || isTouch ? '1' : '0'
-                            }}>
+                    <div className={featureWrapperClass || 'flex flex-col justify-between items-center h-full'}>
+                        {
+                            (disableNumberButton === false) || 
+                            <div>
                                 {
                                     showNumber ?
                                         phone_number :
-                                        <div onClick={showNumberBtnHandler}>
+                                        <Button style={{
+                                            maxWidth: '100%',
+                                            whiteSpace: 'pre-wrap',
+                                            height: 'auto',
+                                            opacity: showDetails || isTouch ? '1' : '0'
+                                        }} onClick={showNumberBtnHandler}>
                                             Показать телефон
-                                        </div>
+                                        </Button>
                                 }
-                            </Typography.Paragraph>
-                        </div>
+                            </div>
+                        }
+
+                        {customFeature}
                     </div>
                 </Col>
             </Row>
@@ -184,7 +202,7 @@ const DetailsItem: React.FC<{
                 <div className="sudno-AdvertCard-details-label pr-2">
                     {label}:
                 </div>
-                <div className="sudno-AdvertCard-details-value flex justify-center content-center">
+                <div className="sudno-AdvertCard-details-value flex justify-center items-center">
                     {children}
                 </div>
             </div>
@@ -195,7 +213,7 @@ const DetailsInfo: React.FC<ILegalInformation & {
     size: 'small' | 'big';
 }> = (props) => {
     return (
-        <div className={'flex flex-wrap justify-start content-center ' + (props.size === 'small' ? 'flex-col' : '')}>
+        <div className={'flex flex-wrap justify-start items-center ' + (props.size === 'small' ? 'flex-col' : '')}>
             <DetailsItem label="Тип">{props.type}</DetailsItem>
             <DetailsItem label="Класс">{props.class_formula}</DetailsItem>
             <DetailsItem label="Назначение">{props.purpose}</DetailsItem>

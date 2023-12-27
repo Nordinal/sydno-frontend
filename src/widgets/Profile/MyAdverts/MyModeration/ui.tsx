@@ -24,7 +24,6 @@ export const MyModeration = () => {
                     <AdvertCard
                         key={item.id}
                         {...item}
-                        size="small"
                         onClick={() => onAdvertCardClick(item.id)}
                     />
                 );

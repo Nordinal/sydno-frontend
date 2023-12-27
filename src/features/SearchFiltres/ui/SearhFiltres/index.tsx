@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { TFilterOptions } from '@/entities/advert';
 import {
     Button,
@@ -65,6 +65,7 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
         ...filterOptions,
     });
     const [showHiddenBlock, setShowHiddenBlock] = useState<boolean>(false);
+    const hiddenBlockRef = useRef<HTMLDivElement>(null);
 
     const onButtonClickHandler = () => {
         onFindButtonClick(filterConfig);
@@ -87,9 +88,20 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
         }));
     }
 
+    // useLayoutEffect(() => {
+    //     let height = 1140;
+
+    //     if (hiddenBlockRef.current) {
+    //         height = hiddenBlockRef.current.getBoundingClientRect().height;
+    //     }
+
+    //     hiddenBlockRef.current?.style.setProperty('--search-filter-hidden-block-height',  `${height}px`);
+    //     setShowHiddenBlock(false);
+    // }, []);
+
     return (
         <div
-            className="p-4" 
+            className="sudno-SearhFiltres p-4" 
             style={{ boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)', overflow: 'hidden', borderRadius: 'var(--main-app-br)' }}
         >
             <Typography.Title level={3}>
@@ -174,6 +186,7 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
             </Row>
             <div
                 className={showHiddenBlock ? 'sudno-SearhFiltres-hiddenBlock-active pb-4' : 'sudno-SearhFiltres-hiddenBlock'}
+                ref={hiddenBlockRef}
             >
                 <Row gutter={[16, 24]} className='pb-4'>
                     <Col
