@@ -1,13 +1,5 @@
-.favorite-star {
-    color: rgb(149, 148, 148) !important;
-    cursor: pointer;
-    margin-right: 8px;
-    height: 40px;
-    transition: color 0.3s;
-}
-
-.favorite-star:hover {
-    color: rgb(82, 154, 226) !important;
+.pt-6 {
+    scroll-behavior: smooth;
 }
 
 .ant-carousel .slick-slide div {
@@ -22,28 +14,111 @@
     max-height: 100%;
 }
 
-.field {
+.header-with-price {
     display: flex;
-    align-items: start;
+    flex-direction: row;
 }
-.price-phone {
+.contacts-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 10px 0;
+}
+.contacts {
+    position: fixed;
+    width: 400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     margin-left: 10px;
     justify-content: start;
 }
+
+.price {
+    position: fixed;
+}
+
 .description {
     margin-top: 10px;
 }
 .info-title {
     margin: 5px 0 15px 10px;
 }
-
-.ant-btn[href^="tel"] {
-    color: white;
+.descriptions {
+    width: 100%;
 }
-.all-button {
-    margin-left: 10px;
+.descriptions:not(:first-child) {
+    margin-top: 20px;
+}
+
+.descriptions th {
+    width: 20%;
+}
+.descriptions td {
+    width: 30%;
+    text-align: center;
+}
+.show-close {
+    margin-top: 10px;
     margin-bottom: 10px;
+}
+
+@media screen and (max-width: 810px) {
+    .main-content {
+        display: flex;
+        flex-direction: column;
+    }
+    .header-with-price {
+        display: flex;
+        flex-direction: column;
+    }
+    .price {
+        position: static;
+    }
+    .contacts-wrapper {
+        align-items: start;
+        justify-content: center;
+    }
+    .contacts {
+        margin: 0 auto;
+        margin-top: 1rem;
+        width: 100%;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .descriptions {
+        width: 390px;
+    }
+    .descriptions th {
+        width: 100px;
+    }
+    .descriptions td {
+        width: 280px;
+        text-align: center;
+    }
+    .contacts {
+        position: relative;
+    }
+    .main-content {
+        display: flex;
+        flex-direction: column;
+    }
+    .header-with-price {
+        display: flex;
+        flex-direction: column;
+    }
+    .price {
+        position: static;
+    }
+}
+@media screen and (max-width: 400px) {
+    .descriptions {
+        width: 370px;
+    }
+}
+@media screen and (max-width: 380px) {
+    .descriptions {
+        width: 350px;
+    }
 }
