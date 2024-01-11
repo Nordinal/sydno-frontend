@@ -2,13 +2,12 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Button, Col, Image, Row, Spin, Typography } from "antd";
 import { StarFilled } from "@ant-design/icons";
-import { useAdvert } from "@/entities/advert";
 import { useShallow } from "zustand/react/shallow";
 import { Carousel } from "antd";
 import "./styles.css";
 import { DetailsPair } from "./DetailsPair";
 import { ConvertData } from "./DataConverter";
-import { IAdvertListItem } from "@/entities/advert/types/main";
+import { useAdvert, IAdvertListItem } from "Advert/entities";
 import { Price } from "SydnoComponents/commons";
 import { SmallImageSlider } from "SydnoComponents/sliders";
 interface IAdvertPageProps {

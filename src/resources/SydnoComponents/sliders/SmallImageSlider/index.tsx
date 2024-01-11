@@ -9,9 +9,10 @@ export interface ISmallImageSlider {
     setIndex?: (index: number) => void;
     imageClass?: string;
     fallbackImageSrc?: string;
+    imageStyle?: React.CSSProperties;
 }
 
-export const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaultIndex = 0, showLabels = true, fallbackImageSrc = '', imageClass }) => {
+export const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaultIndex = 0, showLabels = true, fallbackImageSrc = '', imageClass, imageStyle }) => {
     const [activeIndex, setActiveIndex] = useState<number>(defaultIndex);
     const imageRef = useRef<HTMLImageElement>(null);
 
@@ -40,6 +41,7 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems,
                 src={items[activeIndex]}
                 className={'sudno-SmallImageSlider-image ' + imageClass}
                 onError={onImageErrorLoad}
+                style={imageStyle}
                 alt=""
             />
             <div

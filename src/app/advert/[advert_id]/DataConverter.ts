@@ -1,4 +1,4 @@
-import { IAdvertListItem } from "@/entities/advert/types/main";
+import { IAdvertListItem } from "Advert/entities";
 import countriesJson from "../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json";
 
 export function ConvertData(advertData: IAdvertListItem) {

@@ -1,5 +1,4 @@
-import { AdvertCard } from "@/entities/advert";
-import { IAdvertCard } from "@/entities/advert/ui/AdvertCard";
+import { IAdvertCard, BaseAdvertCard } from "Advert/widgets";
 import { BasicList } from "SydnoComponents/lists";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +15,7 @@ export const MyModeration = () => {
             action="/api/myadverts/moderation"
             renderItem={(item: IAdvertCard) => {
                 return (
-                    <AdvertCard
+                    <BaseAdvertCard
                         key={item.id}
                         {...item}
                         onClick={() => onAdvertCardClick(item.id)}
