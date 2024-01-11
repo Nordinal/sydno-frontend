@@ -32,17 +32,20 @@ const leftCol = {
     },
     'big': {
         className: 'sm:pr-4 sm:pb-0 pb-4',
-        xs: 24,
-        sm: 6,
+        lg: {
+            flex: '0 1 300px',
+        },
     }
 }
 
 const middleCol = {
     'small': {
-        flex: '1',
+        flex: 'auto',
     },
     'big': {
-        flex: '1',
+        lg: {
+            flex: '300',
+        },
     }
 }
 
@@ -52,8 +55,9 @@ const rightCol =  {
     },
     'big': {
         className: 'sm:pl-4',
-        xs: 24,
-        sm: 5,
+        lg: {
+            flex: '0 1 250',
+        },
     }
 }
 
@@ -143,18 +147,17 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                     </div>
                 </Col>
                 <Col {...rightCol[size || 'big']}>
-                    <div className={featureWrapperClass || 'flex flex-col justify-between items-center h-full'}>
+                    <div className={featureWrapperClass || 'flex flex-col justify-between items-end h-full'}>
                         {
                             <>
                                 {
                                     (disableNumberButton === false) || 
-                                    <div>
+                                    <div className="pb-2 sm:pb-0">
                                         {
                                             showNumber ?
                                                 phone_number :
                                                 <Button style={{
                                                     maxWidth: '100%',
-                                                    whiteSpace: 'pre-wrap',
                                                     height: 'auto',
                                                     opacity: showDetails || isTouch ? '1' : '0'
                                                 }} onClick={showNumberBtnHandler}>
