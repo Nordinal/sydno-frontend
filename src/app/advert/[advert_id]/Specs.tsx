@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Descriptions, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { Descriptions } from "antd";
 import useMobileView from "./useMobileView";
 
 type DescriptionItem = {
@@ -30,6 +30,21 @@ const Specs: React.FC<SpecsProps> = ({ ConvertedAdvertData }) => {
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
   const mobileView = useMobileView();
   const columns = mobileView ? 1 : 2;
+
+  useEffect(() => {
+    if (showAllCharacteristics) {
+      const descriptionsElement = document.getElementById("descriptions");
+      if (descriptionsElement) {
+        const offsetTop = descriptionsElement.offsetTop;
+
+        window.scrollTo({
+          top: window.scrollY + offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [showAllCharacteristics]);
+
   return (
     <div className="specs">
       <Descriptions
@@ -42,12 +57,12 @@ const Specs: React.FC<SpecsProps> = ({ ConvertedAdvertData }) => {
       />
 
       {!showAllCharacteristics && ConvertedAdvertData && (
-        <Button
-          className="show-close"
+        <button
           onClick={() => setShowAllCharacteristics(true)}
+          className="show-close"
         >
-          Показать все характеристики
-        </Button>
+          Показать все характеристики...
+        </button>
       )}
 
       {showAllCharacteristics && ConvertedAdvertData && (
@@ -67,14 +82,21 @@ const Specs: React.FC<SpecsProps> = ({ ConvertedAdvertData }) => {
             items={ConvertedAdvertData.technicalInfo}
             className="descriptions"
             column={columns}
+            id="descriptions"
           />
 
-          <Button
+          {/* <Button
             className="show-close"
             onClick={() => setShowAllCharacteristics(false)}
           >
             Скрыть
-          </Button>
+          </Button> */}
+          <button
+            onClick={() => setShowAllCharacteristics(false)}
+            className="show-close"
+          >
+            Скрыть
+          </button>
         </>
       )}
     </div>

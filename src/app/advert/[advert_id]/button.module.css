@@ -11,51 +11,78 @@
     gap: 10px;
     font-size: 20px;
     margin: 4px 2px;
-    transition-duration: 0.3s;
+    transition-duration: 0.25s;
     cursor: pointer;
     opacity: 1;
 }
 
 .tel {
-    background-color: #34a8ff;
+    border: 1.5px solid #3a618c;
+    background-color: #3a618c;
     color: white;
 }
 .tel:hover {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 .show {
-    border: 1px solid #d9d9d9;
+    border: 1.5px solid #d9d9d9;
 }
 .show:hover {
-    border: 1px solid #34a8ff;
-    color: #34a8ff;
+    color: #3a618c;
+    border: 1.5px solid #3a618c;
 }
 
 .email {
-    background-color: #202124;
+    background-color: #150e15;
+
     color: white;
 }
 .email:hover {
-    background-color: #45474d;
+    background-color: #2b262a;
 }
 
 .favorite {
     background-color: #d9d9d9;
+    color: #150e15;
     align-items: center;
     justify-content: center;
     padding: 30px 10px;
     opacity: 1;
 }
-.selected {
-    background-color: #f35757;
-    color: white;
-}
 .favorite:hover {
     opacity: 0.7;
 }
+.disabled {
+    opacity: 0.6;
+}
+.disabled:hover {
+    opacity: 0.6;
+}
+.selected {
+    background-color: #34a8ff;
+    color: white;
+}
+.selected:hover {
+    opacity: 0.9;
+}
+
 .share {
-    border: 1px solid #22c062;
-    color: #22c062;
+    border: 1.5px solid #739570;
+    color: #739570;
+    opacity: 1;
+}
+.share:hover {
+    color: #356330;
+}
+
+.copiedAnimation {
+    color: white;
+    border: 1.5px solid #739570;
+    background-color: #739570;
+}
+.copiedAnimation:hover {
+    color: white;
+    opacity: 1;
 }
 
 .anticon {
@@ -64,32 +91,25 @@
 
 @media screen and (max-width: 810px) {
     .callButton {
-        height: 25px;
-        width: 200px;
+        height: 30px;
+        width: 300px;
         font-size: 18px;
-        padding: 20px;
+        padding: 30px;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 640px) {
+    .callButton {
+        height: 30px;
+        width: 270px;
+        font-size: 15px;
+        padding: 30px;
+    }
+}
+
+@media screen and (max-width: 580px) {
     .callButton {
         height: 25px;
         width: 100%;
-        padding: 20px;
-    }
-}
-
-.copiedAnimation {
-    color: white;
-    background-color: #22c062;
-}
-
-@keyframes fadeInOut {
-    0% {
-        background-color: inherit; /* Изначальный цвет кнопки */
-    }
-    50% {
-        background-color: green; /* Зеленый цвет */
-    }
-    100% {
+        padding: 22px;
     }
 }

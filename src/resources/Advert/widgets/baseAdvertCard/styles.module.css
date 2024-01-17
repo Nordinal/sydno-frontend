@@ -1,0 +1,28 @@
+.sudno-AdvertCard {
+    transition: 0.2s;
+    padding: 15px;
+    border-radius: var(--main-app-br);
+}
+
+.sudno-AdvertCard:hover {
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+    cursor: pointer;
+}
+
+.sudno-AdvertCard-description {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.45) !important;
+}
+
+.sudno-AdvertCard-details-label {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 576px) {
+    .sudno-AdvertCard {
+        box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+    }
+}

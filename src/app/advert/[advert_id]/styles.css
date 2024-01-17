@@ -58,8 +58,13 @@
     text-align: center;
 }
 .show-close {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 10px;
+    font-size: 16px;
+}
+.show-close:hover {
+    color: #34a8ff;
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 810px) {

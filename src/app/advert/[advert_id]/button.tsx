@@ -15,6 +15,7 @@ interface CallButtonProps {
   phone?: string;
   email?: string;
   isFavorite?: boolean;
+  isLoading?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ const ContactButton: FC<CallButtonProps> = ({
   phone,
   email,
   isFavorite,
+  isLoading,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   let buttonText = "";
@@ -59,12 +61,13 @@ const ContactButton: FC<CallButtonProps> = ({
       ) : (
         <StarOutlined style={{ fontSize: "20px" }} />
       );
-      buttonText = "Избранное";
+      buttonText = isFavorite
+        ? "Удалить из избранного"
+        : "Добавить в избранное";
 
       break;
     case "share":
       buttonText = isCopied ? "Скопировано" : "Поделиться";
-      // buttonIcon = <ShareAltOutlined />;
       buttonIcon = isCopied ? <CheckOutlined /> : <ShareAltOutlined />;
       buttonAction = "share";
       break;
@@ -76,27 +79,27 @@ const ContactButton: FC<CallButtonProps> = ({
   }
 
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
     if (onClick) {
       onClick(event);
     }
-    // if (buttonAction) {
-    //   window.location.href = buttonAction;
-    // }
 
     if (buttonAction) {
-      if (type === "share") {
-        navigator.clipboard
-          .writeText(window.location.href)
-          .then(() => {
-            console.log("URL скопирован!");
-            setIsCopied(true);
-            setTimeout(() => setIsCopied(false), 800);
-          })
-          .catch((err) => {
-            console.error("Ошибка копирования URL:", err);
-          });
-      } else {
-        window.location.href = buttonAction;
+      switch (type) {
+        case "share":
+          navigator.clipboard
+            .writeText(window.location.href)
+            .then(() => {
+              setIsCopied(true);
+              setTimeout(() => setIsCopied(false), 800);
+            })
+            .catch((err) => {
+              console.error("Ошибка копирования URL:", err);
+            });
+          break;
+        default:
+          window.location.href = buttonAction;
+          break;
       }
     }
   };
@@ -106,7 +109,8 @@ const ContactButton: FC<CallButtonProps> = ({
       onClick={handleButtonClick}
       className={`${s.callButton} ${s[type]} ${isFavorite ? s.selected : ""} ${
         isCopied ? s.copiedAnimation : ""
-      }`}
+      } ${isLoading ? s.disabled : ""}`}
+      disabled={isLoading}
     >
       {buttonText}
       {buttonIcon && buttonIcon}

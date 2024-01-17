@@ -1,4 +1,4 @@
-import { useWindowSize } from "react-use";
+import { useEffect, useState } from "react";
 
 /**
  * Хук useMobileView.
@@ -10,8 +10,23 @@ import { useWindowSize } from "react-use";
  */
 
 const useMobileView = () => {
-  const { width } = useWindowSize();
-  const isMobileView = width <= 810;
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      const mobileThreshold = 810;
+      setIsMobileView(currentWidth <= mobileThreshold);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return isMobileView;
 };

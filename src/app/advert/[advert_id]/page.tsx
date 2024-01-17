@@ -1,19 +1,20 @@
 "use client";
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Button, Col, Descriptions, Image, Row, Spin, Typography } from "antd";
-import { useAdvert } from "@/entities/advert";
+import { Col, Image, Row, Spin, Typography, notification } from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { Carousel } from "antd";
 import "./styles.css";
 import { ConvertData } from "./DataConverter";
-import { IAdvertListItem } from "@/entities/advert/types/main";
+import { useAdvert } from "Advert/entities";
 import { Price } from "SydnoComponents/commons";
 import ContactButton from "./button";
 import Specs from "./Specs";
 import useMobileView from "./useMobileView";
+import { IAdvertListItem } from "@/entities/advert/types/main";
+import { useUser } from "Auth/entities";
 interface IAdvertPageProps {
   params?: {
-    advert_id?: string;
+    advert_id: string;
   };
 }
 const PRICE_LOCALE = "ru";
@@ -32,13 +33,16 @@ const NUMBER_FORMAT_OPTIONS = {
  */
 
 const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
-  const { getAdvert } = useAdvert(
-    useShallow((state) => ({ getAdvert: state.getAdvert }))
+  const { getAdvert, addToFavourite, deleteFromFavourite } = useAdvert(
+    useShallow((state) => ({
+      getAdvert: state.getAdvert,
+      addToFavourite: state.addToFavourite,
+      deleteFromFavourite: state.deleteFromFavourite,
+    }))
   );
+  const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
+  const [isLoading, setIsLoading] = useState(false);
   const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
-  // const { addToFavorites } = useAdvert(
-  //   useShallow((state) => ({ addToFavorites: (state as any).addToFavorites }))
-  // );
   const [advertData, setAdvertData] = useState<IAdvertListItem | undefined>();
   const [showNumber, setShowNumber] = useState<boolean>(false);
   const mobileView = useMobileView();
@@ -50,11 +54,50 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
 
   const likeButtonClickhandler = (e: SyntheticEvent) => {
     e.stopPropagation();
-    // Использовать когда будет метод для добавления в избранное
-    // addToFavorites(Number(params?.advert_id)).then(() => {
-    //   setIsLocalFavorite(!isLocalFavorite);
-    // });
-    setIsLocalFavorite(!isLocalFavorite);
+    if (!auth) {
+      notification.warning({
+        message: "Необходимо авторизоваться на сайте",
+        placement: "bottomRight",
+      });
+      return;
+    }
+    if (params?.advert_id !== undefined) {
+      if (!isLocalFavorite) {
+        setIsLoading(true);
+        addToFavourite(params?.advert_id).then((res) => {
+          if (res) {
+            notification.success({
+              message: 'Добавлено в "Избранные"',
+              placement: "bottomRight",
+            });
+            setIsLocalFavorite(res);
+          } else {
+            notification.error({
+              message: "Ошибка",
+              placement: "bottomRight",
+            });
+          }
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(true);
+        deleteFromFavourite(params?.advert_id).then((res) => {
+          if (res) {
+            notification.success({
+              message: 'Удалено из "Избранные"',
+              placement: "bottomRight",
+            });
+            setIsLocalFavorite(!res);
+          } else {
+            notification.error({
+              message: "Ошибка",
+              placement: "bottomRight",
+            });
+          }
+          setIsLoading(false);
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -62,7 +105,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
       if (data === false) {
       } else {
         setAdvertData(data);
-        console.log(data);
       }
     });
   }, []);
@@ -139,6 +181,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                   type="favorite"
                   isFavorite={isLocalFavorite}
                   onClick={likeButtonClickhandler}
+                  isLoading={isLoading}
                 />
                 <ContactButton type="share" />
               </Typography.Paragraph>

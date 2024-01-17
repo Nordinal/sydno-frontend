@@ -1,4 +1,4 @@
-import AdvertList from "@/widgets/AdvertList/ui";
+import { MainAdvertPage } from "Advert/pages";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function Index() {
 
   return (
     <>
-      <AdvertList/>
+      <MainAdvertPage/>
     </>
   )
 }
