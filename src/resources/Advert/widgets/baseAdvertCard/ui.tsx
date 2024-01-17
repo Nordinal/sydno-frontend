@@ -31,10 +31,8 @@ const leftCol = {
         span: 24
     },
     'big': {
-        className: 'sm:pr-4 sm:pb-0 pb-4',
-        lg: {
-            flex: '0 1 300px',
-        },
+        className: 'sm:pr-4 xl:pb-0 pb-4',
+        flex: '1 1 150px',
     }
 }
 
@@ -43,9 +41,8 @@ const middleCol = {
         flex: 'auto',
     },
     'big': {
-        lg: {
-            flex: '300',
-        },
+        xl: 12,
+        md: 10
     }
 }
 
@@ -55,9 +52,7 @@ const rightCol =  {
     },
     'big': {
         className: 'sm:pl-4',
-        lg: {
-            flex: '0 1 250',
-        },
+        flex: '1 1 100px',
     }
 }
 
@@ -96,7 +91,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={styles['sudno-AdvertCard']}
+            className={styles['sudno-AdvertCard'] + ' ' + (isTouch && styles['sudno-AdvertCard-shadow'])}
             onClick={onClick}
         >
             <Row>
@@ -147,12 +142,12 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                     </div>
                 </Col>
                 <Col {...rightCol[size || 'big']}>
-                    <div className={featureWrapperClass || 'flex flex-col justify-between items-end h-full'}>
+                    <div className={featureWrapperClass || 'flex flex-col justify-between items-center h-full'}>
                         {
                             <>
                                 {
                                     (disableNumberButton === false) || 
-                                    <div className="pb-2 sm:pb-0">
+                                    <div className="pb-2 xl:pb-0">
                                         {
                                             showNumber ?
                                                 phone_number :
