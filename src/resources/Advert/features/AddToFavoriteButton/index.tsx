@@ -4,11 +4,14 @@ import { useAdvert } from "../../entities/advert/model";
 import { useShallow } from "zustand/react/shallow";
 import { useUser } from "Auth/entities";
 import { notification } from "antd";
+import { HeartTwoTone } from "@ant-design/icons";
 
 export interface IAddToFavoriteButtonProps {
     id: string | number;
     isFavorite?: boolean;
     onChange?: (isFavorite: boolean) => void;
+    padding?: number;
+    fontSize?: string;
 }
 
 /**
@@ -18,12 +21,13 @@ export interface IAddToFavoriteButtonProps {
 export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
     id,
     isFavorite,
-    onChange
+    onChange,
+    padding,
+    fontSize
 }) => {
     const { addToFavourite, deleteFromFavourite } = useAdvert(useShallow(state => ({addToFavourite: state.addToFavourite, deleteFromFavourite: state.deleteFromFavourite})));
     const { auth } = useUser(useShallow(state => ({auth: state.auth})));
     const [localFavorite, setLocalFavorite] = useState(isFavorite);
-    const [isLoading, setIsLoading] = useState(false);
 
     const onButtonClickHandler = (e: SyntheticEvent) => {
         // не забываем что на внешний div карточки навешен onClick, который передается наверх, поэтому всегда останаваливаем всплытие
@@ -34,7 +38,6 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
             return;
         }
         if (!localFavorite) {
-            setIsLoading(true);
             addToFavourite(id).then(res => {
                 if (res) {
                     notification.success({message: 'Добавлено в "Избранные"', placement: 'bottomRight'});
@@ -43,11 +46,9 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
                 } else {
                     notification.error({message: 'Ошибка', placement: 'bottomRight'});
                 }
-                setIsLoading(false);
             });
         }
         else {
-            setIsLoading(true);
             deleteFromFavourite(id).then(res => {
                 if (res) {
                     notification.success({message: 'Удалено из "Избранные"', placement: 'bottomRight'});
@@ -56,17 +57,21 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
                 } else {
                     notification.error({message: 'Ошибка', placement: 'bottomRight'});
                 }
-                setIsLoading(false);
             });
         }
     }
 
     return (
-        <Button
-            type="primary"
+        <div
             onClick={onButtonClickHandler}
+            className={padding ? `p-${padding}` : 'p-2'}
         >
-            {localFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
-        </Button>
+            <HeartTwoTone
+                twoToneColor={localFavorite ? 'red' : ''}
+                style={{fontSize: fontSize || '20px'}}
+            >
+                {localFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+            </HeartTwoTone>
+        </div>
     );
 }

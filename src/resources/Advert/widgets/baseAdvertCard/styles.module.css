@@ -4,6 +4,10 @@
     border-radius: var(--main-app-br);
 }
 
+.sudno-AdvertCard-shadow {
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+}
+
 .sudno-AdvertCard:hover {
     box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
     cursor: pointer;
@@ -21,8 +25,3 @@
     color: rgba(0, 0, 0, 0.45);
 }
 
-@media (max-width: 576px) {
-    .sudno-AdvertCard {
-        box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
-    }
-}

@@ -31,18 +31,18 @@ const leftCol = {
         span: 24
     },
     'big': {
-        className: 'sm:pr-4 sm:pb-0 pb-4',
-        xs: 24,
-        sm: 6,
+        className: 'sm:pr-4 xl:pb-0 pb-4',
+        flex: '1 1 150px',
     }
 }
 
 const middleCol = {
     'small': {
-        flex: '1',
+        flex: 'auto',
     },
     'big': {
-        flex: '1',
+        xl: 12,
+        md: 10
     }
 }
 
@@ -52,8 +52,7 @@ const rightCol =  {
     },
     'big': {
         className: 'sm:pl-4',
-        xs: 24,
-        sm: 5,
+        flex: '1 1 100px',
     }
 }
 
@@ -92,7 +91,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={styles['sudno-AdvertCard']}
+            className={styles['sudno-AdvertCard'] + ' ' + (isTouch && styles['sudno-AdvertCard-shadow'])}
             onClick={onClick}
         >
             <Row>
@@ -143,9 +142,15 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                     </div>
                 </Col>
                 <Col {...rightCol[size || 'big']}>
-                    <div className={featureWrapperClass || 'flex flex-col justify-between items-center h-full'}>
+                    <div className={featureWrapperClass || 'flex flex-col items-end h-full'}>
                         {
                             <>
+                                <div>
+                                    <AddToFavoriteButton
+                                        id={id}
+                                        isFavorite={false}
+                                    />
+                                </div>
                                 {
                                     (disableNumberButton === false) || 
                                     <div>
@@ -154,7 +159,6 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                                 phone_number :
                                                 <Button style={{
                                                     maxWidth: '100%',
-                                                    whiteSpace: 'pre-wrap',
                                                     height: 'auto',
                                                     opacity: showDetails || isTouch ? '1' : '0'
                                                 }} onClick={showNumberBtnHandler}>
@@ -163,12 +167,6 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                         }
                                     </div>
                                 }
-                                <div>
-                                    <AddToFavoriteButton
-                                        id={id}
-                                        isFavorite={false}
-                                    />
-                                </div>
                             </>
                         }
                         {customFeature}
