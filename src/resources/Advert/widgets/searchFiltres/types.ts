@@ -286,9 +286,4 @@ export interface ITechnicalFilterOptions {
     technical_documentation?: boolean | null;
 }
 
-export type TFilterOptions = ILegalFilterOptions & ITechnicalFilterOptions & {
-    /**
-     * Лимит для получения с бэка
-     */
-    limit?: number | null;
-};
+export type TFilterOptions = ILegalFilterOptions & ITechnicalFilterOptions;

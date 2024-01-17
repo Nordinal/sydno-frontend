@@ -142,12 +142,18 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                     </div>
                 </Col>
                 <Col {...rightCol[size || 'big']}>
-                    <div className={featureWrapperClass || 'flex flex-col justify-between items-center h-full'}>
+                    <div className={featureWrapperClass || 'flex flex-col items-end h-full'}>
                         {
                             <>
+                                <div>
+                                    <AddToFavoriteButton
+                                        id={id}
+                                        isFavorite={false}
+                                    />
+                                </div>
                                 {
                                     (disableNumberButton === false) || 
-                                    <div className="pb-2 xl:pb-0">
+                                    <div>
                                         {
                                             showNumber ?
                                                 phone_number :
@@ -161,12 +167,6 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                         }
                                     </div>
                                 }
-                                <div>
-                                    <AddToFavoriteButton
-                                        id={id}
-                                        isFavorite={false}
-                                    />
-                                </div>
                             </>
                         }
                         {customFeature}
