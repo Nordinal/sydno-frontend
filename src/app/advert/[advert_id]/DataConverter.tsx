@@ -1,6 +1,6 @@
-// import { IAdvertListItem } from "@/entities/advert/types/main";
-import { IAdvertListItem } from "@/entities/advert/types/main";
+import { IAdvertListItem } from "Advert/entities";
 import countriesJson from "../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json";
+import { IReceivedAdvert } from "./IAdvertListItemReady";
 
 type DescriptionItem = {
   key: string;
@@ -24,7 +24,7 @@ type DescriptionsPropsObject = {
  */
 
 export function ConvertData(
-  advertData: IAdvertListItem
+  advertData: IReceivedAdvert
 ): DescriptionsPropsObject {
   const legalInformation = advertData.advert_legal_information;
   const technicalInformation = advertData.advert_technical_information;

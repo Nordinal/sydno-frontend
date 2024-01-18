@@ -1,4 +1,4 @@
-export interface IAdvertListItem {
+export interface IReceivedAdvert {
   id: number;
   user_id: number;
   registration_number: string;

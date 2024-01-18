@@ -10,8 +10,8 @@ import { Price } from "SydnoComponents/commons";
 import ContactButton from "./button";
 import Specs from "./Specs";
 import useMobileView from "./useMobileView";
-import { IAdvertListItem } from "@/entities/advert/types/main";
 import { useUser } from "Auth/entities";
+import { IReceivedAdvert } from "./IAdvertListItemReady";
 interface IAdvertPageProps {
   params?: {
     advert_id: string;
@@ -43,7 +43,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
   const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
   const [isLoading, setIsLoading] = useState(false);
   const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
-  const [advertData, setAdvertData] = useState<IAdvertListItem | undefined>();
+  const [advertData, setAdvertData] = useState<IReceivedAdvert | undefined>();
   const [showNumber, setShowNumber] = useState<boolean>(false);
   const mobileView = useMobileView();
 

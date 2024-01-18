@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { sydnoServiceFormData } from "SydnoService/service";
-import { IAdvertListItem } from "@/entities/advert/types/main";
+import { IReceivedAdvert } from "@/app/advert/[advert_id]/IAdvertListItemReady";
 
 export interface IAdvertModel {
-  getAdvert: (id: number | string) => Promise<IAdvertListItem | false>;
+  getAdvert: (id: number | string) => Promise<IReceivedAdvert | false>;
   addToFavourite: (id: number | string) => Promise<boolean>;
   deleteFromFavourite: (id: number | string) => Promise<boolean>;
 }
