@@ -1,0 +1,123 @@
+.sudno-MenuBurger {
+    position: relative;
+    cursor: pointer;
+}
+
+.sudno-MenuBurger:after, .sudno-MenuBurger:before, .sudno-MenuBurger>div {
+    position: absolute;
+    content: '';
+    width: 100%;
+    border-bottom: 2px solid var(--burger-color);
+}
+
+.sudno-MenuBurger:after {
+    top: 0;
+    left: 0;
+}
+
+.sudno-MenuBurger:before {
+    bottom: 0;
+    left: 0;
+}
+
+.sudno-MenuBurger>div {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sudno-MenuBurger-active:after {
+    animation: topLineActive 0.4s forwards;
+}
+
+.sudno-MenuBurger-disable:after {
+    animation: topLineDisable 0.4s forwards;
+}
+
+.sudno-MenuBurger-active:before {
+    animation: bottomLineActive 0.4s forwards;
+}
+
+.sudno-MenuBurger-disable:before {
+    animation: bottomLineDisable 0.4s forwards;
+}
+
+.sudno-MenuBurger-active>div {
+    opacity: 0;
+}
+
+.sudno-MenuBurger-disable>div {
+    opacity: 1;
+}
+
+/* top line */
+@keyframes topLineActive {
+    0% {
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+    50% {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+    100% {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(45deg);
+    }
+}
+@keyframes topLineDisable {
+    0% {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(45deg);
+    }
+    50% {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+    100% {
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+}
+
+/* bottomLine */
+@keyframes bottomLineActive {
+    0% {
+        bottom: 0;
+        left: 0;
+        transform: none;
+    }
+    50% {
+        bottom: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+    100% {
+        bottom: 50%;
+        left: 0;
+        transform: translateY(50%) rotate(-45deg);
+    }
+}
+@keyframes bottomLineDisable {
+    0% {
+        bottom: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(-45deg);
+    }
+    50% {
+        bottom: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+    100% {
+        bottom: 0;
+        left: 0;
+        transform: none;
+    }
+}
