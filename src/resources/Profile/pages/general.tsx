@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { MyDrafts } from "../widgets/MyAdverts/MyDrafts";
 import { MyModeration } from "../widgets/MyAdverts/MyModeration";
 import { sydnoServiceJson } from "SydnoService/service";
+import { MyActive } from "Profile/widgets/MyAdverts/MyActive";
+import { MyInactive } from "Profile/widgets/MyAdverts/MyInactive";
 
 export interface IInfoMyAdverts {
     active: number,
@@ -20,7 +22,7 @@ export const Profile = () => {
             items.push({
                 label: <TabLabel label='Активные' count={info.active}/>,
                 key: '1',
-                children: `Активные`,
+                children: <MyActive />,
             })
         }
         if(info.moderation) {
@@ -41,7 +43,7 @@ export const Profile = () => {
             items.push({
                 label: <TabLabel label='Архив' count={info.inactive}/>,
                 key: '4',
-                children: `Активные`,
+                children: <MyInactive />,
             })
         }
         return items
