@@ -13,7 +13,9 @@ export interface ICreateAdStepOne {
 }
 
 export interface ICreateAdStepTwo {
+  name: string
   flag: string;
+  technical_documentation: boolean;
   exploitation_type: number;
   class_formula: string;
   wave_limit: number;
@@ -25,7 +27,7 @@ export interface ICreateAdStepTwo {
   project_number: string;
   building_number: string;
   building_year: number;
-  building_country: string;
+  building_place: string;
   port_address: {
     region: string;
     city: string;
@@ -49,7 +51,7 @@ export interface ICreateAdStepThree {
   overall_length: number;
   overall_width: number;
   board_height: number;
-  maximum_freeboard: number;
+  draft_in_cargo: number;
   material: number;
   deadweight: number;
   dock_weight: number;
@@ -65,7 +67,6 @@ export interface ICreateAdStepThree {
   second_bottom: number;
   second_sides: number;
   carrying: number;
-  superstructures: number;
   deckhouses: number;
   liquid_tanks: number;
   total_capacity_liquid_tanks: number;

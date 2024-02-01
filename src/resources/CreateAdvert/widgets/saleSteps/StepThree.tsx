@@ -1,5 +1,5 @@
 'use client';
-import { Form, Input, InputNumber, Select } from 'antd';
+import { Form, Input, InputNumber, Select, Space } from 'antd';
 import { onFinishStep } from '../../shared/types/basicTypes';
 import { useEffect, useState } from 'react';
 import { ICreateAdStepThree, useCreateSaleAdvert } from '../../entitites/createAdvert/model';
@@ -11,6 +11,9 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
     const [isTanks, setIsTanks] = useState(false);
     const [isBulkTanks, setIsBulkTanks] = useState(false);
     const [isCapacity, setIsCapacity] = useState(false);
+
+    const [boardHeight, setBoardHeight] = useState<number | null>(null);
+    const [draftInCargo, setDraftInCargo] = useState<number | null>(null);
 
     const [materials, setMaterials] = useState<{value: string, label: string}[]>();
 
@@ -46,7 +49,7 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                 labelAlign='left'
                 required
             >
-                <Input.Group compact>
+                <Space.Compact>
                     <Form.Item
                         noStyle
                         name="overall_length"
@@ -63,7 +66,7 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     >
                         <InputNumber style={{width: '50%'}} placeholder='Ширина' addonAfter='м.' step="0.01" />
                     </Form.Item>
-                </Input.Group>
+                </Space.Compact>
             </Form.Item>
 
             <Form.Item
@@ -73,17 +76,30 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                 initialValue={ adverts_technical_information?.board_height }
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}} placeholder='Высота борта (метры)' addonAfter='метры' step="0.01" />
+                <InputNumber
+                    value={boardHeight}
+                    precision={2}
+                    onChange={(value) => setBoardHeight(value)}
+                    style={{width: '100%'}}
+                    placeholder='Высота борта (метры)'
+                    addonAfter='метры' step="0.01"
+                />
             </Form.Item>
 
             <Form.Item
-                label="Макс. надводный борт"
+                label="Осадка в грузу"
                 labelAlign='left'
-                name="maximum_freeboard"
-                initialValue={ adverts_technical_information?.maximum_freeboard }
+                name="draft_in_cargo"
+                initialValue={ adverts_technical_information?.draft_in_cargo }
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}} placeholder='Максимальный надводный борт' addonAfter='метры' />
+                <InputNumber
+                    max={boardHeight ?? Number.MAX_SAFE_INTEGER}
+                    precision={2}
+                    style={{width: '100%'}}
+                    placeholder='Осадка в грузу'
+                    addonAfter='метры'
+                />
             </Form.Item>
 
             <Form.Item
@@ -173,7 +189,6 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                 labelAlign='left'
                 name="maximum_speed_in_ballast"
                 initialValue={ adverts_technical_information?.maximum_speed_in_ballast }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в балласте (км/ч)' addonAfter='км/ч' step="0.1"/>
             </Form.Item>
@@ -183,7 +198,6 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                 labelAlign='left'
                 name="maximum_speed_when_loaded"
                 initialValue={ adverts_technical_information?.maximum_speed_when_loaded }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в грузу (км/ч)' addonAfter='км/ч' step="0.1"/>
             </Form.Item>
@@ -280,28 +294,6 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
             </Form.Item>
 
             <Form.Item
-                label="Надстройки"
-                labelAlign='left'
-                name="superstructures"
-                initialValue={ adverts_technical_information?.superstructures }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <Select
-                    placeholder='Надстройки'
-                    options={[
-                        {
-                            value: true,
-                            label: 'Да',
-                        },
-                        {
-                            value: false,
-                            label: 'Нет',
-                        }
-                    ]}
-                />
-            </Form.Item>
-
-            <Form.Item
                 label="Наливные танки"
                 labelAlign='left'
                 name="liquid_tanks"
@@ -374,29 +366,6 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     <InputNumber style={{width: '100%'}} placeholder='Количество человек'/>
                 </Form.Item>
             }
-
-            <Form.Item
-                label="Техническая документация"
-                labelAlign='left'
-                name="technical_documentation"
-                initialValue={ adverts_technical_information?.technical_documentation }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <Select
-                    placeholder='Техническая документация'
-                    options={[
-                        {
-                            value: true,
-                            label: 'Да',
-                        },
-                        {
-                            value: false,
-                            label: 'Нет',
-                        }
-                    ]}
-                />
-            </Form.Item>
-
         </Form>
     )
 }
