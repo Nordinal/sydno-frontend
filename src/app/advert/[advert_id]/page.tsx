@@ -1,17 +1,35 @@
 "use client";
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Col, Image, Row, Spin, Typography, notification } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Row,
+  Spin,
+  Typography,
+  notification,
+} from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { Carousel } from "antd";
 import "./styles.css";
 import { ConvertData } from "./DataConverter";
 import { useAdvert } from "Advert/entities";
 import { Price } from "SydnoComponents/commons";
-import ContactButton from "./button";
 import Specs from "./Specs";
-import useMobileView from "./useMobileView";
+import { useScreenSize } from "./useMobileView";
 import { useUser } from "Auth/entities";
 import { IReceivedAdvert } from "./IAdvertListItemReady";
+import {
+  CheckOutlined,
+  CopyOutlined,
+  EyeOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
+import { SpecsPair } from "./SpecsPair";
+import { UserButton } from "Users/features";
+import { CustomCarousel } from "./CustomCarousel";
+
 interface IAdvertPageProps {
   params?: {
     advert_id: string;
@@ -42,14 +60,38 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
   );
   const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
   const [isLoading, setIsLoading] = useState(false);
-  const [isLocalFavorite, setIsLocalFavorite] = useState<boolean>(false);
   const [advertData, setAdvertData] = useState<IReceivedAdvert | undefined>();
   const [showNumber, setShowNumber] = useState<boolean>(false);
-  const mobileView = useMobileView();
+  const [isNumberCopied, setIsNumberCopied] = useState<boolean>(false);
+
+  const [isLocalFavorite, setIsLocalFavorite] = useState<boolean | undefined>(
+    advertData && advertData.in_favorites
+  );
+  const screenSize = useScreenSize();
 
   const showNumberBtnHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
-    setShowNumber(true);
+    if (screenSize !== "small") {
+      setShowNumber(true);
+    }
+  };
+  const numberHandler = (e: SyntheticEvent) => {
+    if (advertData?.phone_number && screenSize !== "small") {
+      navigator.clipboard
+        .writeText(advertData.phone_number)
+        .then(() => {
+          setIsNumberCopied(true);
+          setTimeout(() => setIsNumberCopied(false), 1000);
+        })
+        .catch((err) => {
+          console.error("Ошибка копирования URL:", err);
+        });
+    } else {
+      window.location.href = `tel:${advertData?.phone_number}`;
+    }
+  };
+  const emailHandler = (e: SyntheticEvent) => {
+    window.location.href = `mailto:${advertData?.user.email}`;
   };
 
   const likeButtonClickhandler = (e: SyntheticEvent) => {
@@ -66,10 +108,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
         setIsLoading(true);
         addToFavourite(params?.advert_id).then((res) => {
           if (res) {
-            notification.success({
-              message: 'Добавлено в "Избранные"',
-              placement: "bottomRight",
-            });
             setIsLocalFavorite(res);
           } else {
             notification.error({
@@ -83,10 +121,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
         setIsLoading(true);
         deleteFromFavourite(params?.advert_id).then((res) => {
           if (res) {
-            notification.success({
-              message: 'Удалено из "Избранные"',
-              placement: "bottomRight",
-            });
             setIsLocalFavorite(!res);
           } else {
             notification.error({
@@ -105,10 +139,11 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
       if (data === false) {
       } else {
         setAdvertData(data);
+        setIsLocalFavorite(data.in_favorites);
       }
     });
   }, []);
-
+  console.log(advertData);
   const ConvertedAdvertData = advertData && ConvertData(advertData);
 
   if (!advertData) {
@@ -125,81 +160,250 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
       </div>
     );
   }
-  return (
+  return screenSize !== "small" ? (
     <div className="pt-6">
-      <Row gutter={mobileView ? 24 : 21} className="header-with-price">
-        <Col span={mobileView ? 24 : 14}>
-          <Typography.Title level={mobileView ? 2 : 1} className="header">
+      <Row>
+        <Col span={19}>
+          <Typography.Title
+            level={screenSize === "small" ? 2 : 2}
+            className="header"
+          >
             {advertData.header}
           </Typography.Title>
+
+          <div className="created-at">
+            <Typography.Paragraph
+              style={{
+                fontWeight: "400",
+                color: "#545454",
+                margin: "-10px 0 10px 0",
+                fontSize: "16px",
+                display: "flex",
+              }}
+            >
+              Дата размещения:{" "}
+              {advertData.created_at.split("T")[0].split("-").join(".")}
+              <EyeOutlined
+                style={{
+                  fontSize: "20px",
+                  marginLeft: "15px",
+                  marginRight: "5px",
+                }}
+              />
+              {advertData.views}
+            </Typography.Paragraph>
+          </div>
+
+          <div className="carousel-specs">
+            <Col span={17}>
+              <CustomCarousel
+                isLocalFavorite={isLocalFavorite}
+                likeButtonClickhandler={likeButtonClickhandler}
+                isLoading={isLoading}
+                slides={advertData?.images && advertData?.images}
+              />
+            </Col>
+
+            <Col span={4}>
+              <div className="specs-with-buttons">
+                {ConvertedAdvertData &&
+                  ConvertedAdvertData.mainInfo.map((item) => (
+                    <SpecsPair
+                      key={item.key}
+                      label={item.label}
+                      value={item.children}
+                      column={1}
+                    />
+                  ))}
+              </div>
+            </Col>
+          </div>
+
+          <div className="location">
+            <Typography.Title level={4}>Местонахождение судна</Typography.Title>
+
+            <Typography.Paragraph>
+              {advertData.advert_legal_information.vessel_location.country}
+              {", "}
+              {advertData.advert_legal_information.vessel_location.value}
+            </Typography.Paragraph>
+          </div>
+          <div className="description">
+            <Typography.Title level={4}>Описание</Typography.Title>
+            <Typography.Paragraph>
+              {advertData.description}
+            </Typography.Paragraph>
+          </div>
+          <Divider />
+
+          <Specs ConvertedAdvertData={ConvertedAdvertData} />
+          <Divider />
         </Col>
-        <Col span={mobileView ? 24 : 7}>
-          <Typography.Title level={mobileView ? 3 : 1} className="price">
+
+        <Col span={5}>
+          <div className="side-info">
+            <Typography.Title
+              level={screenSize === "middle" ? 4 : 2}
+              className="price"
+            >
+              <Price
+                locale={PRICE_LOCALE}
+                options={NUMBER_FORMAT_OPTIONS}
+                price={advertData.price || 0}
+              />
+            </Typography.Title>
+
+            <div className="contacts">
+              <UserButton
+                id={advertData.user.id}
+                src={advertData.user.avatar}
+                name={advertData.user.name}
+                advertCount={advertData.user.adverts_count}
+              />
+
+              <div className="contacts-buttons">
+                {showNumber ? (
+                  <Button className="callButton tel" type="primary">
+                    {advertData.phone_number}
+
+                    {isNumberCopied ? (
+                      <CheckOutlined className="check-icon" />
+                    ) : (
+                      <CopyOutlined
+                        style={{ fontSize: "17px" }}
+                        onClick={numberHandler}
+                      />
+                    )}
+                  </Button>
+                ) : (
+                  <Button
+                    className="callButton show-tel"
+                    type="default"
+                    onClick={showNumberBtnHandler}
+                  >
+                    Показать номер
+                    <PhoneOutlined style={{ fontSize: "20px" }} />
+                  </Button>
+                )}
+
+                <Button
+                  className="callButton"
+                  type="primary"
+                  onClick={emailHandler}
+                >
+                  Написать на почту
+                  <MailOutlined style={{ fontSize: "20px" }} />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  ) : (
+    <div className="pt-6">
+      <Row>
+        <Col span={24}>
+          <CustomCarousel
+            isLocalFavorite={isLocalFavorite}
+            likeButtonClickhandler={likeButtonClickhandler}
+            isLoading={isLoading}
+            slides={advertData?.images && advertData?.images}
+          />
+
+          <Typography.Title level={2} className="header">
+            {advertData.header}
+          </Typography.Title>
+          <Typography.Title level={3} style={{ marginTop: "-10px" }}>
             <Price
               locale={PRICE_LOCALE}
               options={NUMBER_FORMAT_OPTIONS}
               price={advertData.price || 0}
             />
           </Typography.Title>
-        </Col>
-      </Row>
 
-      <Row gutter={mobileView ? 24 : 14} className="main-content">
-        <Col span={mobileView ? 24 : 14}>
-          <Carousel className="custom-carousel">
-            {advertData &&
-              (advertData?.images || []).map((image, index) => (
-                <div key={index}>
-                  <Image
-                    src={image}
-                    alt={`Image ${index}`}
-                    className="full-width-image"
-                  />
-                </div>
-              ))}
-          </Carousel>
-        </Col>
-
-        <Col span={mobileView ? 24 : 7} className="contacts-wrapper">
           <div className="contacts">
-            <Typography.Title level={2} className="owner-name">
-              {advertData.user.name}
-            </Typography.Title>
+            <UserButton
+              id={advertData.user.id}
+              src={advertData.user.avatar}
+              name={advertData.user.name}
+              advertCount={advertData.user.adverts_count}
+            />
+
             <div className="contacts-buttons">
-              <Typography.Paragraph>
-                {showNumber ? (
-                  <ContactButton
-                    type="tel"
-                    phone={advertData.phone_number}
-                    onClick={showNumberBtnHandler}
-                  />
-                ) : (
-                  <ContactButton type="show" onClick={showNumberBtnHandler} />
-                )}
-                <ContactButton type="email" />
-                <ContactButton
-                  type="favorite"
-                  isFavorite={isLocalFavorite}
-                  onClick={likeButtonClickhandler}
-                  isLoading={isLoading}
-                />
-                <ContactButton type="share" />
-              </Typography.Paragraph>
+              <Button
+                className="callButton show-tel"
+                type="default"
+                onClick={numberHandler}
+              >
+                Позвонить
+                <PhoneOutlined style={{ fontSize: "22px" }} />
+              </Button>
+
+              <Button
+                className="callButton"
+                type="primary"
+                onClick={emailHandler}
+              >
+                Написать на почту
+                <MailOutlined style={{ fontSize: "22px" }} />
+              </Button>
             </div>
           </div>
-        </Col>
-      </Row>
 
-      <Row gutter={24}>
-        <Col span={mobileView ? 24 : 14}>
-          <Typography.Title level={4} className="description">
-            Описание
-          </Typography.Title>
-          <Typography.Paragraph>{advertData.description}</Typography.Paragraph>
-        </Col>
+          <div className="location">
+            <Typography.Title level={4}>Местонахождение судна</Typography.Title>
 
-        <Col span={mobileView ? 24 : 14} className="specs">
+            <Typography.Paragraph>
+              {advertData.advert_legal_information.vessel_location.country}
+              {", "}
+              {advertData.advert_legal_information.vessel_location.value}
+            </Typography.Paragraph>
+          </div>
+
+          <div className="specs-with-buttons">
+            {ConvertedAdvertData &&
+              ConvertedAdvertData.mainInfo.map((item) => (
+                <SpecsPair
+                  key={item.key}
+                  label={item.label}
+                  value={item.children}
+                  column={2}
+                />
+              ))}
+          </div>
+
+          <div className="description">
+            <Typography.Title level={4}>Описание</Typography.Title>
+            <Typography.Paragraph>
+              {advertData.description}
+            </Typography.Paragraph>
+          </div>
+          <Divider />
+
           <Specs ConvertedAdvertData={ConvertedAdvertData} />
+          <div className="created-at">
+            <Typography.Paragraph
+              style={{
+                fontWeight: "400",
+                color: "#545454",
+                margin: "-10px 0 10px 0",
+                fontSize: "16px",
+              }}
+            >
+              Дата размещения:{" "}
+              {advertData.created_at.split("T")[0].split("-").join(".")}
+              <EyeOutlined
+                style={{
+                  fontSize: "18px",
+                  marginLeft: "10px",
+                  marginRight: "3px",
+                }}
+              />
+              {advertData.views}
+            </Typography.Paragraph>
+          </div>
+          <Divider />
         </Col>
       </Row>
     </div>
