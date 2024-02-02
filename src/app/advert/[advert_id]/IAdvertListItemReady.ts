@@ -10,12 +10,17 @@ export interface IReceivedAdvert {
   phone_number: string;
   created_at: string;
   updated_at: string;
+  in_favorites: boolean;
   user: {
     id: number;
     name: string;
+    avatar: string;
+    email: string;
+    adverts_count: number;
   };
   advert_legal_information: AdvertLegalInformation;
   advert_technical_information: AdvertTechnicalInformation;
+  views: number;
 }
 
 interface PortAddress {
@@ -43,12 +48,13 @@ interface AdvertLegalInformation {
   project_number: string;
   building_number: string;
   building_year: number;
-  building_country: string;
   port_address: PortAddress;
   vessel_location: VesselLocation;
+  building_place: string;
   imo_number: string;
   created_at: string;
   updated_at: string;
+  name: string;
 }
 
 interface AdvertTechnicalInformation {

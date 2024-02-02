@@ -1,9 +1,13 @@
 .pt-6 {
     scroll-behavior: smooth;
 }
+.specs-with-buttons-title {
+    margin-left: 5px;
+}
 
 .ant-carousel .slick-slide div {
-    height: 400px;
+    max-height: 500px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,32 +17,52 @@
     max-width: 100%;
     max-height: 100%;
 }
-
-.header-with-price {
+.carousel-specs {
     display: flex;
-    flex-direction: row;
+    gap: 20px;
 }
+
 .contacts-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.contacts {
+.side-info {
     position: fixed;
-    width: 400px;
-    height: 100%;
+    width: 240px;
+
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    align-items: start;
+    justify-content: flex-end;
+    margin-left: 1rem;
+}
+
+.contacts {
+    top: 120px;
+    display: flex;
+    flex-direction: column;
     justify-content: start;
 }
-
-.price {
-    position: fixed;
+.contacts-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
 }
-
+.owner-name {
+    padding: 0 16px;
+}
+.created-at {
+    display: flex;
+    gap: 10px;
+}
+.location {
+    margin-top: 10px;
+}
 .description {
     margin-top: 10px;
+    padding-right: 5px;
 }
 .info-title {
     margin: 5px 0 15px 10px;
@@ -57,6 +81,15 @@
     width: 30%;
     text-align: center;
 }
+.break {
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    box-shadow: 0px 4px 4px 0px rgba(34, 60, 80, 0.1);
+    box-shadow: 0px 7px 10px 3px rgba(34, 60, 80, 0.1);
+    margin: 20px 0;
+}
+
 .show-close {
     margin-top: 15px;
     margin-bottom: 10px;
@@ -67,56 +100,6 @@
     text-decoration: underline;
 }
 
-@media screen and (max-width: 810px) {
-    .main-content {
-        display: flex;
-        flex-direction: column;
-    }
-    .header-with-price {
-        display: flex;
-        flex-direction: column;
-    }
-    .price {
-        position: static;
-    }
-    .contacts-wrapper {
-        align-items: start;
-        justify-content: center;
-    }
-    .contacts {
-        margin: 0 auto;
-        margin-top: 1rem;
-        width: 100%;
-        position: relative;
-    }
-}
-
-@media screen and (max-width: 420px) {
-    .descriptions {
-        width: 390px;
-    }
-    .descriptions th {
-        width: 100px;
-    }
-    .descriptions td {
-        width: 280px;
-        text-align: center;
-    }
-    .contacts {
-        position: relative;
-    }
-    .main-content {
-        display: flex;
-        flex-direction: column;
-    }
-    .header-with-price {
-        display: flex;
-        flex-direction: column;
-    }
-    .price {
-        position: static;
-    }
-}
 @media screen and (max-width: 400px) {
     .descriptions {
         width: 370px;
@@ -125,5 +108,137 @@
 @media screen and (max-width: 380px) {
     .descriptions {
         width: 350px;
+    }
+}
+
+/* =================BUTTONS================================== */
+.show-tel {
+    border: 1.5px solid #52c41a !important;
+    background-color: #52c41a !important;
+    color: white !important;
+}
+.show-tel:hover {
+    background-color: rgb(85, 182, 37) !important;
+    border: 1.5px solid rgb(85, 182, 37) !important;
+}
+
+.callButton {
+    height: 36px !important;
+    width: 230px !important;
+    padding: 22px !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 17px !important;
+    margin: 4px 0px !important;
+    cursor: pointer !important;
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.check-icon {
+    animation: fadeInOut 700ms ease-out !important;
+    color: #52c41a !important;
+}
+
+.tel {
+    border: 1.5px solid #000000 !important;
+    background-color: white !important;
+    color: #000000 !important;
+}
+.tel:hover {
+    opacity: 0.9;
+}
+
+.disabled {
+    opacity: 0.6;
+}
+.disabled:hover {
+    opacity: 0.6;
+}
+.favorite {
+    background-color: #34a8ff !important;
+    color: white !important;
+    border: 1.5px solid #34a8ff !important;
+}
+.favorite:hover {
+    opacity: 0.9 !important;
+}
+
+@media screen and (max-width: 1250px) {
+    .side-info {
+        width: 230px;
+
+        align-items: start;
+    }
+    .callButton {
+        width: 230px !important;
+        font-size: 15px !important;
+    }
+    .owner-name {
+        padding: 0;
+    }
+}
+@media screen and (max-width: 1150px) {
+    .side-info {
+        width: 200px;
+        align-items: start;
+    }
+    .callButton {
+        width: 190px !important;
+        font-size: 13px !important;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .side-info {
+        width: 160px;
+    }
+    .callButton {
+        width: 150px !important;
+        font-size: 13px !important;
+        padding: 15px 22px !important;
+    }
+}
+@media screen and (max-width: 840px) {
+    .specs-with-buttons {
+        padding: 5px;
+    }
+    .price {
+        margin-top: -50px;
+    }
+    .callButton {
+        height: 25px !important;
+        width: 49% !important;
+        padding: 20px !important;
+        font-size: 20px !important;
+    }
+    .contacts-buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        width: 100%;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+}
+@media screen and (max-width: 540px) {
+    .callButton {
+        height: 25px !important;
+        width: 100% !important;
+        padding: 22px !important;
+    }
+    .contacts-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+        gap: 0px;
+        flex-wrap: wrap;
     }
 }

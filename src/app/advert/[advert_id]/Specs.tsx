@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Descriptions } from "antd";
-import useMobileView from "./useMobileView";
+import { Col, Descriptions, Typography } from "antd";
+import { useScreenSize } from "./useMobileView";
+import s from "./Specs.module.css";
+import { SpecsPair } from "./SpecsPair";
 
 type DescriptionItem = {
   key: string;
@@ -28,8 +30,8 @@ interface SpecsProps {
 
 const Specs: React.FC<SpecsProps> = ({ ConvertedAdvertData }) => {
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
-  const mobileView = useMobileView();
-  const columns = mobileView ? 1 : 2;
+  // const mobileView = useMobileView();
+  const screenSize = useScreenSize();
 
   useEffect(() => {
     if (showAllCharacteristics) {
@@ -46,59 +48,42 @@ const Specs: React.FC<SpecsProps> = ({ ConvertedAdvertData }) => {
   }, [showAllCharacteristics]);
 
   return (
-    <div className="specs">
-      <Descriptions
-        bordered
-        title="Характеристики:"
-        size={"small"}
-        items={ConvertedAdvertData && ConvertedAdvertData.mainInfo}
-        className="descriptions"
-        column={columns}
-      />
-
-      {!showAllCharacteristics && ConvertedAdvertData && (
-        <button
-          onClick={() => setShowAllCharacteristics(true)}
-          className="show-close"
+    <div className={s.specs}>
+      <div className={s.pecsColumn}>
+        <Typography.Title
+          level={4}
+          style={{ marginLeft: `${screenSize === "small" ? "-5px" : ""}` }}
         >
-          Показать все характеристики...
-        </button>
-      )}
+          Юридическая информация
+        </Typography.Title>
+        {ConvertedAdvertData &&
+          ConvertedAdvertData.legalInfo.map((item) => (
+            <SpecsPair
+              key={item.key}
+              label={item.label}
+              value={item.children}
+              column={2}
+            />
+          ))}
+      </div>
+      <div className={s.pecsColumn}>
+        <Typography.Title
+          level={4}
+          style={{ marginLeft: `${screenSize === "small" ? "-5px" : ""}` }}
+        >
+          Техническая информация
+        </Typography.Title>
 
-      {showAllCharacteristics && ConvertedAdvertData && (
-        <>
-          <Descriptions
-            bordered
-            title="Юридическая информация:"
-            size={"small"}
-            items={ConvertedAdvertData.legalInfo}
-            className="descriptions"
-            column={columns}
-          />
-          <Descriptions
-            bordered
-            title="Техническая информация:"
-            size={"small"}
-            items={ConvertedAdvertData.technicalInfo}
-            className="descriptions"
-            column={columns}
-            id="descriptions"
-          />
-
-          {/* <Button
-            className="show-close"
-            onClick={() => setShowAllCharacteristics(false)}
-          >
-            Скрыть
-          </Button> */}
-          <button
-            onClick={() => setShowAllCharacteristics(false)}
-            className="show-close"
-          >
-            Скрыть
-          </button>
-        </>
-      )}
+        {ConvertedAdvertData &&
+          ConvertedAdvertData.technicalInfo.map((item) => (
+            <SpecsPair
+              key={item.key}
+              label={item.label}
+              value={item.children}
+              column={2}
+            />
+          ))}
+      </div>
     </div>
   );
 };
