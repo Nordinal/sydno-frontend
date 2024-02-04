@@ -1,3 +1,4 @@
+"use client";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import {
   Navigation,
@@ -44,29 +45,16 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
   likeButtonClickhandler,
 }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [visible, setVisible] = useState(isModalOpen);
+  const [visible, setVisible] = useState(false);
   const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(
     null
   );
 
-  const showModal = () => {
-    setVisible(true);
-  };
-
   const handleCancel = () => {
     setVisible(false);
-    setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    if (isModalOpen) {
-      showModal();
-    } else {
-      handleCancel();
-    }
-  }, [isModalOpen]);
   return (
     <div>
       <Swiper
@@ -85,7 +73,6 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
         pagination={{ clickable: true }}
         onSwiper={setControlledSwiper}
         onSlideChange={(swiper) => {
-          console.log("slide change", swiper.realIndex);
           setCurrentSlide(swiper.realIndex);
         }}
         keyboard={{
@@ -114,7 +101,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
               className="slide"
               src={slide}
               alt={`Slide ${index + 1}`}
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setVisible(true)}
             />
           </SwiperSlide>
         ))}
