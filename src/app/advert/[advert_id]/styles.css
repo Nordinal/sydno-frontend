@@ -62,7 +62,6 @@
 }
 .description {
     margin-top: 10px;
-    padding-right: 5px;
 }
 .info-title {
     margin: 5px 0 15px 10px;
@@ -113,13 +112,13 @@
 
 /* =================BUTTONS================================== */
 .show-tel {
-    border: 1.5px solid #52c41a !important;
+    /* border: 1.5px solid #52c41a !important; */
     background-color: #52c41a !important;
     color: white !important;
 }
 .show-tel:hover {
     background-color: rgb(85, 182, 37) !important;
-    border: 1.5px solid rgb(85, 182, 37) !important;
+    /* border: 1.5px solid rgb(85, 182, 37) !important; */
 }
 
 .callButton {
@@ -184,15 +183,15 @@
     .owner-name {
         padding: 0;
     }
+    .callButton {
+        width: 190px !important;
+        font-size: 13px !important;
+    }
 }
 @media screen and (max-width: 1150px) {
     .side-info {
         width: 200px;
         align-items: start;
-    }
-    .callButton {
-        width: 190px !important;
-        font-size: 13px !important;
     }
 }
 @media screen and (max-width: 1000px) {

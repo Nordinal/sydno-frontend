@@ -1,3 +1,4 @@
+"use client";
 import { Col, Typography } from "antd";
 import s from "./SpecsPair.module.css";
 
@@ -19,7 +20,7 @@ export const SpecsPair: React.FC<DetailsPairProps | null> = (props) => {
       style={{ minHeight: props.column === 1 ? "25px" : "30px" }}
       className={props.column === 1 ? s.field : s.fields}
     >
-      <Col span={props.column === 1 ? 24 : 17}>
+      <Col span={props.column === 1 ? 24 : 15}>
         {props.label && (
           <Typography.Text
             style={{
@@ -32,7 +33,7 @@ export const SpecsPair: React.FC<DetailsPairProps | null> = (props) => {
           </Typography.Text>
         )}
       </Col>
-      <Col span={props.column === 1 ? 24 : 7}>
+      <Col span={props.column === 1 ? 24 : 9}>
         {props.value && (
           <Typography.Text
             style={{

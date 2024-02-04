@@ -9,30 +9,6 @@ import { useEffect, useState } from "react";
  * Author: [Gleb]
  */
 
-// const useMobileView = () => {
-//   const [isMobileView, setIsMobileView] = useState(false);
-
-//   useEffect(() => {
-//     const handleResize = () => {
-//       const currentWidth = window.innerWidth;
-//       const mobileThreshold = 810;
-//       setIsMobileView(currentWidth <= mobileThreshold);
-//     };
-
-//     handleResize();
-
-//     window.addEventListener("resize", handleResize);
-
-//     return () => {
-//       window.removeEventListener("resize", handleResize);
-//     };
-//   }, []);
-
-//   return isMobileView;
-// };
-
-// export default useMobileView;
-
 export const useScreenSize = () => {
   const [screenSize, setScreenSize] = useState("big"); // 'small', 'middle', 'big'
 
@@ -40,7 +16,7 @@ export const useScreenSize = () => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
       const mobileThreshold = 840;
-      const middleThreshold = 1150;
+      const middleThreshold = 1250;
 
       if (currentWidth <= mobileThreshold) {
         setScreenSize("small");

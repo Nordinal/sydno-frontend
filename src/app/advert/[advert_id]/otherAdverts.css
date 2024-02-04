@@ -1,0 +1,22 @@
+.other-adverts-container {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 15px;
+    margin-bottom: 40px;
+}
+.other-adverts-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+@media screen and (max-width: 840px) {
+    .other-adverts-container {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 5px;
+    }
+}

@@ -29,6 +29,7 @@ import {
 import { SpecsPair } from "./SpecsPair";
 import { UserButton } from "Users/features";
 import { CustomCarousel } from "./CustomCarousel";
+import { OtherAdverts } from "./otherAdverts";
 
 interface IAdvertPageProps {
   params?: {
@@ -176,7 +177,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
               style={{
                 fontWeight: "400",
                 color: "#545454",
-                margin: "-10px 0 10px 0",
+                margin: "-10px 0 15px 0",
                 fontSize: "16px",
                 display: "flex",
               }}
@@ -222,7 +223,9 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
           <div className="location">
             <Typography.Title level={4}>Местонахождение судна</Typography.Title>
 
-            <Typography.Paragraph>
+            <Typography.Paragraph
+              style={{ fontSize: "16px", marginTop: "-6px" }}
+            >
               {advertData.advert_legal_information.vessel_location.country}
               {", "}
               {advertData.advert_legal_information.vessel_location.value}
@@ -230,7 +233,9 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
           </div>
           <div className="description">
             <Typography.Title level={4}>Описание</Typography.Title>
-            <Typography.Paragraph>
+            <Typography.Paragraph
+              style={{ fontSize: "16px", marginTop: "-6px" }}
+            >
               {advertData.description}
             </Typography.Paragraph>
           </div>
@@ -238,6 +243,11 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
 
           <Specs ConvertedAdvertData={ConvertedAdvertData} />
           <Divider />
+
+          <OtherAdverts
+            user_id={advertData.user_id}
+            advert_id={advertData.id}
+          />
         </Col>
 
         <Col span={5}>
@@ -245,6 +255,9 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
             <Typography.Title
               level={screenSize === "middle" ? 4 : 2}
               className="price"
+              style={{
+                wordBreak: "keep-all",
+              }}
             >
               <Price
                 locale={PRICE_LOCALE}
@@ -282,7 +295,12 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                     onClick={showNumberBtnHandler}
                   >
                     Показать номер
-                    <PhoneOutlined style={{ fontSize: "20px" }} />
+                    <PhoneOutlined
+                      style={{
+                        fontSize: "20px",
+                        marginRight: "-5px",
+                      }}
+                    />
                   </Button>
                 )}
 
@@ -292,7 +310,9 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                   onClick={emailHandler}
                 >
                   Написать на почту
-                  <MailOutlined style={{ fontSize: "20px" }} />
+                  <MailOutlined
+                    style={{ fontSize: "20px", marginRight: "-5px" }}
+                  />
                 </Button>
               </div>
             </div>
@@ -311,9 +331,14 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
             slides={advertData?.images && advertData?.images}
           />
 
-          <Typography.Title level={2} className="header">
+          <Typography.Title
+            level={2}
+            className="header"
+            style={{ marginTop: "10px" }}
+          >
             {advertData.header}
           </Typography.Title>
+
           <Typography.Title level={3} style={{ marginTop: "-10px" }}>
             <Price
               locale={PRICE_LOCALE}
@@ -337,7 +362,9 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                 onClick={numberHandler}
               >
                 Позвонить
-                <PhoneOutlined style={{ fontSize: "22px" }} />
+                <PhoneOutlined
+                  style={{ fontSize: "22px", marginRight: "-10px" }}
+                />
               </Button>
 
               <Button
@@ -346,7 +373,9 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
                 onClick={emailHandler}
               >
                 Написать на почту
-                <MailOutlined style={{ fontSize: "22px" }} />
+                <MailOutlined
+                  style={{ fontSize: "22px", marginRight: "-10px" }}
+                />
               </Button>
             </div>
           </div>
@@ -354,7 +383,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
           <div className="location">
             <Typography.Title level={4}>Местонахождение судна</Typography.Title>
 
-            <Typography.Paragraph>
+            <Typography.Paragraph style={{ fontSize: "16px" }}>
               {advertData.advert_legal_information.vessel_location.country}
               {", "}
               {advertData.advert_legal_information.vessel_location.value}
@@ -375,13 +404,19 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
 
           <div className="description">
             <Typography.Title level={4}>Описание</Typography.Title>
-            <Typography.Paragraph>
+            <Typography.Paragraph
+              style={{ fontSize: "16px", marginTop: "-6px" }}
+            >
               {advertData.description}
             </Typography.Paragraph>
           </div>
           <Divider />
 
           <Specs ConvertedAdvertData={ConvertedAdvertData} />
+          <OtherAdverts
+            user_id={advertData.user_id}
+            advert_id={advertData.id}
+          />
           <div className="created-at">
             <Typography.Paragraph
               style={{
