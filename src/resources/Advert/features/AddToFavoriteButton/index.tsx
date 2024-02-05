@@ -38,26 +38,28 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
             return;
         }
         if (!localFavorite) {
-            addToFavourite(id).then(res => {
-                if (res) {
-                    notification.success({message: 'Добавлено в "Избранные"', placement: 'bottomRight'});
-                    setLocalFavorite(res);
-                    onChange?.(res);
-                } else {
+            addToFavourite(id)
+                .then(res => {
+                    if (res) {
+                        setLocalFavorite(res);
+                        onChange?.(res);
+                    }
+                })
+                .catch(() => {
                     notification.error({message: 'Ошибка', placement: 'bottomRight'});
-                }
-            });
+                });
         }
         else {
-            deleteFromFavourite(id).then(res => {
-                if (res) {
-                    notification.success({message: 'Удалено из "Избранные"', placement: 'bottomRight'});
-                    setLocalFavorite(!res);
-                    onChange?.(!res);
-                } else {
+            deleteFromFavourite(id)
+                .then(res => {
+                    if (res) {
+                        setLocalFavorite(!res);
+                        onChange?.(!res);
+                    }
+                })
+                .catch(() => {
                     notification.error({message: 'Ошибка', placement: 'bottomRight'});
-                }
-            });
+                });
         }
     }
 

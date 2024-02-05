@@ -7,6 +7,7 @@ import { Button, Col, Row, Typography } from "antd";
 import Link from "next/link";
 import styles from './styles.module.css'
 import { AddToFavoriteButton } from "../../features/AddToFavoriteButton";
+import { getCountryName, TCountryCode} from "SydnoComponents/selectors";
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
@@ -16,7 +17,7 @@ export interface IAdvertCard extends IAdvertListItem {
     disableNumberButton?: boolean;
 }
 
-const FALLBACK_IMAGE_SRC = 'https://upload.wikimedia.org/wikipedia/commons/a/ab/European_shorthair_TUROK_cat_show_Turku_2010-03-27.JPG';
+const FALLBACK_IMAGE_SRC = '/sheep-icon.png';
 
 const PRICE_LOCALE = 'ru';
 
@@ -160,7 +161,6 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                                 <Button style={{
                                                     maxWidth: '100%',
                                                     height: 'auto',
-                                                    opacity: showDetails || isTouch ? '1' : '0'
                                                 }} onClick={showNumberBtnHandler}>
                                                     Показать телефон
                                                 </Button>
@@ -215,6 +215,7 @@ const DetailsInfo: React.FC<IAdvertLegalInformation & {
                 <Flag
                     country_code={props.flag}
                 />
+                <div className="pl-2">{getCountryName(props.flag as TCountryCode)}</div>
             </DetailsItem>
         </div>
     );

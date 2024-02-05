@@ -43,11 +43,11 @@
 }
 
 .sudno-MenuBurger-active>div {
-    opacity: 0;
+    animation: middleLineActive 0.4s forwards;
 }
 
 .sudno-MenuBurger-disable>div {
-    opacity: 1;
+    animation: middleLineDisable 0.4s forwards;
 }
 
 /* top line */
@@ -119,5 +119,29 @@
         bottom: 0;
         left: 0;
         transform: none;
+    }
+}
+
+/* middleLine */
+@keyframes middleLineActive {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes middleLineDisable {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
     }
 }

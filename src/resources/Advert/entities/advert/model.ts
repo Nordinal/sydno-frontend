@@ -21,16 +21,16 @@ export const useAdvert = create<IAdvertModel>(() => ({
         try {
             const data = await sydnoServiceFormData.get(`/api/adverts/${id}/favorite`);
             return data.statusText === 'OK'
-        } catch {
-            return false;
+        } catch(e) {
+            throw e;
         }
     },
     deleteFromFavourite: async (id) => {
         try {
             const data = await sydnoServiceFormData.get(`/api/adverts/${id}/unfavorite`);
             return data.statusText === 'OK'
-        } catch {
-            return false;
+        } catch(e) {
+            throw e;
         }
     }
 }));

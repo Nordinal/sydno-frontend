@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import './styles.css';
 
 export interface ISmallImageSlider {
-    maxItems: number;
+    maxItems?: number;
     items: string[];
     showLabels?: boolean;
     defaultIndex?: number;
@@ -12,7 +12,7 @@ export interface ISmallImageSlider {
     imageStyle?: React.CSSProperties;
 }
 
-export const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems, defaultIndex = 0, showLabels = true, fallbackImageSrc = '', imageClass, imageStyle }) => {
+export const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems = 5, defaultIndex = 0, showLabels = true, fallbackImageSrc = '', imageClass, imageStyle }) => {
     const [activeIndex, setActiveIndex] = useState<number>(defaultIndex);
     const imageRef = useRef<HTMLImageElement>(null);
 
@@ -38,7 +38,7 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({ items, maxItems,
         <div className="sudno-SmallImageSlider flex items-center">
             <img
                 ref={imageRef}
-                src={items[activeIndex]}
+                src={items.length === 0 ? fallbackImageSrc : items[activeIndex]}
                 className={'sudno-SmallImageSlider-image ' + imageClass}
                 onError={onImageErrorLoad}
                 style={imageStyle}
