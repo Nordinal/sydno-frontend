@@ -1,21 +1,41 @@
 "use client";
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Button, Col, Image, Row, Spin, Typography } from "antd";
-import { StarFilled } from "@ant-design/icons";
+import {
+  Button,
+  Col,
+  Divider,
+  Row,
+  Spin,
+  Typography,
+  notification,
+} from "antd";
 import { useShallow } from "zustand/react/shallow";
 import { Carousel } from "antd";
 import "./styles.css";
-import { DetailsPair } from "./DetailsPair";
 import { ConvertData } from "./DataConverter";
-import { useAdvert, IAdvertListItem } from "Advert/entities";
+import { useAdvert } from "Advert/entities";
 import { Price } from "SydnoComponents/commons";
-import { SmallImageSlider } from "SydnoComponents/sliders";
+import Specs from "./Specs";
+import { useScreenSize } from "./useMobileView";
+import { useUser } from "Auth/entities";
+import { IReceivedAdvert } from "./IAdvertListItemReady";
+import {
+  CheckOutlined,
+  CopyOutlined,
+  EyeOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
+import { SpecsPair } from "./SpecsPair";
+import { UserButton } from "Users/features";
+import { CustomCarousel } from "./CustomCarousel";
+import { OtherAdverts } from "./otherAdverts";
+
 interface IAdvertPageProps {
   params?: {
-    advert_id?: string;
+    advert_id: string;
   };
 }
-
 const PRICE_LOCALE = "ru";
 
 const NUMBER_FORMAT_OPTIONS = {
@@ -23,17 +43,96 @@ const NUMBER_FORMAT_OPTIONS = {
   currency: "RUB",
 };
 
+/**
+ * Компонент страницы объявления.
+ * Отображает страницу объявления с контактной информацией, изображениями и описанием.
+ * @param params Объект параметров с идентификатором объявления `advert_id`.
+ *
+ * Author: [Gleb]
+ */
+
 const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
-  const { getAdvert } = useAdvert(
-    useShallow((state) => ({ getAdvert: state.getAdvert }))
+  const { getAdvert, addToFavourite, deleteFromFavourite } = useAdvert(
+    useShallow((state) => ({
+      getAdvert: state.getAdvert,
+      addToFavourite: state.addToFavourite,
+      deleteFromFavourite: state.deleteFromFavourite,
+    }))
   );
-  const [advertData, setAdvertData] = useState<IAdvertListItem | false>();
-  const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
+  const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
+  const [isLoading, setIsLoading] = useState(false);
+  const [advertData, setAdvertData] = useState<IReceivedAdvert | undefined>();
   const [showNumber, setShowNumber] = useState<boolean>(false);
+  const [isNumberCopied, setIsNumberCopied] = useState<boolean>(false);
+
+  const [isLocalFavorite, setIsLocalFavorite] = useState<boolean | undefined>(
+    advertData && advertData.in_favorites
+  );
+  const screenSize = useScreenSize();
 
   const showNumberBtnHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
-    setShowNumber(true);
+    if (screenSize !== "small") {
+      setShowNumber(true);
+    }
+  };
+  const numberHandler = (e: SyntheticEvent) => {
+    if (advertData?.phone_number && screenSize !== "small") {
+      navigator.clipboard
+        .writeText(advertData.phone_number)
+        .then(() => {
+          setIsNumberCopied(true);
+          setTimeout(() => setIsNumberCopied(false), 1000);
+        })
+        .catch((err) => {
+          console.error("Ошибка копирования URL:", err);
+        });
+    } else {
+      window.location.href = `tel:${advertData?.phone_number}`;
+    }
+  };
+  const emailHandler = (e: SyntheticEvent) => {
+    window.location.href = `mailto:${advertData?.user.email}`;
+  };
+
+  const likeButtonClickhandler = (e: SyntheticEvent) => {
+    e.stopPropagation();
+    if (!auth) {
+      notification.warning({
+        message: "Необходимо авторизоваться на сайте",
+        placement: "bottomRight",
+      });
+      return;
+    }
+    if (params?.advert_id !== undefined) {
+      if (!isLocalFavorite) {
+        setIsLoading(true);
+        addToFavourite(params?.advert_id).then((res) => {
+          if (res) {
+            setIsLocalFavorite(res);
+          } else {
+            notification.error({
+              message: "Ошибка",
+              placement: "bottomRight",
+            });
+          }
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(true);
+        deleteFromFavourite(params?.advert_id).then((res) => {
+          if (res) {
+            setIsLocalFavorite(!res);
+          } else {
+            notification.error({
+              message: "Ошибка",
+              placement: "bottomRight",
+            });
+          }
+          setIsLoading(false);
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -41,11 +140,11 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
       if (data === false) {
       } else {
         setAdvertData(data);
+        setIsLocalFavorite(data.in_favorites);
       }
     });
   }, []);
-
-  //Готовим данные для отрисовки
+  console.log(advertData);
   const ConvertedAdvertData = advertData && ConvertData(advertData);
 
   if (!advertData) {
@@ -62,130 +161,284 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
       </div>
     );
   }
-  return (
+  return screenSize !== "small" ? (
     <div className="pt-6">
-      <Row gutter={14}>
-        <Col span={12}>
-          <Typography.Title level={1}>
-            <StarFilled className="favorite-star" />
+      <Row>
+        <Col span={19}>
+          <Typography.Title
+            level={screenSize === "small" ? 2 : 2}
+            className="header"
+          >
             {advertData.header}
           </Typography.Title>
+
+          <div className="created-at">
+            <Typography.Paragraph
+              style={{
+                fontWeight: "400",
+                color: "#545454",
+                margin: "-10px 0 15px 0",
+                fontSize: "16px",
+                display: "flex",
+              }}
+            >
+              Дата размещения:{" "}
+              {advertData.created_at.split("T")[0].split("-").join(".")}
+              <EyeOutlined
+                style={{
+                  fontSize: "20px",
+                  marginLeft: "15px",
+                  marginRight: "5px",
+                }}
+              />
+              {advertData.views}
+            </Typography.Paragraph>
+          </div>
+
+          <div className="carousel-specs">
+            <Col span={17}>
+              <CustomCarousel
+                isLocalFavorite={isLocalFavorite}
+                likeButtonClickhandler={likeButtonClickhandler}
+                isLoading={isLoading}
+                slides={advertData?.images && advertData?.images}
+              />
+            </Col>
+
+            <Col span={4}>
+              <div className="specs-with-buttons">
+                {ConvertedAdvertData &&
+                  ConvertedAdvertData.mainInfo.map((item) => (
+                    <SpecsPair
+                      key={item.key}
+                      label={item.label}
+                      value={item.children}
+                      column={1}
+                    />
+                  ))}
+              </div>
+            </Col>
+          </div>
+
+          <div className="location">
+            <Typography.Title level={4}>Местонахождение судна</Typography.Title>
+
+            <Typography.Paragraph
+              style={{ fontSize: "16px", marginTop: "-6px" }}
+            >
+              {advertData.advert_legal_information.vessel_location.country}
+              {", "}
+              {advertData.advert_legal_information.vessel_location.value}
+            </Typography.Paragraph>
+          </div>
+          <div className="description">
+            <Typography.Title level={4}>Описание</Typography.Title>
+            <Typography.Paragraph
+              style={{ fontSize: "16px", marginTop: "-6px" }}
+            >
+              {advertData.description}
+            </Typography.Paragraph>
+          </div>
+          <Divider />
+
+          <Specs ConvertedAdvertData={ConvertedAdvertData} />
+          <Divider />
+
+          <OtherAdverts
+            user_id={advertData.user_id}
+            advert_id={advertData.id}
+          />
         </Col>
 
-        <Col span={9} className="price-phone">
-          <Typography.Title level={2} className="price">
+        <Col span={5}>
+          <div className="side-info">
+            <Typography.Title
+              level={screenSize === "middle" ? 4 : 2}
+              className="price"
+              style={{
+                wordBreak: "keep-all",
+              }}
+            >
+              <Price
+                locale={PRICE_LOCALE}
+                options={NUMBER_FORMAT_OPTIONS}
+                price={advertData.price || 0}
+              />
+            </Typography.Title>
+
+            <div className="contacts">
+              <UserButton
+                id={advertData.user.id}
+                src={advertData.user.avatar}
+                name={advertData.user.name}
+                advertCount={advertData.user.adverts_count}
+              />
+
+              <div className="contacts-buttons">
+                {showNumber ? (
+                  <Button className="callButton tel" type="primary">
+                    {advertData.phone_number}
+
+                    {isNumberCopied ? (
+                      <CheckOutlined className="check-icon" />
+                    ) : (
+                      <CopyOutlined
+                        style={{ fontSize: "17px" }}
+                        onClick={numberHandler}
+                      />
+                    )}
+                  </Button>
+                ) : (
+                  <Button
+                    className="callButton show-tel"
+                    type="default"
+                    onClick={showNumberBtnHandler}
+                  >
+                    Показать номер
+                    <PhoneOutlined
+                      style={{
+                        fontSize: "20px",
+                        marginRight: "-5px",
+                      }}
+                    />
+                  </Button>
+                )}
+
+                <Button
+                  className="callButton"
+                  type="primary"
+                  onClick={emailHandler}
+                >
+                  Написать на почту
+                  <MailOutlined
+                    style={{ fontSize: "20px", marginRight: "-5px" }}
+                  />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  ) : (
+    <div className="pt-6">
+      <Row>
+        <Col span={24}>
+          <CustomCarousel
+            isLocalFavorite={isLocalFavorite}
+            likeButtonClickhandler={likeButtonClickhandler}
+            isLoading={isLoading}
+            slides={advertData?.images && advertData?.images}
+          />
+
+          <Typography.Title
+            level={2}
+            className="header"
+            style={{ marginTop: "10px" }}
+          >
+            {advertData.header}
+          </Typography.Title>
+
+          <Typography.Title level={3} style={{ marginTop: "-10px" }}>
             <Price
               locale={PRICE_LOCALE}
               options={NUMBER_FORMAT_OPTIONS}
               price={advertData.price || 0}
             />
           </Typography.Title>
-          <Typography.Paragraph>
-            {showNumber ? (
+
+          <div className="contacts">
+            <UserButton
+              id={advertData.user.id}
+              src={advertData.user.avatar}
+              name={advertData.user.name}
+              advertCount={advertData.user.adverts_count}
+            />
+
+            <div className="contacts-buttons">
               <Button
+                className="callButton show-tel"
+                type="default"
+                onClick={numberHandler}
+              >
+                Позвонить
+                <PhoneOutlined
+                  style={{ fontSize: "22px", marginRight: "-10px" }}
+                />
+              </Button>
+
+              <Button
+                className="callButton"
                 type="primary"
-                href={`tel:${advertData.phone_number}`}
-              >{`Позвонить +${advertData.phone_number}`}</Button>
-            ) : (
-              <Button onClick={showNumberBtnHandler}>Показать телефон</Button>
-            )}
-          </Typography.Paragraph>
-        </Col>
-      </Row>
-
-      <Row gutter={24}>
-        <Col span={12}>
-          <Carousel className="custom-carousel">
-            {advertData &&
-              (advertData?.images || []).map((image, index) => (
-                <div key={index}>
-                  <Image
-                    src={image}
-                    alt={`Image ${index}`}
-                    className="full-width-image"
-                  />
-                </div>
-              ))}
-          </Carousel>
-          <SmallImageSlider
-            items={advertData.images || []}
-            maxItems={5}
-            showLabels={true}
-            // imageClass="rounded-xl"
-          />
-          <Typography.Title level={4} className="description">
-            Описание
-          </Typography.Title>
-          <Typography.Paragraph>{advertData.description}</Typography.Paragraph>
-        </Col>
-
-        <Col span={12}>
-          <div>
-            <Row gutter={24}>
-              <Col span={16}>
-                <div>
-                  {ConvertedAdvertData &&
-                    ConvertedAdvertData.mainInfo.map(
-                      (field, index) =>
-                        field.value && (
-                          <DetailsPair
-                            key={index}
-                            title={field.title}
-                            value={field.value}
-                          />
-                        )
-                    )}
-                  <div>
-                    {!showAllCharacteristics && ConvertedAdvertData && (
-                      <Button
-                        className="all-button"
-                        onClick={() => setShowAllCharacteristics(true)}
-                      >
-                        Показать все характеристики
-                      </Button>
-                    )}
-
-                    {showAllCharacteristics && ConvertedAdvertData && (
-                      <>
-                        <Typography.Title level={4} className="info-title">
-                          Юридическая информация
-                        </Typography.Title>
-                        {ConvertedAdvertData.legalInfo.map(
-                          (field, index) =>
-                            field.value && (
-                              <DetailsPair
-                                key={index}
-                                title={field.title}
-                                value={field.value}
-                              />
-                            )
-                        )}
-                        <Typography.Title level={4} className="info-title">
-                          Техническая информация
-                        </Typography.Title>
-                        {ConvertedAdvertData.technicalInfo.map(
-                          (field, index) =>
-                            field !== null && (
-                              <DetailsPair
-                                key={index}
-                                title={field.title}
-                                value={field.value}
-                              />
-                            )
-                        )}
-                        <Button
-                          className="all-button"
-                          onClick={() => setShowAllCharacteristics(false)}
-                        >
-                          Скрыть
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </Col>
-            </Row>
+                onClick={emailHandler}
+              >
+                Написать на почту
+                <MailOutlined
+                  style={{ fontSize: "22px", marginRight: "-10px" }}
+                />
+              </Button>
+            </div>
           </div>
+
+          <div className="location">
+            <Typography.Title level={4}>Местонахождение судна</Typography.Title>
+
+            <Typography.Paragraph style={{ fontSize: "16px" }}>
+              {advertData.advert_legal_information.vessel_location.country}
+              {", "}
+              {advertData.advert_legal_information.vessel_location.value}
+            </Typography.Paragraph>
+          </div>
+
+          <div className="specs-with-buttons">
+            {ConvertedAdvertData &&
+              ConvertedAdvertData.mainInfo.map((item) => (
+                <SpecsPair
+                  key={item.key}
+                  label={item.label}
+                  value={item.children}
+                  column={2}
+                />
+              ))}
+          </div>
+
+          <div className="description">
+            <Typography.Title level={4}>Описание</Typography.Title>
+            <Typography.Paragraph
+              style={{ fontSize: "16px", marginTop: "-6px" }}
+            >
+              {advertData.description}
+            </Typography.Paragraph>
+          </div>
+          <Divider />
+
+          <Specs ConvertedAdvertData={ConvertedAdvertData} />
+          <OtherAdverts
+            user_id={advertData.user_id}
+            advert_id={advertData.id}
+          />
+          <div className="created-at">
+            <Typography.Paragraph
+              style={{
+                fontWeight: "400",
+                color: "#545454",
+                margin: "-10px 0 10px 0",
+                fontSize: "16px",
+              }}
+            >
+              Дата размещения:{" "}
+              {advertData.created_at.split("T")[0].split("-").join(".")}
+              <EyeOutlined
+                style={{
+                  fontSize: "18px",
+                  marginLeft: "10px",
+                  marginRight: "3px",
+                }}
+              />
+              {advertData.views}
+            </Typography.Paragraph>
+          </div>
+          <Divider />
         </Col>
       </Row>
     </div>

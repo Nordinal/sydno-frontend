@@ -1,0 +1,9 @@
+.user-button__person {
+    cursor: pointer;
+}
+
+.user-button__person:hover .user-button__name {
+    color: var(--primary-color);
+
+    transition: color .2s linear;
+}

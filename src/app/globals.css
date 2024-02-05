@@ -5,6 +5,7 @@
 :root {
   --main-app-br: 6px;
   --header-height: 48px;
+  --primary-color: #34a8ff;
 }
 
 * {

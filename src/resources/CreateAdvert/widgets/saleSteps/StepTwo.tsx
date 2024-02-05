@@ -1,5 +1,5 @@
 'use client';
-import { Form, Input, Select, AutoComplete, Checkbox, DatePicker, InputNumber } from 'antd';
+import { Form, Input, Select, AutoComplete, Checkbox, DatePicker, InputNumber, Space } from 'antd';
 import { onFinishStep } from '../../shared/types/basicTypes';
 import { useState, useEffect } from 'react';
 import { CountriesSelector, RegionSelector } from 'SydnoComponents/selectors';
@@ -77,6 +77,16 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
             autoComplete="off"
         >
             <Form.Item
+                label='Название судна'
+                labelAlign='left'
+                name={'name'}
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+                initialValue={ advert_legal_information?.name }
+            >
+                <Input placeholder='Название судна'/> 
+            </Form.Item>
+
+            <Form.Item
                 label="Флаг"
                 labelAlign='left'
                 name="flag"
@@ -131,11 +141,21 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
             </Form.Item>
 
             <Form.Item
+                label='Наличие технической документации'
+                labelAlign='left'
+                name='technical_documentation'
+                initialValue={ advert_legal_information?.technical_documentation || false }
+                valuePropName="checked"
+            >
+                <Checkbox />
+            </Form.Item>
+
+            <Form.Item
                 label="Тип и назначение"
                 labelAlign='left'
                 required
             >
-                <Input.Group compact>
+                <Space.Compact>
                     <Form.Item
                         name='type'
                         initialValue={ advert_legal_information?.type.toString() }
@@ -156,7 +176,7 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
                     >
                         <Input style={{ width: '40%' }} placeholder='Назначение'/>
                     </Form.Item>
-                </Input.Group>
+                </Space.Compact>
             </Form.Item>
 
             <Form.Item
@@ -211,14 +231,14 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
                     }
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <DatePicker />
+                    <DatePicker picker='month'/>
                 </Form.Item>
             }
 
             <Form.Item
                 name={'port_address'}
                 initialValue={ advert_legal_information?.port_address }
-                label='Страна приписки'
+                label='Порт приписки'
                 labelAlign='left'
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
@@ -236,28 +256,29 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
             </Form.Item>
 
             <Form.Item
-                label='Место и год постройки'
+                label='Место постройки'
                 labelAlign='left'
+                name={'building_place'}
+                initialValue={ advert_legal_information?.building_place }
             >
-                <Input.Group compact>
-                    <Form.Item
-                        name={'building_country'}
-                        initialValue={ advert_legal_information?.building_country }
-                        noStyle
-                    >
-                        <CountriesSelector style={{width: '50%'}} placeholder='Страна постройки'/>   
-                    </Form.Item>
-                    <Form.Item
-                        name={'building_year'}
-                        initialValue={
-                            advert_legal_information?.building_year &&
-                            dayjs(advert_legal_information?.building_year.toString())
-                        }
-                        noStyle
-                    >
-                        <DatePicker style={{width: '50%'}} placeholder='Год постройки' picker="year"/>
-                    </Form.Item>
-                </Input.Group>
+                <Input placeholder='Место постройки'/> 
+            </Form.Item>
+
+            <Form.Item
+                label='Год постройки'
+                labelAlign='left'
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <Form.Item
+                    name={'building_year'}
+                    initialValue={
+                        advert_legal_information?.building_year &&
+                        dayjs(advert_legal_information?.building_year.toString())
+                    }
+                    noStyle
+                >
+                    <DatePicker style={{width: '50%'}} placeholder='Год постройки' picker="year"/>
+                </Form.Item>
             </Form.Item>
 
             <Form.Item
