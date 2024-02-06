@@ -46,13 +46,13 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
 }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(
     null
   );
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   return (
@@ -101,7 +101,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
               className="slide"
               src={slide}
               alt={`Slide ${index + 1}`}
-              onClick={() => setVisible(true)}
+              onClick={() => setOpen(true)}
             />
           </SwiperSlide>
         ))}
@@ -109,7 +109,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
 
       <div>
         <Modal
-          visible={visible}
+          open={open}
           onCancel={handleCancel}
           style={{ padding: "0px" }}
           footer={null}

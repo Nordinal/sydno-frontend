@@ -36,7 +36,9 @@
     margin: 4px 0px !important;
     cursor: pointer !important;
     z-index: 100;
+    border: 0px !important;
 }
+
 .favorite {
     background-color: #34a8ff !important;
     color: white !important;
@@ -48,7 +50,6 @@
     background-color: #d9d9d9 !important;
     color: #150e15 !important;
     opacity: 0.7 !important;
-    border: 0px !important;
 }
 .not-favorite:hover {
     opacity: 1 !important;
@@ -108,6 +109,7 @@
     margin: 4px 0px !important;
     cursor: pointer !important;
     z-index: 100;
+    border: 0px !important;
 }
 @media screen and (max-width: 840px) {
     .modal-slide {

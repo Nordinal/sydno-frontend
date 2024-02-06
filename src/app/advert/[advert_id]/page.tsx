@@ -41,6 +41,7 @@ const PRICE_LOCALE = "ru";
 const NUMBER_FORMAT_OPTIONS = {
   style: "currency",
   currency: "RUB",
+  maximumFractionDigits: "0",
 };
 
 /**
@@ -109,6 +110,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
         setIsLoading(true);
         addToFavourite(params?.advert_id).then((res) => {
           if (res) {
+            setIsLoading(false);
             setIsLocalFavorite(res);
           } else {
             notification.error({
@@ -116,12 +118,12 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
               placement: "bottomRight",
             });
           }
-          setIsLoading(false);
         });
       } else {
         setIsLoading(true);
         deleteFromFavourite(params?.advert_id).then((res) => {
           if (res) {
+            setIsLoading(false);
             setIsLocalFavorite(!res);
           } else {
             notification.error({
@@ -129,7 +131,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
               placement: "bottomRight",
             });
           }
-          setIsLoading(false);
         });
       }
     }

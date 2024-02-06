@@ -2,7 +2,7 @@
 import { useAdvert } from "Advert/entities";
 import "./otherAdverts.css";
 import { useShallow } from "zustand/react/shallow";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { IReceivedAdvert } from "./IAdvertListItemReady";
 import { Button, Col, Spin, Typography } from "antd";
 import { OtherAdvert } from "./otherAdvert";
@@ -44,29 +44,38 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({
         setOtherAdverts(data.data);
       }
     });
-  }, [getOtherAdverts, user_id, advert_id]);
+  }, [user_id, advert_id]);
   useEffect(() => {
+    console.log(curruntPage);
     const fetchNextPageData = async () => {
       try {
-        const nextPageUrl = `http://localhost/api/otheruseradverts?page=${curruntPage}&user_id=${Number(
-          user_id
-        )}&advert_id=${Number(advert_id)}`;
-        const response = await axios.get(nextPageUrl);
-        const nextPageData = response.data.data;
-        setOtherAdverts((prevOtherAdverts) => {
-          if (nextPageData.length && prevOtherAdverts) {
-            setIsLoading(false);
-            if (curruntPage > 1) {
-              setShouldScroll(true);
+        if (curruntPage > 1) {
+          const nextPageUrl = `http://localhost/api/otheruseradverts?page=${curruntPage}&user_id=${Number(
+            user_id
+          )}&advert_id=${Number(advert_id)}`;
+          const response = await axios.get(nextPageUrl);
+          const nextPageData = response.data.data;
+          const advertsTo = response.data.to;
+          const advertsTotal = response.data.total;
+
+          setOtherAdverts((prevOtherAdverts) => {
+            if (nextPageData.length && prevOtherAdverts) {
+              setIsLoading(false);
+              if (curruntPage > 1) {
+                setShouldScroll(true);
+              }
+              if (advertsTo === advertsTotal) {
+                setAllAdvertsLoaded(true);
+              }
+
+              return [...prevOtherAdverts, ...nextPageData];
+            } else {
+              return prevOtherAdverts;
             }
-            return [...prevOtherAdverts, ...nextPageData];
-          } else {
-            return prevOtherAdverts;
+          });
+          if (nextPageData && nextPageData.length === 0) {
+            setIsLoading(false);
           }
-        });
-        if (nextPageData && nextPageData.length === 0) {
-          setAllAdvertsLoaded(true);
-          setIsLoading(false);
         }
       } catch (error) {
         console.error("Error fetching next page data:", error);
