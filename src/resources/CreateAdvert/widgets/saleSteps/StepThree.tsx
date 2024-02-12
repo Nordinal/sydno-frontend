@@ -185,21 +185,12 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
             </Form.Item>
 
             <Form.Item
-                label="Максимальная скорость в балласте"
+                label="Максимальная скорость"
                 labelAlign='left'
-                name="maximum_speed_in_ballast"
-                initialValue={ adverts_technical_information?.maximum_speed_in_ballast }
+                name="maximum_speed"
+                initialValue={ adverts_technical_information?.maximum_speed }
             >
-                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в балласте (км/ч)' addonAfter='км/ч' step="0.1"/>
-            </Form.Item>
-
-            <Form.Item
-                label="Максимальная скорость в грузу"
-                labelAlign='left'
-                name="maximum_speed_when_loaded"
-                initialValue={ adverts_technical_information?.maximum_speed_when_loaded }
-            >
-                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в грузу (км/ч)' addonAfter='км/ч' step="0.1"/>
+                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость(км/ч)' addonAfter='км/ч' step="0.1"/>
             </Form.Item>
 
             <Form.Item

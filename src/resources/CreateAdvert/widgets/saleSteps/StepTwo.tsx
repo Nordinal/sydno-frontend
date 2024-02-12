@@ -111,13 +111,23 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
             </Form.Item>
 
             <Form.Item
-                label="Формула класса"
+                label="Класс"
                 labelAlign='left'
                 name="class_formula"
                 initialValue={ advert_legal_information?.class_formula }
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input placeholder='Формула класса'/>
+                <Input placeholder='Класс'/>
+            </Form.Item>
+
+            <Form.Item
+                label="Классификационное общество"
+                labelAlign='left'
+                name="classification_society"
+                initialValue={ advert_legal_information?.classification_society }
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <Input placeholder='Классификационное общество'/>
             </Form.Item>
 
             <Form.Item
@@ -128,16 +138,6 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber step={0.1} max={3.5} min={0}/>
-            </Form.Item>
-
-            <Form.Item
-                label='Ледовое усиление'
-                labelAlign='left'
-                name='ice_strengthening'
-                initialValue={ advert_legal_information?.ice_strengthening || false }
-                valuePropName="checked"
-            >
-                <Checkbox />
             </Form.Item>
 
             <Form.Item

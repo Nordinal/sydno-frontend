@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, { Suspense } from "react";
 import { BaseAdvertCard, IAdvertCard } from "Advert/widgets";
 import { SearchFiltres } from "../../widgets/searchFiltres";
 import { BasicList } from "SydnoComponents/lists";
@@ -7,11 +7,14 @@ import { Col, Row } from "antd";
 import { convertObjectToPathname, getUrlQueryParams } from "SydnoHelpers/commons";
 import { useRouter, useSearchParams } from "next/navigation";
 
+export const MainAdvertPage = () => {
+    return (<Suspense><MainAdvertPageUI/></Suspense>)
+}
 /**
  * Компонент страницы с поиском обьявлений по фильтрам
  * @author Burtseff Ilysha
  */
-export const MainAdvertPage = () => {
+export const MainAdvertPageUI = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
 

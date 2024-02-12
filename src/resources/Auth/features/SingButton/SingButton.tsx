@@ -156,7 +156,7 @@ const SingInForm = ({onToggleForm, errorMessage}: {onToggleForm: (val: 'singin' 
 
                 <Form.Item>
                     <div className='flex justify-between align-center'>
-                        <Checkbox checked={remember} onClick={() => setRemember(!remember)}>Запомнить меня</Checkbox>
+                        <Checkbox className='flex items-center' checked={remember} onClick={() => setRemember(!remember)}>Запомнить меня</Checkbox>
                         <Button type='link' onClick={() => onToggleForm('forgotpass')}>Забыли пароль?</Button>
                     </div>
                 </Form.Item>

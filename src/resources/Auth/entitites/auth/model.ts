@@ -151,8 +151,9 @@ export const useUser = create<IUserModel>((set, get) => ({
     },
     updateProfileInfo: async (payload) => {
         try {
+            const phone = payload.phone_number?.includes('_') ? null : payload.phone_number;
             await sydnoServiceJson.put(
-                `/api/user/profile-information?phone_number=${payload.phone_number}&name=${payload.name}`
+                `/api/user/profile-information?${phone ? `phone_number=${phone}` : ''}&name=${payload.name}`
             );
             const user =  await sydnoServiceJson.get<IUser>('/api/user');
             set({

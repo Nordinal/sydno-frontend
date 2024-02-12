@@ -7,6 +7,7 @@ import { useShallow } from 'zustand/react/shallow';
 import s from '../styles.module.css';
 import ruRU from 'antd/lib/locale/ru_RU';
 import { StaticContext } from 'SydnoHelpers/contexts';
+import { Footer } from 'SydnoPage/widgets/footer/Footer';
 
 const theme: ThemeConfig = {
     token: {
@@ -30,6 +31,7 @@ export const SydnoLayout = ({children}: {children: React.ReactNode}) => {
                     <Layout.Content className={s['sydno-container']}>
                         {children}
                     </Layout.Content>
+                    <Footer />
                 </Layout>
                 {contextHolder}
             </StaticContext.Provider>

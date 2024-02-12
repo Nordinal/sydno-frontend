@@ -9,11 +9,12 @@ import styles from "./styles.module.css";
 import { AddToFavoriteButton } from "../../features/AddToFavoriteButton";
 
 export interface IAdvertCard extends IAdvertListItem {
-  onClick?: () => void;
-  size?: "small" | "big";
-  featureWrapperClass?: string;
-  customFeature?: React.ReactNode;
-  disableNumberButton?: boolean;
+    onClick?: () => void;
+    size?: 'small' | 'big';
+    featureWrapperClass?: string;
+    customFeature?: React.ReactNode;
+    disableNumberButton?: boolean;
+    isDraft: boolean;
 }
 
 const FALLBACK_IMAGE_SRC =
@@ -59,124 +60,126 @@ const rightCol = {
 };
 
 export const BaseAdvertCard: React.FC<IAdvertCard> = ({
-  onClick,
-  header,
-  price,
-  advert_legal_information,
-  description,
-  phone_number,
-  images,
-  id,
-  size,
-  customFeature,
-  featureWrapperClass,
-  disableNumberButton,
+    onClick,
+    header, 
+    price,
+    advert_legal_information,
+    description,
+    phone_number,
+    images,
+    id,
+    size,
+    customFeature,
+    featureWrapperClass,
+    disableNumberButton,
+    isDraft
 }) => {
-  const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [showNumber, setShowNumber] = useState<boolean>(false);
-  const isTouch = isTouchDevice();
+    const [showDetails, setShowDetails] = useState<boolean>(false);
+    const [showNumber, setShowNumber] = useState<boolean>(false);
+    const isTouch = isTouchDevice();
 
-  const showNumberBtnHandler = (e: SyntheticEvent) => {
-    e.stopPropagation();
-    setShowNumber(true);
-  };
+    const showNumberBtnHandler = (e: SyntheticEvent) => {
+        e.stopPropagation();
+        setShowNumber(true);
+    };
 
-  const onMouseLeave = () => {
-    setShowDetails(false);
-  };
+    const onMouseLeave = () => {
+        setShowDetails(false);
+    };
 
-  const onMouseEnter = () => {
-    setShowDetails(true);
-  };
+    const onMouseEnter = () => {
+        setShowDetails(true);
+    };
 
-  return (
-    <div
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      className={
-        styles["sudno-AdvertCard"] +
-        " " +
-        (isTouch && styles["sudno-AdvertCard-shadow"])
-      }
-      onClick={onClick}
-    >
-      <Row>
-        <Col {...leftCol[size || "big"]}>
-          <SmallImageSlider
-            items={images}
-            maxItems={5}
-            showLabels={showDetails}
-            fallbackImageSrc={FALLBACK_IMAGE_SRC}
-            imageStyle={{ borderRadius: "var(--main-app-br)" }}
-          />
-        </Col>
-        <Col {...middleCol[size || "big"]}>
-          <div className="flex flex-col h-full">
-            <Typography.Title level={3}>
-              <Link href={"advert/" + id}>{header}</Link>
-            </Typography.Title>
-            <Typography.Title level={4} style={{ marginTop: 0 }}>
-              <Price
-                locale={PRICE_LOCALE}
-                options={NUMBER_FORMAT_OPTIONS}
-                price={price}
-              />
-            </Typography.Title>
-            <div className="flex flex-col flex-auto">
-              <Typography.Paragraph
-                className={
-                  styles["sudno-AdvertCard-labels"] + " flex items-center"
-                }
-              >
-                <DetailsInfo
-                  size={size || "big"}
-                  {...advert_legal_information}
-                />
-              </Typography.Paragraph>
-              <Typography.Paragraph
-                className={styles["sudno-AdvertCard-description"]}
-              >
-                {description}
-              </Typography.Paragraph>
-            </div>
-          </div>
-        </Col>
-        <Col {...rightCol[size || "big"]}>
-          <div
-            className={featureWrapperClass || "flex flex-col items-end h-full"}
-          >
-            {
-              <>
-                <div>
-                  <AddToFavoriteButton id={id} isFavorite={false} />
-                </div>
-                {disableNumberButton === false || (
-                  <div>
-                    {showNumber ? (
-                      phone_number
-                    ) : (
-                      <Button
-                        style={{
-                          maxWidth: "100%",
-                          height: "auto",
-                          opacity: showDetails || isTouch ? "1" : "0",
-                        }}
-                        onClick={showNumberBtnHandler}
-                      >
-                        Показать телефон
-                      </Button>
-                    )}
-                  </div>
-                )}
-              </>
-            }
-            {customFeature}
-          </div>
-        </Col>
-      </Row>
-    </div>
-  );
-};
+    return (
+        <div
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className={styles['sudno-AdvertCard'] + ' ' + (isTouch && styles['sudno-AdvertCard-shadow']) + ' ' + (isDraft && styles['sudno-AdvertCard-draft'])}
+            onClick={onClick}
+        >
+            <Row>
+                <Col {...leftCol[size || 'big']} >
+                    <SmallImageSlider
+                        items={images}
+                        maxItems={5}
+                        showLabels={showDetails}
+                        fallbackImageSrc={FALLBACK_IMAGE_SRC}
+                        imageStyle={{ borderRadius: 'var(--main-app-br)' }}
+                    />
+                </Col>
+                <Col {...middleCol[size || 'big']}>
+                    <div className="flex flex-col h-full">
+                        <Typography.Title
+                            level={3}
+                        >
+
+                            <Link href={'advert/' + id}>
+                                {header}
+                            </Link>
+                        </Typography.Title>
+                        <Typography.Title
+                            level={4}
+                            style={{marginTop: 0}}
+                        >
+                            <Price
+                                locale={PRICE_LOCALE}
+                                options={NUMBER_FORMAT_OPTIONS}
+                                price={price}                                
+                            />
+                        </Typography.Title>
+                        <div className="flex flex-col flex-auto">
+                            <Typography.Paragraph
+                                className={styles['sudno-AdvertCard-labels'] + ' flex items-center'}
+                            >
+                                <DetailsInfo
+                                    size={size || 'big'}
+                                    {...advert_legal_information}
+                                />
+                            </Typography.Paragraph>
+                            <Typography.Paragraph
+                                className={styles['sudno-AdvertCard-description']}
+                            >
+                                {description}
+                            </Typography.Paragraph>
+                        </div>
+                    </div>
+                </Col>
+                <Col {...rightCol[size || 'big']}>
+                    <div className={featureWrapperClass || 'flex flex-col items-end h-full'}>
+                        {
+                            <>
+                                <div>
+                                    <AddToFavoriteButton
+                                        id={id}
+                                        isFavorite={false}
+                                    />
+                                </div>
+                                {
+                                    !disableNumberButton &&
+                                    <div>
+                                        {
+                                            showNumber ?
+                                                phone_number :
+                                                <Button style={{
+                                                    maxWidth: '100%',
+                                                    height: 'auto',
+                                                    opacity: showDetails || isTouch ? '1' : '0'
+                                                }} onClick={showNumberBtnHandler}>
+                                                    Показать телефон
+                                                </Button>
+                                        }
+                                    </div>
+                                }
+                            </>
+                        }
+                        {customFeature}
+                    </div>
+                </Col>
+            </Row>
+        </div>
+    );
+}
 
 const DetailsItem: React.FC<{
   label: string;
