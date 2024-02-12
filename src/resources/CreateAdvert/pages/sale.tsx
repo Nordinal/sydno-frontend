@@ -1,16 +1,26 @@
 'use client';
-import { Button, Col, Modal, Row, Steps, Typography } from 'antd';
-import { useContext, useState } from 'react';
+import { Button, Col, Row, Steps, Typography } from 'antd';
+import { useContext, useLayoutEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import { CreateSaleAdvertStepOne } from '../widgets/saleSteps/StepOne';
 import { CreateSaleAdvertStepThree } from '../widgets/saleSteps/StepThree';
 import { CreateSaleAdvertStepTwo } from '../widgets/saleSteps/StepTwo';
 import { onFinishStep } from '../shared/types/basicTypes';
-import { ICreateAdStepOne, ICreateAdStepThree, ICreateAdStepTwo, useCreateSaleAdvert } from '../entitites/createAdvert/model';
+import { ICreateAdStepOne, ICreateAdStepThree, ICreateAdStepTwo, IInstanceCreateAd, useCreateSaleAdvert } from '../entitites/createAdvert/model';
 import { StaticContext } from 'SydnoHelpers/contexts';
+import { sydnoServiceJson } from 'SydnoService/service';
 
-export function CreateSaleAdvert() {
+export function CreateSaleAdvert({id}: {id: number}) {
+    const { setInstance } = useCreateSaleAdvert(useShallow(state => ({setInstance: state.setInstance})));
+
+    useLayoutEffect(() => {
+        if(id) {
+            sydnoServiceJson.get<IInstanceCreateAd>(`/api/adverts/${id}/edit`).then((res) => {
+                setInstance(res.data)
+            })
+        }
+    }, [id]);
 
     return (
         <div>

@@ -23,6 +23,7 @@ export interface ICreateAdStepTwo {
   purpose: string;
   was_registered: boolean;
   register_valid_until: string;
+  classification_society: string;
   vessel_status: number;
   project_number: string;
   building_number: string;
@@ -41,7 +42,6 @@ export interface ICreateAdStepTwo {
     value: string;
   };
   imo_number: string;
-  ice_strengthening: number;
   id?: number;
 }
 
@@ -60,8 +60,7 @@ export interface ICreateAdStepThree {
   num_engines: number;
   num_additional_engines: number;
   power: number;
-  maximum_speed_in_ballast: number;
-  maximum_speed_when_loaded: number;
+  maximum_speed: number;
   cargo_tanks: number;
   total_capacity_cargo_tanks: number;
   second_bottom: number;

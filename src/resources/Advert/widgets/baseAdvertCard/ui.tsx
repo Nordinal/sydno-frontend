@@ -14,6 +14,7 @@ export interface IAdvertCard extends IAdvertListItem {
     featureWrapperClass?: string;
     customFeature?: React.ReactNode;
     disableNumberButton?: boolean;
+    isDraft: boolean;
 }
 
 const FALLBACK_IMAGE_SRC = 'https://upload.wikimedia.org/wikipedia/commons/a/ab/European_shorthair_TUROK_cat_show_Turku_2010-03-27.JPG';
@@ -69,6 +70,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     customFeature,
     featureWrapperClass,
     disableNumberButton,
+    isDraft
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -91,7 +93,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
         <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={styles['sudno-AdvertCard'] + ' ' + (isTouch && styles['sudno-AdvertCard-shadow'])}
+            className={styles['sudno-AdvertCard'] + ' ' + (isTouch && styles['sudno-AdvertCard-shadow']) + ' ' + (isDraft && styles['sudno-AdvertCard-draft'])}
             onClick={onClick}
         >
             <Row>
@@ -152,7 +154,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                     />
                                 </div>
                                 {
-                                    (disableNumberButton === false) || 
+                                    !disableNumberButton &&
                                     <div>
                                         {
                                             showNumber ?
