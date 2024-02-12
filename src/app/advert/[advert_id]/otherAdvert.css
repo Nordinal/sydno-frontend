@@ -1,7 +1,6 @@
 .other-advert-container {
     display: flex;
     flex-direction: column;
-    width: 22%;
 }
 .image-block {
     position: relative;
@@ -33,6 +32,10 @@
     line-height: 2rem !important;
     margin: 5px 0;
 }
+.other-info-block-about {
+    display: flex;
+    flex-direction: column;
+}
 .other-flag {
     width: 40px;
     position: absolute;
@@ -56,7 +59,6 @@
         padding: 5px 22px;
     }
     .other-advert-container {
-        width: 49%;
         margin-bottom: 10px;
     }
     .other-flag {

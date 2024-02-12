@@ -22,6 +22,7 @@ export const OtherAdvert: React.FC<OtherAdvertsProps> = ({
   const NUMBER_FORMAT_OPTIONS = {
     style: "currency",
     currency: "RUB",
+    maximumFractionDigits: "0",
   };
   return (
     <div className="other-advert-container" ref={forwardedRef}>
@@ -52,7 +53,7 @@ export const OtherAdvert: React.FC<OtherAdvertsProps> = ({
           </Link>
         </div>
 
-        <div>
+        <div className="other-info-block-about">
           <p
             style={{
               color: "black",
