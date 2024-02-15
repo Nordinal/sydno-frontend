@@ -1,19 +1,10 @@
-import { AuthWrapper } from "Auth/entities";
-import { Metadata } from "next";
-
+import { AuthWrapper } from 'Auth/entities';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Создать объявление",
+    title: 'Создать объявление'
 };
 
-export default function RootLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
-    return (
-      <AuthWrapper>
-            {children}
-      </AuthWrapper>
-    );
-  }
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+    return <AuthWrapper>{children}</AuthWrapper>;
+}

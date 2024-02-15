@@ -141,12 +141,12 @@ export interface ITechnicalFilterOptions {
     material?: string | null;
 
     /**
-     * Предельная масса (дедвейт) 0 
+     * Предельная масса (дедвейт) 0
      */
     min_deadweight?: number | null;
 
     /**
-     * Предельная масса (дедвейт) 600 000 т. 
+     * Предельная масса (дедвейт) 600 000 т.
      */
     max_deadweight?: number | null;
 
@@ -276,7 +276,7 @@ export interface ITechnicalFilterOptions {
     min_passangers_avialable?: number | null;
 
     /**
-     * Пассажировмещаемость Infinity 
+     * Пассажировмещаемость Infinity
      */
     max_passangers_avialable?: number | null;
 

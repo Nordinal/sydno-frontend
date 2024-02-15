@@ -1,14 +1,10 @@
-import { Profile } from "Profile/pages";
-import { Metadata } from "next";
+import { Profile } from 'Profile/pages';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Мои объявления",
+    title: 'Мои объявления'
 };
 
 export default function ProfileServer() {
-
-    return (
-        <Profile />
-    )
+    return <Profile />;
 }
-  

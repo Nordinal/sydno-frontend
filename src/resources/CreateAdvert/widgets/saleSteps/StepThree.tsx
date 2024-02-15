@@ -6,8 +6,10 @@ import { ICreateAdStepThree, useCreateSaleAdvert } from '../../entitites/createA
 import { useShallow } from 'zustand/react/shallow';
 import { sydnoServiceJson } from 'SydnoService/service';
 
-export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) {
-    const { adverts_technical_information } = useCreateSaleAdvert(useShallow(state => ({adverts_technical_information: state.instance.adverts_technical_information})))
+export function CreateSaleAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) {
+    const { adverts_technical_information } = useCreateSaleAdvert(
+        useShallow((state) => ({ adverts_technical_information: state.instance.adverts_technical_information }))
+    );
     const [isTanks, setIsTanks] = useState(false);
     const [isBulkTanks, setIsBulkTanks] = useState(false);
     const [isCapacity, setIsCapacity] = useState(false);
@@ -15,21 +17,20 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
     const [boardHeight, setBoardHeight] = useState<number | null>(null);
     const [draftInCargo, setDraftInCargo] = useState<number | null>(null);
 
-    const [materials, setMaterials] = useState<{value: string, label: string}[]>();
+    const [materials, setMaterials] = useState<{ value: string; label: string }[]>();
 
     const _onFinish = (values: ICreateAdStepThree) => {
-        onFinish({type: 'StepThree', data: values});
-    }
+        onFinish({ type: 'StepThree', data: values });
+    };
 
     useEffect(() => {
-        sydnoServiceJson.get('/api/selector?materials').then(res => {
-            const data = res.data.message
+        sydnoServiceJson.get('/api/selector?materials').then((res) => {
+            const data = res.data.message;
             setMaterials(
-                Object.entries(data.materials as {[x in string]: string})
-                    .map(([value, label] : [string, string]) => ({
-                        value,
-                        label
-                    }))
+                Object.entries(data.materials as { [x in string]: string }).map(([value, label]: [string, string]) => ({
+                    value,
+                    label
+                }))
             );
         });
     }, []);
@@ -42,171 +43,182 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
             wrapperCol={{ span: 15, offset: 1 }}
             initialValues={{ remember: true }}
             onFinish={_onFinish}
-            autoComplete="off"
+            autoComplete='off'
         >
-            <Form.Item
-                label="Габариты"
-                labelAlign='left'
-                required
-            >
+            <Form.Item label='Габариты' labelAlign='left' required>
                 <Space.Compact>
                     <Form.Item
                         noStyle
-                        name="overall_length"
-                        initialValue={ adverts_technical_information?.overall_length }
+                        name='overall_length'
+                        initialValue={adverts_technical_information?.overall_length}
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <InputNumber style={{width: '50%'}} placeholder='Длина' addonAfter='м.' step="0.01" />
+                        <InputNumber style={{ width: '50%' }} placeholder='Длина' addonAfter='м.' step='0.01' />
                     </Form.Item>
                     <Form.Item
                         noStyle
-                        name="overall_width"
-                        initialValue={ adverts_technical_information?.overall_width }
+                        name='overall_width'
+                        initialValue={adverts_technical_information?.overall_width}
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <InputNumber style={{width: '50%'}} placeholder='Ширина' addonAfter='м.' step="0.01" />
+                        <InputNumber style={{ width: '50%' }} placeholder='Ширина' addonAfter='м.' step='0.01' />
                     </Form.Item>
                 </Space.Compact>
             </Form.Item>
 
             <Form.Item
-                label="Высота борта"
+                label='Высота борта'
                 labelAlign='left'
-                name="board_height"
-                initialValue={ adverts_technical_information?.board_height }
+                name='board_height'
+                initialValue={adverts_technical_information?.board_height}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
                     value={boardHeight}
                     precision={2}
                     onChange={(value) => setBoardHeight(value)}
-                    style={{width: '100%'}}
+                    style={{ width: '100%' }}
                     placeholder='Высота борта (метры)'
-                    addonAfter='метры' step="0.01"
+                    addonAfter='метры'
+                    step='0.01'
                 />
             </Form.Item>
 
             <Form.Item
-                label="Осадка в грузу"
+                label='Осадка в грузу'
                 labelAlign='left'
-                name="draft_in_cargo"
-                initialValue={ adverts_technical_information?.draft_in_cargo }
+                name='draft_in_cargo'
+                initialValue={adverts_technical_information?.draft_in_cargo}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
                     max={boardHeight ?? Number.MAX_SAFE_INTEGER}
                     precision={2}
-                    style={{width: '100%'}}
+                    style={{ width: '100%' }}
                     placeholder='Осадка в грузу'
                     addonAfter='метры'
                 />
             </Form.Item>
 
             <Form.Item
-                label="Материал корпуса"
+                label='Материал корпуса'
                 labelAlign='left'
-                name="material"
-                initialValue={ adverts_technical_information?.overall_length }
+                name='material'
+                initialValue={adverts_technical_information?.overall_length}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Select
-                    placeholder='Материал корпуса'
-                    options={materials}
+                <Select placeholder='Материал корпуса' options={materials} />
+            </Form.Item>
+
+            <Form.Item
+                label='Дедвейт'
+                labelAlign='left'
+                name='deadweight'
+                initialValue={adverts_technical_information?.deadweight}
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber style={{ width: '100%' }} placeholder='Дедвейт (тонны)' addonAfter='тонны' />
+            </Form.Item>
+
+            <Form.Item
+                label='Доковый вес'
+                labelAlign='left'
+                name='dock_weight'
+                initialValue={adverts_technical_information?.dock_weight}
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber style={{ width: '100%' }} placeholder='Доковый вес (тонны)' addonAfter='тонны' />
+            </Form.Item>
+
+            <Form.Item
+                label='Водоизмещение полное'
+                labelAlign='left'
+                name='full_displacement'
+                initialValue={adverts_technical_information?.full_displacement}
+                rules={[{ required: true, message: 'Обязательное поле' }]}
+            >
+                <InputNumber
+                    style={{ width: '100%' }}
+                    placeholder='Водоизмещение полное (Рег. тонны)'
+                    addonAfter='рег. тонны'
                 />
             </Form.Item>
 
             <Form.Item
-                label="Дедвейт"
+                label='Валовая вместимость'
                 labelAlign='left'
-                name="deadweight"
-                initialValue={ adverts_technical_information?.deadweight }
+                name='gross_tonnage'
+                initialValue={adverts_technical_information?.gross_tonnage}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}} placeholder='Дедвейт (тонны)' addonAfter='тонны' />
+                <InputNumber style={{ width: '100%' }} placeholder='Валовая вместимость' addonAfter='рег. тонны' />
             </Form.Item>
 
             <Form.Item
-                label="Доковый вес"
+                label='Количество главных двигателей'
                 labelAlign='left'
-                name="dock_weight"
-                initialValue={ adverts_technical_information?.dock_weight }
+                name='num_engines'
+                initialValue={adverts_technical_information?.num_engines}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}} placeholder='Доковый вес (тонны)' addonAfter='тонны'/>
+                <InputNumber
+                    style={{ width: '100%' }}
+                    placeholder='Количество главных двигателей'
+                    min={1}
+                    max={8}
+                    addonAfter='шт.'
+                />
             </Form.Item>
-
             <Form.Item
-                label="Водоизмещение полное"
+                label='Количество вспомогательных двигателей'
                 labelAlign='left'
-                name="full_displacement"
-                initialValue={ adverts_technical_information?.full_displacement }
+                name='num_additional_engines'
+                initialValue={adverts_technical_information?.num_additional_engines}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}} placeholder='Водоизмещение полное (Рег. тонны)' addonAfter='рег. тонны' />
+                <InputNumber
+                    style={{ width: '100%' }}
+                    placeholder='Количество вспомогательных двигателей'
+                    min={1}
+                    max={8}
+                    addonAfter='шт.'
+                />
             </Form.Item>
 
             <Form.Item
-                label="Валовая вместимость"
+                label='Мощность двигателей'
                 labelAlign='left'
-                name="gross_tonnage"
-                initialValue={ adverts_technical_information?.gross_tonnage }
+                name='power'
+                initialValue={adverts_technical_information?.power}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}}  placeholder='Валовая вместимость' addonAfter='рег. тонны' />
+                <InputNumber
+                    style={{ width: '100%' }}
+                    placeholder='Мощность двигателей кВт'
+                    step='0.1'
+                    addonAfter='кВт'
+                />
             </Form.Item>
 
             <Form.Item
-                label="Количество главных двигателей"
+                label='Максимальная скорость'
                 labelAlign='left'
-                name="num_engines"
-                initialValue={ adverts_technical_information?.num_engines }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
+                name='maximum_speed'
+                initialValue={adverts_technical_information?.maximum_speed}
             >
-                <InputNumber style={{width: '100%'}}  placeholder='Количество главных двигателей' min={1} max={8} addonAfter='шт.' />
-            </Form.Item>
-            <Form.Item
-                label="Количество вспомогательных двигателей"
-                labelAlign='left'
-                name="num_additional_engines"
-                initialValue={ adverts_technical_information?.num_additional_engines }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <InputNumber style={{width: '100%'}}  placeholder='Количество вспомогательных двигателей' min={1} max={8} addonAfter='шт.' />
+                <InputNumber
+                    style={{ width: '100%' }}
+                    placeholder='Максимальная скорость(км/ч)'
+                    addonAfter='км/ч'
+                    step='0.1'
+                />
             </Form.Item>
 
             <Form.Item
-                label="Мощность двигателей"
+                label='Грузовые танки'
                 labelAlign='left'
-                name="power"
-                initialValue={ adverts_technical_information?.power }
-                rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <InputNumber style={{width: '100%'}}  placeholder='Мощность двигателей кВт' step="0.1" addonAfter='кВт' />
-            </Form.Item>
-
-            <Form.Item
-                label="Максимальная скорость в балласте"
-                labelAlign='left'
-                name="maximum_speed_in_ballast"
-                initialValue={ adverts_technical_information?.maximum_speed_in_ballast }
-            >
-                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в балласте (км/ч)' addonAfter='км/ч' step="0.1"/>
-            </Form.Item>
-
-            <Form.Item
-                label="Максимальная скорость в грузу"
-                labelAlign='left'
-                name="maximum_speed_when_loaded"
-                initialValue={ adverts_technical_information?.maximum_speed_when_loaded }
-            >
-                <InputNumber style={{width: '100%'}}  placeholder='Максимальная скорость в грузу (км/ч)' addonAfter='км/ч' step="0.1"/>
-            </Form.Item>
-
-            <Form.Item
-                label="Грузовые танки"
-                labelAlign='left'
-                name="cargo_tanks"
-                initialValue={ adverts_technical_information?.cargo_tanks || isTanks }
+                name='cargo_tanks'
+                initialValue={adverts_technical_information?.cargo_tanks || isTanks}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -216,34 +228,33 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     options={[
                         {
                             value: true,
-                            label: 'Да',
+                            label: 'Да'
                         },
                         {
                             value: false,
-                            label: 'Нет',
+                            label: 'Нет'
                         }
                     ]}
                 />
             </Form.Item>
 
-            {
-                isTanks &&
+            {isTanks && (
                 <Form.Item
-                    label="Суммарная вместимость"
+                    label='Суммарная вместимость'
                     labelAlign='left'
-                    name="total_capacity_cargo_tanks"
-                    initialValue={ adverts_technical_information?.total_capacity_cargo_tanks }
+                    name='total_capacity_cargo_tanks'
+                    initialValue={adverts_technical_information?.total_capacity_cargo_tanks}
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <InputNumber style={{width: '100%'}}  placeholder='Суммарная вместимость'/>
+                    <InputNumber style={{ width: '100%' }} placeholder='Суммарная вместимость' />
                 </Form.Item>
-            }
+            )}
 
             <Form.Item
-                label="Второе дно"
+                label='Второе дно'
                 labelAlign='left'
-                name="second_bottom"
-                initialValue={ adverts_technical_information?.second_bottom }
+                name='second_bottom'
+                initialValue={adverts_technical_information?.second_bottom}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -251,21 +262,21 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     options={[
                         {
                             value: true,
-                            label: 'Да',
+                            label: 'Да'
                         },
                         {
                             value: false,
-                            label: 'Нет',
+                            label: 'Нет'
                         }
                     ]}
                 />
             </Form.Item>
 
             <Form.Item
-                label="Вторые борта"
+                label='Вторые борта'
                 labelAlign='left'
-                name="second_sides"
-                initialValue={ adverts_technical_information?.second_sides }
+                name='second_sides'
+                initialValue={adverts_technical_information?.second_sides}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -273,31 +284,31 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     options={[
                         {
                             value: true,
-                            label: 'Да',
+                            label: 'Да'
                         },
                         {
                             value: false,
-                            label: 'Нет',
+                            label: 'Нет'
                         }
                     ]}
                 />
             </Form.Item>
 
             <Form.Item
-                label="Грузоподъемность"
+                label='Грузоподъемность'
                 labelAlign='left'
-                name="carrying"
-                initialValue={ adverts_technical_information?.carrying }
+                name='carrying'
+                initialValue={adverts_technical_information?.carrying}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber style={{width: '100%'}}  placeholder='Грузоподъемность'/>
+                <InputNumber style={{ width: '100%' }} placeholder='Грузоподъемность' />
             </Form.Item>
 
             <Form.Item
-                label="Наливные танки"
+                label='Наливные танки'
                 labelAlign='left'
-                name="liquid_tanks"
-                initialValue={ adverts_technical_information?.liquid_tanks || isBulkTanks }
+                name='liquid_tanks'
+                initialValue={adverts_technical_information?.liquid_tanks || isBulkTanks}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -307,34 +318,33 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     options={[
                         {
                             value: true,
-                            label: 'Да',
+                            label: 'Да'
                         },
                         {
                             value: false,
-                            label: 'Нет',
+                            label: 'Нет'
                         }
                     ]}
                 />
             </Form.Item>
 
-            {
-                isBulkTanks &&
+            {isBulkTanks && (
                 <Form.Item
-                    label="Cуммарная вместимость"
+                    label='Cуммарная вместимость'
                     labelAlign='left'
-                    name="total_capacity_liquid_tanks"
-                    initialValue={ adverts_technical_information?.total_capacity_liquid_tanks }
+                    name='total_capacity_liquid_tanks'
+                    initialValue={adverts_technical_information?.total_capacity_liquid_tanks}
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <InputNumber style={{width: '100%'}} placeholder='Cуммарная вместимость'/>
+                    <InputNumber style={{ width: '100%' }} placeholder='Cуммарная вместимость' />
                 </Form.Item>
-            }
+            )}
 
             <Form.Item
-                label="Пассажировместимость"
+                label='Пассажировместимость'
                 labelAlign='left'
-                name="passangers_avialable"
-                initialValue={ adverts_technical_information?.passangers_avialable || isCapacity }
+                name='passangers_avialable'
+                initialValue={adverts_technical_information?.passangers_avialable || isCapacity}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -344,28 +354,27 @@ export function CreateSaleAdvertStepThree({onFinish}: {onFinish: onFinishStep}) 
                     options={[
                         {
                             value: true,
-                            label: 'Да',
+                            label: 'Да'
                         },
                         {
                             value: false,
-                            label: 'Нет',
+                            label: 'Нет'
                         }
                     ]}
                 />
             </Form.Item>
 
-            {
-                isCapacity &&
+            {isCapacity && (
                 <Form.Item
-                    label="Количество человек"
+                    label='Количество человек'
                     labelAlign='left'
-                    name="num_passangers"
-                    initialValue={ adverts_technical_information?.num_passangers }
+                    name='num_passangers'
+                    initialValue={adverts_technical_information?.num_passangers}
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <InputNumber style={{width: '100%'}} placeholder='Количество человек'/>
+                    <InputNumber style={{ width: '100%' }} placeholder='Количество человек' />
                 </Form.Item>
-            }
+            )}
         </Form>
-    )
+    );
 }

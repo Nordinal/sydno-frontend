@@ -1,1 +1,1 @@
-export { InputEmail } from 'SydnoComponents/inputs/InputEmail'
+export { InputEmail } from 'SydnoComponents/inputs/InputEmail';

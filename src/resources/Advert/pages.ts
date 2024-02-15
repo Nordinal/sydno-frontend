@@ -1,1 +1,1 @@
-export { MainAdvertPage } from "./pages/MainAdvertsPage";
+export { MainAdvertPage } from './pages/MainAdvertsPage';

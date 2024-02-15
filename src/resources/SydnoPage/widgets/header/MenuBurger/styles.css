@@ -3,7 +3,9 @@
     cursor: pointer;
 }
 
-.sudno-MenuBurger:after, .sudno-MenuBurger:before, .sudno-MenuBurger>div {
+.sudno-MenuBurger:after,
+.sudno-MenuBurger:before,
+.sudno-MenuBurger > div {
     position: absolute;
     content: '';
     width: 100%;
@@ -20,7 +22,7 @@
     left: 0;
 }
 
-.sudno-MenuBurger>div {
+.sudno-MenuBurger > div {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -42,11 +44,11 @@
     animation: bottomLineDisable 0.4s forwards;
 }
 
-.sudno-MenuBurger-active>div {
+.sudno-MenuBurger-active > div {
     animation: middleLineActive 0.4s forwards;
 }
 
-.sudno-MenuBurger-disable>div {
+.sudno-MenuBurger-disable > div {
     animation: middleLineDisable 0.4s forwards;
 }
 

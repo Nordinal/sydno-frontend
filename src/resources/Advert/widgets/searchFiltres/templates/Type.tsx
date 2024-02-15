@@ -6,21 +6,19 @@ import { sydnoServiceFormData } from 'SydnoService/service';
 export const Type: React.FC<{
     type?: string | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    type,
-    changeConfigProperty
-}) => {
-    const [typeList, setTypeList] = useState<{value: string, label: string}[]>();
+}> = ({ type, changeConfigProperty }) => {
+    const [typeList, setTypeList] = useState<{ value: string; label: string }[]>();
 
     useEffect(() => {
-        sydnoServiceFormData.get('/api/selector?vesseltypes').then(res => {
-            const data = res.data.message
+        sydnoServiceFormData.get('/api/selector?vesseltypes').then((res) => {
+            const data = res.data.message;
             setTypeList(
-                Object.entries(data.vessel_types as {[x in string]: string})
-                    .map(([value, label] : [string, string]) => ({
+                Object.entries(data.vessel_types as { [x in string]: string }).map(
+                    ([value, label]: [string, string]) => ({
                         value,
                         label
-                    }))
+                    })
+                )
             );
         });
     }, []);
@@ -36,5 +34,5 @@ export const Type: React.FC<{
                 options={typeList}
             />
         </>
-    )
-}
+    );
+};

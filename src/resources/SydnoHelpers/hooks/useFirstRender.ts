@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect } from 'react';
 
 /**
  * Хук для определени первого рендера компонента
@@ -12,4 +12,4 @@ export const useFirstRender: () => boolean = () => {
     }, []);
 
     return firstRender.current;
-}
+};

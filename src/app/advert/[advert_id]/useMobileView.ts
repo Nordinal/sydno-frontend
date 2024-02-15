@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * Хук useMobileView.
@@ -10,31 +10,31 @@ import { useEffect, useState } from "react";
  */
 
 export const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState("big"); // 'small', 'middle', 'big'
+    const [screenSize, setScreenSize] = useState('big'); // 'small', 'middle', 'big'
 
-  useEffect(() => {
-    const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      const mobileThreshold = 840;
-      const middleThreshold = 1150;
+    useEffect(() => {
+        const handleResize = () => {
+            const currentWidth = window.innerWidth;
+            const mobileThreshold = 840;
+            const middleThreshold = 1150;
 
-      if (currentWidth <= mobileThreshold) {
-        setScreenSize("small");
-      } else if (currentWidth <= middleThreshold) {
-        setScreenSize("middle");
-      } else {
-        setScreenSize("big");
-      }
-    };
+            if (currentWidth <= mobileThreshold) {
+                setScreenSize('small');
+            } else if (currentWidth <= middleThreshold) {
+                setScreenSize('middle');
+            } else {
+                setScreenSize('big');
+            }
+        };
 
-    handleResize();
+        handleResize();
 
-    window.addEventListener("resize", handleResize);
+        window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [screenSize]);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [screenSize]);
 
-  return screenSize;
+    return screenSize;
 };

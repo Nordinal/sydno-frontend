@@ -9,25 +9,17 @@ export const BackendSelector: React.FC<{
     style?: React.CSSProperties;
     allowClear?: boolean;
     className?: string;
-}> = ({
-    selector,
-    value,
-    onChange,
-    style,
-    allowClear,
-    className,
-}) => {
-    const [selectorList, setSelectorList] = useState<{value: string, label: string}[]>();
+}> = ({ selector, value, onChange, style, allowClear, className }) => {
+    const [selectorList, setSelectorList] = useState<{ value: string; label: string }[]>();
 
     useEffect(() => {
-        sydnoServiceJson.get('/api/selector?' + selector).then(res => {
-            const data = res.data.message
+        sydnoServiceJson.get('/api/selector?' + selector).then((res) => {
+            const data = res.data.message;
             setSelectorList(
-                Object.entries(data[selector] as {[x in string]: string})
-                    .map(([value, label] : [string, string]) => ({
-                        value,
-                        label
-                    }))
+                Object.entries(data[selector] as { [x in string]: string }).map(([value, label]: [string, string]) => ({
+                    value,
+                    label
+                }))
             );
         });
     }, []);
@@ -43,5 +35,5 @@ export const BackendSelector: React.FC<{
                 options={selectorList}
             />
         </>
-    )
-}
+    );
+};

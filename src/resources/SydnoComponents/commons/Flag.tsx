@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 /**
  * Компонент-хелпер для отображения флага
  * Передаются всё те же параметры что и для обычной картинки, но вместо src - country_code - двухбуквенный код страны
- * @param country_code - код страны 
+ * @param country_code - код страны
  * @author Burtsev Ilysha
- * @returns 
+ * @returns
  */
 export const Flag: React.FC<{
     alt?: string;
@@ -15,15 +15,7 @@ export const Flag: React.FC<{
     styles?: React.CSSProperties;
     className?: string;
     onClick?: () => void;
-}> = ({
-    alt,
-    country_code,
-    width,
-    height,
-    styles,
-    className,
-    onClick,
-}) => {
+}> = ({ alt, country_code, width, height, styles, className, onClick }) => {
     return (
         <img
             alt={alt}
@@ -35,4 +27,4 @@ export const Flag: React.FC<{
             onClick={onClick}
         />
     );
-}
+};

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import './styles.css';
-import { useFirstRender } from "SydnoHelpers/hooks";
+import { useFirstRender } from 'SydnoHelpers/hooks';
 
 export interface IMenuBurger {
     /**
@@ -44,14 +44,7 @@ export interface IMenuBurger {
  * @author Бурцев И.А.
  */
 
-export const MenuBurger: React.FC<IMenuBurger> = ({
-    color,
-    width,
-    height,
-    padding,
-    status,
-    onClick
-}) => {
+export const MenuBurger: React.FC<IMenuBurger> = ({ color, width, height, padding, status, onClick }) => {
     const ref = useRef<HTMLDivElement>(null);
     const isFirstRender = useFirstRender();
     const [isActive, setIsActive] = useState<boolean>(status || false);
@@ -64,20 +57,20 @@ export const MenuBurger: React.FC<IMenuBurger> = ({
         if (!isFirstRender) {
             setIsActive(status || false);
         }
-    }, [status,isFirstRender])
+    }, [status, isFirstRender]);
 
     return (
-        <div style={{ cursor: 'pointer', padding: padding || '0'}} onClick={onClick}>
+        <div style={{ cursor: 'pointer', padding: padding || '0' }} onClick={onClick}>
             <div
                 ref={ref}
                 className={`sudno-MenuBurger${isActive ? ' sudno-MenuBurger-active' : ' sudno-MenuBurger-disable'}`}
                 style={{
                     width: width || '30px',
-                    height: height || '24px',
+                    height: height || '24px'
                 }}
             >
                 <div></div>
             </div>
         </div>
     );
-}
+};

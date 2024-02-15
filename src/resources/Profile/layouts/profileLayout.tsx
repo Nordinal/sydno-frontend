@@ -8,13 +8,14 @@ import { useContext } from 'react';
 import { AuthWrapper, useUser } from 'Auth/entities';
 import { StaticContext } from 'SydnoHelpers/contexts';
 
-
-export const ProfileLayoutClient = ({children}: {children: React.ReactNode}) => {
-    const { name, logout, avatar } = useUser(useShallow(state => ({
-        name: state.instance?.name,
-        logout: state.logout,
-        avatar: state.instance?.avatar
-    })));
+export const ProfileLayoutClient = ({ children }: { children: React.ReactNode }) => {
+    const { name, logout, avatar } = useUser(
+        useShallow((state) => ({
+            name: state.instance?.name,
+            logout: state.logout,
+            avatar: state.instance?.avatar
+        }))
+    );
     const pathname = usePathname();
     const { modal } = useContext(StaticContext);
 
@@ -28,49 +29,60 @@ export const ProfileLayoutClient = ({children}: {children: React.ReactNode}) => 
             onOk: () => {
                 logout();
             }
-        })
-    }    
+        });
+    };
     return (
         <AuthWrapper>
             <div className='my-8'>
                 <Row>
                     <Col span={6}>
                         <div className='mb-4 flex align-center'>
-                            <div className='mr-2'><Avatar src={avatar} icon={<UserOutlined />} /></div>
-                            <div><Typography.Title level={4}>{name}</Typography.Title></div>
+                            <div className='mr-2'>
+                                <Avatar src={avatar} icon={<UserOutlined />} />
+                            </div>
+                            <div>
+                                <Typography.Title level={4}>{name}</Typography.Title>
+                            </div>
                         </div>
 
-                        <Divider style={{margin: '1rem 0'}}/>
+                        <Divider style={{ margin: '1rem 0' }} />
 
                         <div className='flex flex-col'>
                             <Link href={'/profile'}>
-                                <Button danger={pathname === '/profile'} type='link' style={{textAlign: 'start', paddingLeft: 0}}>
+                                <Button
+                                    danger={pathname === '/profile'}
+                                    type='link'
+                                    style={{ textAlign: 'start', paddingLeft: 0 }}
+                                >
                                     Мои объявления
                                 </Button>
                             </Link>
-                            <Button type='link' style={{textAlign: 'start', paddingLeft: 0}}>
+                            <Button type='link' style={{ textAlign: 'start', paddingLeft: 0 }}>
                                 Избранное
                             </Button>
                         </div>
 
-                        <Divider style={{margin: '8px 0'}}/>
+                        <Divider style={{ margin: '8px 0' }} />
 
                         <div className='flex flex-col'>
                             <Link href={'/profile/settings'}>
-                                <Button danger={pathname === '/profile/settings'}  type='link' style={{textAlign: 'start', paddingLeft: 0}}>
+                                <Button
+                                    danger={pathname === '/profile/settings'}
+                                    type='link'
+                                    style={{ textAlign: 'start', paddingLeft: 0 }}
+                                >
                                     Настройки
                                 </Button>
                             </Link>
                         </div>
 
-                        <Divider style={{margin: '8px 0'}}/>
+                        <Divider style={{ margin: '8px 0' }} />
 
                         <div className='flex flex-col'>
-                            <Button onClick={openExitModal} type='link' style={{textAlign: 'start', paddingLeft: 0}}>
+                            <Button onClick={openExitModal} type='link' style={{ textAlign: 'start', paddingLeft: 0 }}>
                                 Выйти
                             </Button>
                         </div>
-
                     </Col>
                     <Col offset={1} span={17}>
                         {children}
@@ -79,4 +91,4 @@ export const ProfileLayoutClient = ({children}: {children: React.ReactNode}) => 
             </div>
         </AuthWrapper>
     );
-} 
+};

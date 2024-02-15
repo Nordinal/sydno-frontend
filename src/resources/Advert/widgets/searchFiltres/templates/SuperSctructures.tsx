@@ -3,17 +3,14 @@ import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
-    {value: true, label: 'да'},
-    {value: false, label: 'нет'}
+    { value: true, label: 'да' },
+    { value: false, label: 'нет' }
 ];
 
 export const SuperSctructures: React.FC<{
     superstructures?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    superstructures,
-    changeConfigProperty
-}) => {
+}> = ({ superstructures, changeConfigProperty }) => {
     return (
         <div>
             <p>Надстройки</p>
@@ -25,5 +22,5 @@ export const SuperSctructures: React.FC<{
                 options={OPTIONS}
             />
         </div>
-    )
-}
+    );
+};

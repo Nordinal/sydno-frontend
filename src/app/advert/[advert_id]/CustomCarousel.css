@@ -112,6 +112,16 @@
     z-index: 100;
     border: 0px !important;
 }
+@media screen and (max-width: 1640px) {
+    .modal-wrapper {
+        width: 90vw !important;
+    }
+}
+@media screen and (max-width: 1390px) {
+    .modal-wrapper {
+        width: 65vw !important;
+    }
+}
 @media screen and (max-width: 840px) {
     .modal-slide {
         height: 70vh !important;

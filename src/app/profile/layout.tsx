@@ -1,11 +1,5 @@
-import { ProfileLayoutClient } from "Profile/layouts";
+import { ProfileLayoutClient } from 'Profile/layouts';
 
-export default function RootLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
-    return (
-      <ProfileLayoutClient>{children}</ProfileLayoutClient>
-    );
-  }
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+    return <ProfileLayoutClient>{children}</ProfileLayoutClient>;
+}

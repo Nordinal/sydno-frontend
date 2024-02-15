@@ -1,14 +1,11 @@
-import { Input } from "antd";
-import React from "react";
-import { TChangeConfigProperty } from "../types";
+import { Input } from 'antd';
+import React from 'react';
+import { TChangeConfigProperty } from '../types';
 
 export const ProjectNumber: React.FC<{
     project_number?: string | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    project_number,
-    changeConfigProperty
-}) => {
+}> = ({ project_number, changeConfigProperty }) => {
     return (
         <>
             <p>Номер проекта</p>
@@ -18,4 +15,4 @@ export const ProjectNumber: React.FC<{
             />
         </>
     );
-}
+};

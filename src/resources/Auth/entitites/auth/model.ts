@@ -22,59 +22,50 @@ export interface IUserData {
 export interface IUserModel extends IUserData {
     hasUser: () => boolean;
     fetch: () => void;
-    login: (values: {email: string, pass: string, remember: boolean}) => Promise<void>;
-    registration: (values: {email: string, name: string, pass: string, confirmationPass: string}) => Promise<boolean>;
+    login: (values: { email: string; pass: string; remember: boolean }) => Promise<void>;
+    registration: (values: { email: string; name: string; pass: string; confirmationPass: string }) => Promise<boolean>;
     logout: () => Promise<void>;
     resetError: () => void;
-    verify: (payload: {
-        id: string;
-        hash: string;
-        expires: string;
-        signature: string;
-    }) => Promise<boolean>;
-    forgotPassword: (payload: {email: string}) => Promise<boolean>;
+    verify: (payload: { id: string; hash: string; expires: string; signature: string }) => Promise<boolean>;
+    forgotPassword: (payload: { email: string }) => Promise<boolean>;
     sendVerifyMail: () => Promise<boolean>;
     resetPassword: (payload: {
-        email?: string,
-        token?: string,
-        password: string,
-        password_confirmation: string,
-        current_password?: string
-    }) => Promise<boolean>
-    updateProfileInfo: (payload: {
-        phone_number: string;
-        name: string;
-    }) => Promise<boolean>
-    updateAvatar: (payload: string | RcFile | Blob) => Promise<boolean>
-    deleteAvatar: () => Promise<boolean>
-};
+        email?: string;
+        token?: string;
+        password: string;
+        password_confirmation: string;
+        current_password?: string;
+    }) => Promise<boolean>;
+    updateProfileInfo: (payload: { phone_number: string; name: string }) => Promise<boolean>;
+    updateAvatar: (payload: string | RcFile | Blob) => Promise<boolean>;
+    deleteAvatar: () => Promise<boolean>;
+}
 
 const initState: IUserData = {
     auth: null,
     instance: null,
     error: null,
-    registrationStatus: null,
-}
+    registrationStatus: null
+};
 
 export const useUser = create<IUserModel>((set, get) => ({
     ...initState,
     fetch: async () => {
         try {
-            const user =  await sydnoServiceJson.get<IUser>('/api/user');
+            const user = await sydnoServiceJson.get<IUser>('/api/user');
             set({
                 instance: user.data,
                 auth: true
-            })
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+            });
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             set({
                 auth: false
             });
         }
     },
     hasUser: () => {
-        return !!get().instance
+        return !!get().instance;
     },
     login: async (values) => {
         try {
@@ -84,9 +75,8 @@ export const useUser = create<IUserModel>((set, get) => ({
                 remember: values.remember
             });
             location.reload();
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             set({
                 auth: false
             });
@@ -107,9 +97,8 @@ export const useUser = create<IUserModel>((set, get) => ({
                 registrationStatus: true
             });
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             return false;
         }
     },
@@ -119,23 +108,23 @@ export const useUser = create<IUserModel>((set, get) => ({
 
             set(initState, true);
             location.reload();
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
         }
     },
     verify: async (payload) => {
         try {
-            await sydnoServiceJson.get(`/api/email/verify/${payload.id}/${payload.hash}?expires=${payload.expires}&signature=${payload.signature}`);
+            await sydnoServiceJson.get(
+                `/api/email/verify/${payload.id}/${payload.hash}?expires=${payload.expires}&signature=${payload.signature}`
+            );
             const user = await sydnoServiceJson.get<IUser>('/api/user');
             set({
                 instance: user.data,
                 auth: true
-            })
+            });
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             return false;
         }
     },
@@ -143,25 +132,24 @@ export const useUser = create<IUserModel>((set, get) => ({
         try {
             await sydnoServiceJson.post('/api/email/verification-notification');
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
-            return false
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
+            return false;
         }
     },
     updateProfileInfo: async (payload) => {
         try {
+            const phone = payload.phone_number?.includes('_') ? null : payload.phone_number;
             await sydnoServiceJson.put(
-                `/api/user/profile-information?phone_number=${payload.phone_number}&name=${payload.name}`
+                `/api/user/profile-information?${phone ? `phone_number=${phone}` : ''}&name=${payload.name}`
             );
-            const user =  await sydnoServiceJson.get<IUser>('/api/user');
+            const user = await sydnoServiceJson.get<IUser>('/api/user');
             set({
                 instance: user.data
-            })
+            });
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             return false;
         }
     },
@@ -170,56 +158,53 @@ export const useUser = create<IUserModel>((set, get) => ({
             const formData = new FormData();
             formData.append('avatar_image', payload);
             await sydnoServiceFormData.post('/api/user/avatar', formData);
-            const user =  await sydnoServiceJson.get<IUser>('/api/user');
+            const user = await sydnoServiceJson.get<IUser>('/api/user');
             set({
                 instance: user.data
-            })
+            });
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             return false;
         }
     },
     deleteAvatar: async () => {
         try {
             await sydnoServiceJson.delete('/api/user/avatar');
-            const user =  await sydnoServiceJson.get<IUser>('/api/user');
+            const user = await sydnoServiceJson.get<IUser>('/api/user');
             set({
                 instance: user.data
-            })
+            });
             return true;
-        }
-        catch {
+        } catch {
             return false;
         }
     },
     forgotPassword: async (payload) => {
         try {
-            await sydnoServiceJson.post('/api/forgot-password', {email: payload.email});
+            await sydnoServiceJson.post('/api/forgot-password', { email: payload.email });
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             return false;
         }
     },
     resetPassword: async (payload) => {
         try {
-            if(payload.current_password) await sydnoServiceJson.put(
-                `/api/user/password?current_password=${payload.current_password}&password=${payload.password}&password_confirmation=${payload.password_confirmation}`
-            );
-            else await sydnoServiceJson.post('/api/reset-password', {...payload});
+            if (payload.current_password)
+                await sydnoServiceJson.put(
+                    `/api/user/password?current_password=${payload.current_password}&password=${payload.password}&password_confirmation=${payload.password_confirmation}`
+                );
+            else await sydnoServiceJson.post('/api/reset-password', { ...payload });
             return true;
-        }
-        catch (e) {
-            if(e instanceof AxiosError) set({error: e});
+        } catch (e) {
+            if (e instanceof AxiosError) set({ error: e });
             return false;
         }
     },
     resetError: () => {
         set({
             error: null
-        })
+        });
     }
 }));

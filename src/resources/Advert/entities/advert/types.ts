@@ -79,5 +79,5 @@ export interface IAdvertListItem {
         avatar: string;
         email: string;
         adverts_count: number;
-      };
+    };
 }

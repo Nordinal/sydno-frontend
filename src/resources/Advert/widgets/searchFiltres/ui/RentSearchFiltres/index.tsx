@@ -5,14 +5,10 @@ import React from 'react';
  * Компонент принимает объект с фильтрами и по нажатию на кнопку "Показать результаты", вызывает колбэк, передавая в него измененные фильтры
  * @param filterOptions начальнаое значение фильтров
  * @param onFindButtonClick колбэк, прнимающий новый объект с фильтрами
- * @returns 
+ * @returns
  */
 const RentSearchFiltres = () => {
-  return (
-    <div>
-      {/* на будущее будут отдельные фильтры для аренды */}
-    </div>
-  )
-}
+    return <div>{/* на будущее будут отдельные фильтры для аренды */}</div>;
+};
 
 export default RentSearchFiltres;

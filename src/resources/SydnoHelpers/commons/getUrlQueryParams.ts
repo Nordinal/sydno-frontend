@@ -1,8 +1,8 @@
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams } from 'next/navigation';
 
 /**
  * Хелпер для преобразования ReadonlyURLSearchParams в обьект
- * @param ReadonlyURLSearchParams 
+ * @param ReadonlyURLSearchParams
  */
 export function getUrlQueryParams(searchParams: ReadonlyURLSearchParams): object {
     let resultObject = {};

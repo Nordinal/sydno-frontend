@@ -1,12 +1,13 @@
-import { Avatar, Dropdown, MenuProps, Typography } from "antd";
-import { useShallow } from "zustand/react/shallow";
+import { Avatar, Dropdown, MenuProps, Typography } from 'antd';
+import { useShallow } from 'zustand/react/shallow';
 import { UserOutlined } from '@ant-design/icons';
-import { useRouter } from "next/navigation";
-import { useUser } from "Auth/entities";
-
+import { useRouter } from 'next/navigation';
+import { useUser } from 'Auth/entities';
 
 export const ProfileButton = () => {
-    const { name, logout, avatar } = useUser(useShallow(state => ({name: state.instance?.name, logout: state.logout, avatar: state.instance?.avatar})));
+    const { name, logout, avatar } = useUser(
+        useShallow((state) => ({ name: state.instance?.name, logout: state.logout, avatar: state.instance?.avatar }))
+    );
     const router = useRouter();
 
     const items: MenuProps['items'] = [
@@ -14,7 +15,7 @@ export const ProfileButton = () => {
             key: '1',
             label: 'Мои объявления',
             onClick: () => {
-                router.push('/profile')
+                router.push('/profile');
             }
         },
         {
@@ -28,7 +29,7 @@ export const ProfileButton = () => {
             key: 'settings',
             label: 'Настройки',
             onClick: () => {
-                router.push('/profile/settings')
+                router.push('/profile/settings');
             }
         },
         {
@@ -45,11 +46,13 @@ export const ProfileButton = () => {
     ];
 
     return (
-        <Dropdown menu={{ items }} className="cursor-pointer">
-            <div className="flex items-center" onClick={() => router.push('/profile')}>
-                <Avatar src={avatar} size="small" icon={<UserOutlined />}/>
-                <Typography.Text strong style={{color: 'white'}} className="ml-2">{name}</Typography.Text>
+        <Dropdown menu={{ items }} className='cursor-pointer'>
+            <div className='flex items-center' onClick={() => router.push('/profile')}>
+                <Avatar src={avatar} size='small' icon={<UserOutlined />} />
+                <Typography.Text strong style={{ color: 'white' }} className='ml-2'>
+                    {name}
+                </Typography.Text>
             </div>
         </Dropdown>
     );
-}
+};
