@@ -17,9 +17,10 @@ export const NumEngines: React.FC<{
             <Row>
                 <Col span={12}>
                     <InputNumber
+                        placeholder="От"
                         value={min_num_engines}
                         min={1}
-                        style={{width: '100%'}}
+                        style={{width: '98%'}}
                         max={8}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_num_engines', value || undefined)}
                         formatter={(value) => value ? `от ${value}` : ''}
@@ -27,10 +28,11 @@ export const NumEngines: React.FC<{
                 </Col>
                 <Col span={12}>
                     <InputNumber
+                        placeholder="До"
                         value={max_num_engines}
                         min={1}
                         max={8}
-                        style={{width: '100%'}}
+                        style={{width: '98%', marginLeft:'2%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_num_engines', value || undefined)}
                         formatter={(value) => value ? `до ${value}` : ''}
                     />

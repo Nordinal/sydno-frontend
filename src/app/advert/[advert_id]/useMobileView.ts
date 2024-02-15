@@ -16,7 +16,7 @@ export const useScreenSize = () => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
       const mobileThreshold = 840;
-      const middleThreshold = 1250;
+      const middleThreshold = 1150;
 
       if (currentWidth <= mobileThreshold) {
         setScreenSize("small");

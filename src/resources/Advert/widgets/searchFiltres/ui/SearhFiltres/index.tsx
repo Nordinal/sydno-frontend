@@ -147,11 +147,13 @@ const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, onFindBut
                 <Col
                     xs={24}              
                     sm={6}
+                    // style={{display:"flex", flexDirection:'column', gap:'5px'}}
                 >
                     <OverallLength
                         min_overall_length={filterConfig.min_overall_length}
                         max_overall_length={filterConfig.max_overall_length}
                         changeConfigProperty={changeConfigProperty}
+                        
                     />
                 </Col>
                 <Col

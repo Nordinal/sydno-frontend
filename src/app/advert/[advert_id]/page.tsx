@@ -10,7 +10,6 @@ import {
   notification,
 } from "antd";
 import { useShallow } from "zustand/react/shallow";
-import { Carousel } from "antd";
 import "./styles.css";
 import { ConvertData } from "./DataConverter";
 import { useAdvert } from "Advert/entities";
@@ -36,6 +35,7 @@ interface IAdvertPageProps {
     advert_id: string;
   };
 }
+const FALLBACK_IMAGE_SRC = ['/sheep-icon.png'];
 const PRICE_LOCALE = "ru";
 
 const NUMBER_FORMAT_OPTIONS = {
@@ -197,13 +197,16 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
           </div>
 
           <div className="carousel-specs">
+            
             <Col span={17}>
-              <CustomCarousel
+            <CustomCarousel
                 isLocalFavorite={isLocalFavorite}
                 likeButtonClickhandler={likeButtonClickhandler}
                 isLoading={isLoading}
-                slides={advertData?.images && advertData?.images}
-              />
+                slides={advertData?.images.length > 0 ? advertData?.images : FALLBACK_IMAGE_SRC}
+                withModal={advertData?.images.length > 0 }
+              /> 
+              
             </Col>
 
             <Col span={4}>

@@ -225,17 +225,9 @@ export function ConvertData(
       },
       {
         key: crypto.randomUUID(),
-        label: "Максимальная скорость в грузу",
+        label: "Максимальная скорость",
         children: formatField(
-          technicalInformation.maximum_speed_when_loaded,
-          "уз"
-        ),
-      },
-      {
-        key: crypto.randomUUID(),
-        label: "Максимальная скорость в балласте",
-        children: formatField(
-          technicalInformation.maximum_speed_in_ballast,
+          technicalInformation.maximum_speed,
           "уз"
         ),
       },
@@ -325,12 +317,6 @@ export function ConvertData(
         key: crypto.randomUUID(),
         label: "Наличие надстроек",
         children: technicalInformation.superstructures === false ? "Нет" : "Да",
-      },
-
-      {
-        key: crypto.randomUUID(),
-        label: "Ледовое Усиление",
-        children: legalInformation.ice_strengthening === false ? "Нет" : "Да",
       },
     ],
   };

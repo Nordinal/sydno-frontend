@@ -99,7 +99,7 @@ const UserButtonUi = ({
     <div className={"inline-block" + (` ${className}` || "")}>
       <div
         className={
-          `flex ${name.length >= 28 ? `items-start` : `items-center`} ` +
+          `flex ${name.length >= 26 ? `items-start` : `items-center`} ` +
           s["user-button__person"]
         }
         onClick={handleClick}

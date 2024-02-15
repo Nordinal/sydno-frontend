@@ -35,6 +35,7 @@ interface CustomSliderProps {
   slides: string[];
   isLocalFavorite?: boolean;
   isLoading: boolean;
+  withModal:boolean;
   likeButtonClickhandler: (e: SyntheticEvent) => void;
 }
 
@@ -43,6 +44,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
   isLocalFavorite,
   isLoading,
   likeButtonClickhandler,
+  withModal,
 }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
@@ -108,6 +110,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
       </Swiper>
 
       <div>
+        {withModal &&
         <Modal
           open={open}
           onCancel={handleCancel}
@@ -155,6 +158,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
             </div>
           </Swiper>
         </Modal>
+}
       </div>
     </div>
   );

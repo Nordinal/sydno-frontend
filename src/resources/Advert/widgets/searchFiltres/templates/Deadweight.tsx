@@ -17,22 +17,24 @@ export const Deadweight: React.FC<{
         <Row>
           <Col span={12}>
             <InputNumber
+                placeholder="От"
                 value={min_deadweight}
                 min={0}
                 max={600000}
                 step={0.01}
-                style={{width: '100%'}}
+                style={{width: '98%'}}
                 onChange={(value) => changeConfigProperty<number | undefined>('min_deadweight', value || undefined)}
                 formatter={(value) => value ? `от ${value}` : ''}
             />
           </Col>
           <Col span={12}>
             <InputNumber
+                placeholder="До"
                 value={max_deadweight}
                 min={0}
                 max={600000}
                 step={0.01}
-                style={{width: '100%'}}
+                style={{width: '98%', marginLeft:'2%'}}
                 onChange={(value) => changeConfigProperty<number | undefined>('max_deadweight', value || undefined)}
                 formatter={(value) => value ? `до ${value}` : ''}
             />

@@ -72,8 +72,7 @@ interface AdvertTechnicalInformation {
   num_engines: number;
   num_additional_engines: number;
   power: string;
-  maximum_speed_in_ballast: string;
-  maximum_speed_when_loaded: string;
+  maximum_speed: string;
   cargo_tanks: boolean;
   total_capacity_cargo_tanks: number | null;
   second_bottom: boolean;

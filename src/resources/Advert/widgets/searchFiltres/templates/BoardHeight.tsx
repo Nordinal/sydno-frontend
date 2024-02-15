@@ -17,22 +17,24 @@ export const BoardHeight: React.FC<{
         <Row>
             <Col span={12}>
                 <InputNumber
+                    placeholder="От"
                     value={min_board_height}
                     min={0.05}
                     max={74}
                     step={0.01}
-                    style={{width: '100%'}}
+                    style={{width: '98%'}}
                     onChange={(value) => changeConfigProperty<number | undefined>('min_board_height', value || undefined)}
                     formatter={(value) => value ? `от ${value}` : ''}
                 />
             </Col>
             <Col span={12}>
                 <InputNumber
+                    placeholder="До"
                     value={max_board_height}
                     min={0.05}
                     max={74}
                     step={0.01}
-                    style={{width: '100%'}}
+                    style={{width: '98%', marginLeft:'2%'}}
                     onChange={(value) => changeConfigProperty<number | undefined>('max_board_height', value || undefined)}
                     formatter={(value) => value ? `до ${value}` : ''}
                 />

@@ -17,8 +17,9 @@ export const PassangersAvialable: React.FC<{
             <Row>
                 <Col span={12}>
                     <InputNumber
+                        placeholder="От"
                         value={min_passangers_avialable}
-                        style={{width: '100%'}}
+                        style={{width: '98%'}}
                         min={0}
                         step={1}
                         max={Infinity}
@@ -28,11 +29,12 @@ export const PassangersAvialable: React.FC<{
                 </Col>
                 <Col span={12}>
                     <InputNumber
+                        placeholder="До"
                         value={max_passangers_avialable}
                         min={0}
                         step={1}
                         max={Infinity}
-                        style={{width: '100%'}}
+                        style={{width: '98%', marginLeft:'2%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_passangers_avialable', value || undefined)}
                         formatter={(value) => value ? `до ${value}` : ''}
                     />

@@ -17,20 +17,20 @@ export const VesselLocation: React.FC<{
         <p>Местонахождение судна</p>
         <Row>
             <Col span={12}>
-                <p>страна</p>
+                <p style={{width: '98%'}}>страна</p>
                 <CountriesSelector
                     value={vessel_location_country || undefined}
-                    style={{width: '100%'}}
+                    style={{width: '98%'}}
                     placeholder='Выберите страну'
                     onChange={(value: string) => changeConfigProperty<string>('vessel_location_country', value)}
                     allowClear={true}
                 />
             </Col>
             <Col span={12}>
-                <p>город</p>
+                <p style={{width: '98%', marginLeft:'2%'}}>город</p>
                 <RegionSelector
                     value={vessel_location_city as any || undefined}
-                    style={{width: '100%'}}
+                    style={{width: '98%', marginLeft:'2%'}}
                     allowClear={true}
                     onChange={({city}: any) => changeConfigProperty<string>('vessel_location_city', city)}
                 />

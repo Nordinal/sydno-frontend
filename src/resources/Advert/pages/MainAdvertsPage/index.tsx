@@ -6,6 +6,7 @@ import { BasicList } from "SydnoComponents/lists";
 import { Col, Row } from "antd";
 import { convertObjectToPathname, getUrlQueryParams } from "SydnoHelpers/commons";
 import { useRouter, useSearchParams } from "next/navigation";
+import { smoothScrollToAnchor } from "SydnoHelpers/commons";
 
 /**
  * Компонент страницы с поиском обьявлений по фильтрам
@@ -15,6 +16,13 @@ export const MainAdvertPage = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    const scrollToAnchor = () => {
+        // делаем искусственную задержку, чтобы сначала данны грузились, а потом скролл
+        setTimeout(() => {
+            smoothScrollToAnchor('advert-list-anchor');
+        }, 500);
+    }
+
     const changeUrlByOptions = (filterParams: object) => {
         const currentSearchParams = getUrlQueryParams(searchParams);
 
@@ -23,7 +31,11 @@ export const MainAdvertPage = () => {
             ...filterParams
         }
 
+        //@ts-ignore
+        delete newSearchParams['page'];
+
         router.push(location.pathname + '?' + convertObjectToPathname(newSearchParams), { scroll: false });
+        scrollToAnchor()
     }
 
     const paginationChange = (page: number) => {
@@ -32,6 +44,7 @@ export const MainAdvertPage = () => {
         params.set('page', page.toString());
 
         router.push(location.pathname + '?' + params.toString(), { scroll: false });
+        scrollToAnchor();
     }
 
     const onAdvertCardClick = (id: number) => {
@@ -45,6 +58,9 @@ export const MainAdvertPage = () => {
                     filterOptions={getUrlQueryParams(searchParams)}
                     onFindButtonClick={changeUrlByOptions}
                 />
+            </Col>
+            <Col span={24}>
+                <div className="sydno-anchor" id="advert-list-anchor"></div>
             </Col>
             <Col span={24}>
                 <BasicList

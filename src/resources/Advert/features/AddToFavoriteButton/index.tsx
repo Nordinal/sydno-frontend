@@ -4,7 +4,7 @@ import { useAdvert } from "../../entities/advert/model";
 import { useShallow } from "zustand/react/shallow";
 import { useUser } from "Auth/entities";
 import { notification } from "antd";
-import { HeartTwoTone } from "@ant-design/icons";
+import { HeartTwoTone, StarTwoTone } from "@ant-design/icons";
 
 export interface IAddToFavoriteButtonProps {
     id: string | number;
@@ -38,26 +38,28 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
             return;
         }
         if (!localFavorite) {
-            addToFavourite(id).then(res => {
-                if (res) {
-                    notification.success({message: 'Добавлено в "Избранные"', placement: 'bottomRight'});
-                    setLocalFavorite(res);
-                    onChange?.(res);
-                } else {
+            addToFavourite(id)
+                .then(res => {
+                    if (res) {
+                        setLocalFavorite(res);
+                        onChange?.(res);
+                    }
+                })
+                .catch(() => {
                     notification.error({message: 'Ошибка', placement: 'bottomRight'});
-                }
-            });
+                });
         }
         else {
-            deleteFromFavourite(id).then(res => {
-                if (res) {
-                    notification.success({message: 'Удалено из "Избранные"', placement: 'bottomRight'});
-                    setLocalFavorite(!res);
-                    onChange?.(!res);
-                } else {
+            deleteFromFavourite(id)
+                .then(res => {
+                    if (res) {
+                        setLocalFavorite(!res);
+                        onChange?.(!res);
+                    }
+                })
+                .catch(() => {
                     notification.error({message: 'Ошибка', placement: 'bottomRight'});
-                }
-            });
+                });
         }
     }
 
@@ -66,12 +68,9 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
             onClick={onButtonClickHandler}
             className={padding ? `p-${padding}` : 'p-2'}
         >
-            <HeartTwoTone
-                twoToneColor={localFavorite ? 'red' : ''}
-                style={{fontSize: fontSize || '20px'}}
-            >
-                {localFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
-            </HeartTwoTone>
+            <StarTwoTone twoToneColor={localFavorite ? '' : '#d9d9d9'}
+                style={{fontSize: fontSize || '25px'}}/>
+            
         </div>
     );
 }

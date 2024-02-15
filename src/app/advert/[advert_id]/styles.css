@@ -183,15 +183,15 @@
     .owner-name {
         padding: 0;
     }
-    .callButton {
-        width: 190px !important;
-        font-size: 13px !important;
-    }
 }
 @media screen and (max-width: 1150px) {
     .side-info {
         width: 200px;
         align-items: start;
+    }
+    .callButton {
+        width: 190px !important;
+        font-size: 13px !important;
     }
 }
 @media screen and (max-width: 1000px) {

@@ -7,6 +7,7 @@ import { Button, Col, Row, Typography } from "antd";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import { AddToFavoriteButton } from "../../features/AddToFavoriteButton";
+import { UserButton } from "Users/features";
 
 export interface IAdvertCard extends IAdvertListItem {
   onClick?: () => void;
@@ -16,8 +17,7 @@ export interface IAdvertCard extends IAdvertListItem {
   disableNumberButton?: boolean;
 }
 
-const FALLBACK_IMAGE_SRC =
-  "https://upload.wikimedia.org/wikipedia/commons/a/ab/European_shorthair_TUROK_cat_show_Turku_2010-03-27.JPG";
+const FALLBACK_IMAGE_SRC = '/sheep-icon.png';
 
 const PRICE_LOCALE = "ru";
 
@@ -71,6 +71,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
   customFeature,
   featureWrapperClass,
   disableNumberButton,
+  user,
 }) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -89,94 +90,104 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     setShowDetails(true);
   };
 
-  return (
-    <div
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      className={
-        styles["sudno-AdvertCard"] +
-        " " +
-        (isTouch && styles["sudno-AdvertCard-shadow"])
-      }
-      onClick={onClick}
-    >
-      <Row>
-        <Col {...leftCol[size || "big"]}>
-          <SmallImageSlider
-            items={images}
-            maxItems={5}
-            showLabels={showDetails}
-            fallbackImageSrc={FALLBACK_IMAGE_SRC}
-            imageStyle={{ borderRadius: "var(--main-app-br)" }}
-          />
-        </Col>
-        <Col {...middleCol[size || "big"]}>
-          <div className="flex flex-col h-full">
-            <Typography.Title level={3}>
-              <Link href={"advert/" + id}>{header}</Link>
-            </Typography.Title>
-            <Typography.Title level={4} style={{ marginTop: 0 }}>
-              <Price
-                locale={PRICE_LOCALE}
-                options={NUMBER_FORMAT_OPTIONS}
-                price={price}
-              />
-            </Typography.Title>
-            <div className="flex flex-col flex-auto">
-              <Typography.Paragraph
-                className={
-                  styles["sudno-AdvertCard-labels"] + " flex items-center"
-                }
-              >
-                <DetailsInfo
-                  size={size || "big"}
-                  {...advert_legal_information}
-                />
-              </Typography.Paragraph>
-              <Typography.Paragraph
-                className={styles["sudno-AdvertCard-description"]}
-              >
-                {description}
-              </Typography.Paragraph>
-            </div>
-          </div>
-        </Col>
-        <Col {...rightCol[size || "big"]}>
-          <div
-            className={featureWrapperClass || "flex flex-col items-end h-full"}
-          >
-            {
-              <>
-                <div>
-                  <AddToFavoriteButton id={id} isFavorite={false} />
-                </div>
-                {disableNumberButton === false || (
-                  <div>
-                    {showNumber ? (
-                      phone_number
-                    ) : (
-                      <Button
-                        style={{
-                          maxWidth: "100%",
-                          height: "auto",
-                          opacity: showDetails || isTouch ? "1" : "0",
-                        }}
-                        onClick={showNumberBtnHandler}
-                      >
-                        Показать телефон
-                      </Button>
-                    )}
-                  </div>
-                )}
-              </>
-            }
-            {customFeature}
-          </div>
-        </Col>
-      </Row>
-    </div>
-  );
-};
+    return (
+        <div
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className={styles['sudno-AdvertCard'] + ' ' + (isTouch && styles['sudno-AdvertCard-shadow'])}
+            onClick={onClick}
+        >
+            <Row>
+                <Col {...leftCol[size || 'big']} >
+                    <SmallImageSlider
+                        items={images}
+                        maxItems={5}
+                        showLabels={showDetails}
+                        fallbackImageSrc={FALLBACK_IMAGE_SRC}
+                        imageStyle={{ borderRadius: 'var(--main-app-br)' }}
+                    />
+                </Col>
+                <Col {...middleCol[size || 'big']}>
+                    <div className="flex flex-col h-full">
+                        <Typography.Title
+                            level={3}
+                        >
+
+                            <Link href={'advert/' + id}>
+                                {header}
+                           </Link>
+                        </Typography.Title>
+                        <Typography.Title
+                            level={4}
+                            style={{marginTop: 0}}
+                        >
+                            <Price
+                                locale={PRICE_LOCALE}
+                                options={NUMBER_FORMAT_OPTIONS}
+                                price={price}                                
+                            />
+                        </Typography.Title>
+                        <div className="flex flex-col flex-auto">
+                            <Typography.Paragraph
+                                className={styles['sudno-AdvertCard-labels'] + ' flex items-center'}
+                            >
+                                <DetailsInfo
+                                    size={size || 'big'}
+                                    {...advert_legal_information}
+                                />
+                            </Typography.Paragraph>
+                            <Typography.Paragraph
+                                className={styles['sudno-AdvertCard-description']}
+                            >
+                                {description}
+                            </Typography.Paragraph>
+                        </div>
+                    </div>
+                </Col>
+                <Col {...rightCol[size || 'big']} className='flex flex-col items-end h-74  '>
+                    <div className={featureWrapperClass || 'flex flex-col items-end  h-full justify-between '}>
+                        {
+                            <>
+
+                                <div >
+                                    <AddToFavoriteButton
+                                        id={id}
+                                        isFavorite={false}
+                                    />                
+                                </div>                                          
+                                {
+                                    (disableNumberButton === false) || 
+                                    <div className="flex flex-col gap-3 w-36 ">
+                                      <UserButton className="ml-1"
+                    id={user.id}
+                    src={user.avatar}
+                    name={user.name}
+                    advertCount={user.adverts_count}
+                  />
+                                        {
+                                            showNumber ?
+                                                phone_number :
+                                                <Button style={{
+                                                    maxWidth: '100%',
+                                                    height: 'auto',
+                                                }} onClick={showNumberBtnHandler}>
+                                                    Показать телефон
+                                                </Button>
+                                        }
+                                    </div>
+                                }
+                                
+                                
+                            </>
+                        }
+                        {customFeature}
+                    </div>
+                    
+                </Col>
+            </Row>
+        </div>
+    );
+}
 
 const DetailsItem: React.FC<{
   label: string;

@@ -17,20 +17,22 @@ export const EnginePower: React.FC<{
             <Row>
                 <Col span={12}>
                     <InputNumber
+                        placeholder="От"
                         value={min_power}
                         min={1}
                         max={100000}
-                        style={{width: '100%'}}
+                        style={{width: '98%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('min_power', value || undefined)}
                         formatter={(value) => value ? `от ${value}` : ''}
                     />
                 </Col>
                 <Col span={12}>
                     <InputNumber
+                        placeholder="До"
                         value={max_power}
                         min={1}
                         max={100000}
-                        style={{width: '100%'}}
+                        style={{width: '98%', marginLeft:'2%'}}
                         onChange={(value) => changeConfigProperty<number | undefined>('max_power', value || undefined)}
                         formatter={(value) => value ? `до ${value}` : ''}
                     />

@@ -17,22 +17,24 @@ export const MaximumFreeboard: React.FC<{
         <Row>
           <Col span={12}>
             <InputNumber
+                placeholder="От"
                 value={min_maximum_freeboard}
                 min={0}
                 max={47}
                 step={0.01}
-                style={{width: '100%'}}
+                style={{width: '98%'}}
                 onChange={(value) => changeConfigProperty<number | undefined>('min_maximum_freeboard', value || undefined)}
                 formatter={(value) => value ? `от ${value}` : ''}
             />
           </Col>
           <Col span={12}>
             <InputNumber
+                 placeholder="До"
                 value={max_maximum_freeboard}
                 min={0}
                 max={47}
                 step={0.01}
-                style={{width: '100%'}}
+                style={{width: '98%', marginLeft:'2%'}}
                 onChange={(value) => changeConfigProperty<number | undefined>('max_maximum_freeboard', value || undefined)}
                 formatter={(value) => value ? `до ${value}` : ''}
             />

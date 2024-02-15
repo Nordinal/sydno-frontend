@@ -17,7 +17,7 @@ export const SpecsPair: React.FC<DetailsPairProps | null> = (props) => {
   }
   return (
     <Typography.Paragraph
-      style={{ minHeight: props.column === 1 ? "25px" : "30px" }}
+      style={{ minHeight: props.column === 1 ? "25px" : "30px",  }}
       className={props.column === 1 ? s.field : s.fields}
     >
       <Col span={props.column === 1 ? 24 : 15}>

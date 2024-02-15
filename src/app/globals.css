@@ -4,6 +4,7 @@
 
 :root {
   --main-app-br: 6px;
+  --header-height: 48px;
   --primary-color: #34a8ff;
 }
 
@@ -21,6 +22,10 @@ body {
   min-width: 375px;
 }
 
+body.lock {
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -28,4 +33,9 @@ h4,
 h5,
 h6 {
   margin: 0;
+}
+
+.sydno-anchor {
+  padding-top: var(--header-height);;
+  margin-top: calc(var(--header-height) * -1);
 }

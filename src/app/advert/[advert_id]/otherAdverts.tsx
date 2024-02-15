@@ -39,8 +39,10 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({
   useEffect(() => {
     getOtherAdverts(Number(user_id), Number(advert_id)).then((data) => {
       if (data === false) {
-        console.log("no data");
+        // setAllAdvertsLoaded(true);
+        // setIsLoading(афд);
       } else {
+        console.log(data)
         setOtherAdverts(data.data);
       }
     });
@@ -50,6 +52,7 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({
     const fetchNextPageData = async () => {
       try {
         if (curruntPage > 1) {
+          // FIXME: избавиться от localhost
           const nextPageUrl = `http://localhost/api/otheruseradverts?page=${curruntPage}&user_id=${Number(
             user_id
           )}&advert_id=${Number(advert_id)}`;
@@ -115,7 +118,7 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({
     );
   }
 
-  return (
+  return otherAdverts.length > 0 && (
     <Col span={24}>
       <Typography.Title level={4}>
         Другие объявления этого продавца
@@ -144,7 +147,7 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({
         </div>
       )}
       <div className="other-adverts-button">
-        {!isLoading && !allAdvertsLoaded && (
+        {!isLoading && !allAdvertsLoaded  && (
           <Button
             type="default"
             onClick={() => {

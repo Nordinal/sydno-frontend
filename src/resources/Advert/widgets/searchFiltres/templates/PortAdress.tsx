@@ -17,20 +17,20 @@ export const PortAdress: React.FC<{
         <p>Порт приписки</p>
         <Row>
             <Col span={12}>
-                <p>страна</p>
+                <p style={{width: '98%'}}>страна</p>
                 <CountriesSelector
                     value={port_adress_country || undefined}
-                    style={{width: '100%'}}
+                    style={{width: '98%'}}
                     placeholder='Выберите страну'
                     onChange={(value: string) => changeConfigProperty<string>('port_adress_country', value)}
                     allowClear={true}
                 />
             </Col>
             <Col span={12}>
-                <p>город</p>
+                <p style={{width: '98%', marginLeft:'2%'}}>город</p>
                 <RegionSelector
                     value={(port_adress_city as any) || undefined}
-                    style={{width: '100%'}}
+                    style={{width: '98%', marginLeft:'2%'}}
                     allowClear={true}
                     onChange={({city}: {city: any}) => changeConfigProperty<string>('port_adress_city', city)}
                 />
