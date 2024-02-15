@@ -41,6 +41,9 @@ export const MainAdvertPageUI = () => {
         //@ts-ignore
         delete newSearchParams['page'];
 
+        //@ts-ignore
+        delete newSearchParams['page'];
+
         router.push(location.pathname + '?' + convertObjectToPathname(newSearchParams), { scroll: false });
         scrollToAnchor();
     };
@@ -62,6 +65,9 @@ export const MainAdvertPageUI = () => {
         <Row className='pt-4 pb-16'>
             <Col className='pb-6' span={24}>
                 <SearchFiltres filterOptions={getUrlQueryParams(searchParams)} onFindButtonClick={changeUrlByOptions} />
+            </Col>
+            <Col span={24}>
+                <div className='sydno-anchor' id='advert-list-anchor'></div>
             </Col>
             <Col span={24}>
                 <div className='sydno-anchor' id='advert-list-anchor'></div>
