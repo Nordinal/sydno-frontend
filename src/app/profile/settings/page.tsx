@@ -1,14 +1,10 @@
-import { ProfileSettings } from "Profile/pages";
-import { Metadata } from "next";
+import { ProfileSettings } from 'Profile/pages';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Настройки",
+    title: 'Настройки'
 };
 
 export default function ProfileServer() {
-
-    return (
-        <ProfileSettings />
-    )
+    return <ProfileSettings />;
 }
-  

@@ -1,1 +1,1 @@
-export { BasicList } from 'SydnoComponents/lists/BasicList/BasicList'
+export { BasicList } from 'SydnoComponents/lists/BasicList/BasicList';

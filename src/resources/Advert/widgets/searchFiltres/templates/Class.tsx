@@ -1,21 +1,18 @@
 import React from 'react';
 import { Input } from 'antd';
-import { TChangeConfigProperty } from "../types";
+import { TChangeConfigProperty } from '../types';
 
 export const Class: React.FC<{
     class_formula?: string | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    class_formula,
-    changeConfigProperty,
-}) => {
+}> = ({ class_formula, changeConfigProperty }) => {
     return (
         <>
             <p>Класс</p>
-            <Input 
+            <Input
                 value={class_formula || undefined}
                 onChange={(event) => changeConfigProperty<string>('class_formula', event.target.value)}
             />
         </>
-    )
-}
+    );
+};

@@ -8,62 +8,68 @@ import { useShallow } from 'zustand/react/shallow';
 import dayjs from 'dayjs';
 import { sydnoServiceJson } from 'SydnoService/service';
 
+export function CreateSaleAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
+    const { advert_legal_information } = useCreateSaleAdvert(
+        useShallow((state) => ({ advert_legal_information: state.instance.advert_legal_information }))
+    );
+    const [checkboxAccounting, setCheckboxAccounting] = useState<boolean | undefined>(
+        advert_legal_information?.was_registered
+    );
+    const [statusVessel, setStatusVessel] = useState<string | undefined>(
+        advert_legal_information?.vessel_status.toString()
+    );
 
-export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
-    const { advert_legal_information } = useCreateSaleAdvert(useShallow(state => ({advert_legal_information: state.instance.advert_legal_information})))
-    const [checkboxAccounting, setCheckboxAccounting] = useState<boolean | undefined>(advert_legal_information?.was_registered);
-    const [statusVessel, setStatusVessel] = useState<string | undefined>(advert_legal_information?.vessel_status.toString());
-
-    const [vesseltypes, setVesseltypes] = useState<{value: string, label: string}[]>();
-    const [exploitationTypes, setExploitationTypes] = useState<{value: string, label: string}[]>();
+    const [vesseltypes, setVesseltypes] = useState<{ value: string; label: string }[]>();
+    const [exploitationTypes, setExploitationTypes] = useState<{ value: string; label: string }[]>();
 
     const _onFinish = (values: any) => {
-        const result = {...values}
-        if(values.register_valid_until)
-            result.register_valid_until = values.register_valid_until.format().split('T')[0]
-        if(values.building_year)
-            result.building_year = values.building_year.year()
-        if(values.port_address) {
+        const result = { ...values };
+        if (values.register_valid_until)
+            result.register_valid_until = values.register_valid_until.format().split('T')[0];
+        if (values.building_year) result.building_year = values.building_year.year();
+        if (values.port_address) {
             result.port_address = {
                 value: values.port_address.value,
                 city: values.port_address.city,
                 country: values.port_address.country,
                 region: values.port_address.region
-            }
+            };
         }
-        if(values.vessel_location) {
+        if (values.vessel_location) {
             result.vessel_location = {
                 value: values.vessel_location.value,
                 city: values.vessel_location.city,
                 country: values.vessel_location.country,
                 region: values.vessel_location.region
-            }
+            };
         }
-        onFinish({type: 'StepTwo', data: result})
-    }
+        onFinish({ type: 'StepTwo', data: result });
+    };
 
     const onStatusVesselChange = (value: string) => {
-        setStatusVessel(value)
-    }
+        setStatusVessel(value);
+    };
 
     useEffect(() => {
-        sydnoServiceJson.get('/api/selector?vesseltypes&exploitationtypes').then(res => {
-            const data = res.data.message
+        sydnoServiceJson.get('/api/selector?vesseltypes&exploitationtypes').then((res) => {
+            const data = res.data.message;
             setVesseltypes(
-                Object.entries(data.vessel_types as {[x in string]: string})
-                    .map(([value, label] : [string, string]) => ({
+                Object.entries(data.vessel_types as { [x in string]: string }).map(
+                    ([value, label]: [string, string]) => ({
                         value,
                         label
-                    }))
+                    })
+                )
             );
             setExploitationTypes(
-                Object.entries(data.exploitation_types as {[x in string]: string})
-                    .map(([value, label] : [string, string]) => ({
+                Object.entries(data.exploitation_types as { [x in string]: string }).map(
+                    ([value, label]: [string, string]) => ({
                         value,
                         label
-                    }))
+                    })
+                )
             );
-        })
+        });
     }, []);
 
     return (
@@ -74,116 +80,105 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
             wrapperCol={{ span: 15, offset: 1 }}
             initialValues={{ remember: true }}
             onFinish={_onFinish}
-            autoComplete="off"
+            autoComplete='off'
         >
             <Form.Item
                 label='Название судна'
                 labelAlign='left'
                 name={'name'}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
-                initialValue={ advert_legal_information?.name }
+                initialValue={advert_legal_information?.name}
             >
-                <Input placeholder='Название судна'/> 
+                <Input placeholder='Название судна' />
             </Form.Item>
 
             <Form.Item
-                label="Флаг"
+                label='Флаг'
                 labelAlign='left'
-                name="flag"
-                initialValue={ advert_legal_information?.flag }
+                name='flag'
+                initialValue={advert_legal_information?.flag}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <CountriesSelector />
             </Form.Item>
 
             <Form.Item
-                label="Тип эксплуатации"
+                label='Тип эксплуатации'
                 labelAlign='left'
-                name="exploitation_type"
-                initialValue={ advert_legal_information?.exploitation_type.toString() }
+                name='exploitation_type'
+                initialValue={advert_legal_information?.exploitation_type.toString()}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 wrapperCol={{ span: 6, offset: 1 }}
             >
-                <Select
-                    placeholder='Тип эксплуатации'
-                    options={exploitationTypes}
-                />
+                <Select placeholder='Тип эксплуатации' options={exploitationTypes} />
             </Form.Item>
 
             <Form.Item
-                label="Класс"
+                label='Класс'
                 labelAlign='left'
-                name="class_formula"
-                initialValue={ advert_legal_information?.class_formula }
+                name='class_formula'
+                initialValue={advert_legal_information?.class_formula}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input placeholder='Класс'/>
+                <Input placeholder='Класс' />
             </Form.Item>
 
             <Form.Item
-                label="Классификационное общество"
+                label='Классификационное общество'
                 labelAlign='left'
-                name="classification_society"
-                initialValue={ advert_legal_information?.classification_society }
+                name='classification_society'
+                initialValue={advert_legal_information?.classification_society}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input placeholder='Классификационное общество'/>
+                <Input placeholder='Классификационное общество' />
             </Form.Item>
 
             <Form.Item
-                label="Ограничения по высоте волны"
+                label='Ограничения по высоте волны'
                 labelAlign='left'
-                name="wave_limit"
-                initialValue={ advert_legal_information?.wave_limit }
+                name='wave_limit'
+                initialValue={advert_legal_information?.wave_limit}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <InputNumber step={0.1} max={3.5} min={0}/>
+                <InputNumber step={0.1} max={3.5} min={0} />
             </Form.Item>
 
             <Form.Item
                 label='Наличие технической документации'
                 labelAlign='left'
                 name='technical_documentation'
-                initialValue={ advert_legal_information?.technical_documentation || false }
-                valuePropName="checked"
+                initialValue={advert_legal_information?.technical_documentation || false}
+                valuePropName='checked'
             >
                 <Checkbox />
             </Form.Item>
 
-            <Form.Item
-                label="Тип и назначение"
-                labelAlign='left'
-                required
-            >
+            <Form.Item label='Тип и назначение' labelAlign='left' required>
                 <Space.Compact>
                     <Form.Item
                         name='type'
-                        initialValue={ advert_legal_information?.type.toString() }
+                        initialValue={advert_legal_information?.type.toString()}
                         noStyle
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <Select
-                            style={{ width: '60%' }}
-                            placeholder="Выбрать тип"
-                            options={vesseltypes}
-                        />
+                        <Select style={{ width: '60%' }} placeholder='Выбрать тип' options={vesseltypes} />
                     </Form.Item>
                     <Form.Item
                         name={'purpose'}
-                        initialValue={ advert_legal_information?.purpose }
+                        initialValue={advert_legal_information?.purpose}
                         noStyle
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <Input style={{ width: '40%' }} placeholder='Назначение'/>
+                        <Input style={{ width: '40%' }} placeholder='Назначение' />
                     </Form.Item>
                 </Space.Compact>
             </Form.Item>
 
             <Form.Item
-                label="Статус судна"
+                label='Статус судна'
                 labelAlign='left'
-                initialValue={ advert_legal_information?.vessel_status.toString() }
-                name="vessel_status"
+                initialValue={advert_legal_information?.vessel_status.toString()}
+                name='vessel_status'
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -192,52 +187,53 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
                     options={[
                         {
                             value: '0',
-                            label: 'Действующие документы',
+                            label: 'Действующие документы'
                         },
                         {
                             value: '1',
-                            label: 'Без документов',
+                            label: 'Без документов'
                         },
                         {
                             value: '2',
-                            label: 'Холодный отстой',
+                            label: 'Холодный отстой'
                         }
                     ]}
                 />
             </Form.Item>
 
-            {
-                statusVessel === '1' &&
+            {statusVessel === '1' && (
                 <Form.Item
                     label='Находилась ли на учете?'
                     labelAlign='left'
                     name='was_registered'
-                    initialValue={ advert_legal_information?.was_registered }
-                    valuePropName="checked"
+                    initialValue={advert_legal_information?.was_registered}
+                    valuePropName='checked'
                 >
-                    <Checkbox onChange={() => setCheckboxAccounting(!checkboxAccounting)} checked={checkboxAccounting}/>
+                    <Checkbox
+                        onChange={() => setCheckboxAccounting(!checkboxAccounting)}
+                        checked={checkboxAccounting}
+                    />
                 </Form.Item>
-            }
+            )}
 
-            {
-                ((statusVessel === '1' && checkboxAccounting) || statusVessel !== '1' && statusVessel !== null) &&
+            {((statusVessel === '1' && checkboxAccounting) || (statusVessel !== '1' && statusVessel !== null)) && (
                 <Form.Item
                     label='Действие документов до'
                     labelAlign='left'
                     name='register_valid_until'
                     initialValue={
-                        advert_legal_information?.register_valid_until && 
+                        advert_legal_information?.register_valid_until &&
                         dayjs(advert_legal_information.register_valid_until)
                     }
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
-                    <DatePicker picker='month'/>
+                    <DatePicker picker='month' />
                 </Form.Item>
-            }
+            )}
 
             <Form.Item
                 name={'port_address'}
-                initialValue={ advert_legal_information?.port_address }
+                initialValue={advert_legal_information?.port_address}
                 label='Порт приписки'
                 labelAlign='left'
                 rules={[{ required: true, message: 'Обязательное поле' }]}
@@ -247,21 +243,21 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
 
             <Form.Item
                 name={'vessel_location'}
-                initialValue={ advert_legal_information?.vessel_location }
+                initialValue={advert_legal_information?.vessel_location}
                 label='Местонахождение судна'
                 labelAlign='left'
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <RegionSelector placeholder='Местонахождение судна'/>
+                <RegionSelector placeholder='Местонахождение судна' />
             </Form.Item>
 
             <Form.Item
                 label='Место постройки'
                 labelAlign='left'
                 name={'building_place'}
-                initialValue={ advert_legal_information?.building_place }
+                initialValue={advert_legal_information?.building_place}
             >
-                <Input placeholder='Место постройки'/> 
+                <Input placeholder='Место постройки' />
             </Form.Item>
 
             <Form.Item
@@ -277,36 +273,36 @@ export function CreateSaleAdvertStepTwo({onFinish}: {onFinish: onFinishStep}) {
                     }
                     noStyle
                 >
-                    <DatePicker style={{width: '50%'}} placeholder='Год постройки' picker="year"/>
+                    <DatePicker style={{ width: '50%' }} placeholder='Год постройки' picker='year' />
                 </Form.Item>
             </Form.Item>
 
             <Form.Item
-                label="Номер IMO"
+                label='Номер IMO'
                 labelAlign='left'
-                name="imo_number"
-                initialValue={ advert_legal_information?.imo_number }
+                name='imo_number'
+                initialValue={advert_legal_information?.imo_number}
             >
-                <Input placeholder='Номер IMO'/>
+                <Input placeholder='Номер IMO' />
             </Form.Item>
 
             <Form.Item
-                label="Номер проекта"
+                label='Номер проекта'
                 labelAlign='left'
-                name="project_number"
-                initialValue={ advert_legal_information?.project_number }
+                name='project_number'
+                initialValue={advert_legal_information?.project_number}
             >
-                <Input placeholder='Номер проекта'/>
+                <Input placeholder='Номер проекта' />
             </Form.Item>
 
             <Form.Item
-                label="Строительный номер"
+                label='Строительный номер'
                 labelAlign='left'
-                name="building_number"
-                initialValue={ advert_legal_information?.building_number }
+                name='building_number'
+                initialValue={advert_legal_information?.building_number}
             >
-                <Input placeholder='Строительный номер'/>
+                <Input placeholder='Строительный номер' />
             </Form.Item>
         </Form>
-    )
+    );
 }

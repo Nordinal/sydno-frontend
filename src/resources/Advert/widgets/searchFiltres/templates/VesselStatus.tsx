@@ -6,21 +6,19 @@ import { sydnoServiceFormData } from 'SydnoService/service';
 export const VesselStatus: React.FC<{
     vessel_status?: string | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    vessel_status,
-    changeConfigProperty
-}) => {
-    const [statusList, setStatusList] = useState<{value: string, label: string}[]>();
+}> = ({ vessel_status, changeConfigProperty }) => {
+    const [statusList, setStatusList] = useState<{ value: string; label: string }[]>();
 
     useEffect(() => {
-        sydnoServiceFormData.get('/api/selector?vesselstatuses').then(res => {
-            const data = res.data.message
+        sydnoServiceFormData.get('/api/selector?vesselstatuses').then((res) => {
+            const data = res.data.message;
             setStatusList(
-                Object.entries(data.vessel_statuses as {[x in string]: string})
-                    .map(([value, label] : [string, string]) => ({
+                Object.entries(data.vessel_statuses as { [x in string]: string }).map(
+                    ([value, label]: [string, string]) => ({
                         value,
                         label
-                    }))
+                    })
+                )
             );
         });
     }, []);
@@ -36,5 +34,5 @@ export const VesselStatus: React.FC<{
                 options={statusList}
             />
         </>
-    )
-}
+    );
+};

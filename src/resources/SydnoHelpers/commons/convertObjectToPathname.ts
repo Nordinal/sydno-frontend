@@ -1,7 +1,7 @@
 /**
  * Хелпер для преобразовывания объекта в строку с query-параметрами
- * @param object 
- * @returns 
+ * @param object
+ * @returns
  */
 export function convertObjectToPathname(object: object) {
     return Object.entries(object)
@@ -9,7 +9,7 @@ export function convertObjectToPathname(object: object) {
             return value !== undefined && value !== null;
         })
         .map(([key, value]) => {
-            return `${key}=${value}`
+            return `${key}=${value}`;
         })
         .join('&');
 }

@@ -73,4 +73,11 @@ export interface IAdvertListItem {
     images: string[];
     advert_legal_information: IAdvertLegalInformation;
     advert_technical_information: IAdvertTechnicalInformation;
+    user: {
+        id: number;
+        name: string;
+        avatar: string;
+        email: string;
+        adverts_count: number;
+    };
 }

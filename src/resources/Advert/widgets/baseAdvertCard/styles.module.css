@@ -23,12 +23,12 @@
 }
 
 .sudno-AdvertCard-draft::after {
-    content: '';
+    content: "";
     opacity: 0;
 }
 
 .sudno-AdvertCard-draft:hover::after {
-    content: 'Продолжить создание →';
+    content: "Продолжить создание →";
     position: absolute;
     opacity: 1;
     transition: opacity 0.2s linear;
@@ -48,8 +48,12 @@
     border-radius: var(--main-app-br);
 }
 
-
 .sudno-AdvertCard-details-label {
     color: rgba(0, 0, 0, 0.45);
 }
 
+@media (min-width: 768px) and (max-width: 1000px) {
+    .sudno-AdvertCard-description {
+        display: none;
+    }
+}

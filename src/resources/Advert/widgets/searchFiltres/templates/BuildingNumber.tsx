@@ -1,14 +1,11 @@
-import { Input } from "antd";
-import React from "react";
-import { TChangeConfigProperty } from "../types";
+import { Input } from 'antd';
+import React from 'react';
+import { TChangeConfigProperty } from '../types';
 
 export const BuildingNumber: React.FC<{
     building_number?: string | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    building_number,
-    changeConfigProperty
-}) => {
+}> = ({ building_number, changeConfigProperty }) => {
     return (
         <>
             <p>Строительный номер</p>
@@ -18,4 +15,4 @@ export const BuildingNumber: React.FC<{
             />
         </>
     );
-}
+};

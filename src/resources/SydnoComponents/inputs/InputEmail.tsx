@@ -1,9 +1,6 @@
-import { Input } from "antd";
-
-
+import { Input } from 'antd';
 
 export const InputEmail = () => {
-
     return (
         <Input
             readOnly
@@ -14,4 +11,4 @@ export const InputEmail = () => {
             onFocus={(e) => e.currentTarget.removeAttribute('readonly')}
         />
     );
-}
+};

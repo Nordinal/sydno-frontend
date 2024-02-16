@@ -3,17 +3,14 @@ import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
-    {value: true, label: 'да'},
-    {value: false, label: 'нет'}
+    { value: true, label: 'да' },
+    { value: false, label: 'нет' }
 ];
 
 export const DeckHouse: React.FC<{
     deckhouses?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    deckhouses,
-    changeConfigProperty
-}) => {
+}> = ({ deckhouses, changeConfigProperty }) => {
     return (
         <div>
             <p>Рубки</p>
@@ -25,5 +22,5 @@ export const DeckHouse: React.FC<{
                 options={OPTIONS}
             />
         </div>
-    )
-}
+    );
+};

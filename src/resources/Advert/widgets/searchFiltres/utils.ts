@@ -1,4 +1,4 @@
-import { TFilterOptions } from "./types";
+import { TFilterOptions } from './types';
 
 /**
  * Дефолтный объект с которым работает компонент фильтров.
@@ -60,5 +60,5 @@ export const initialFilterOptions: TFilterOptions = {
     superstructures: null,
     min_passangers_avialable: null,
     max_passangers_avialable: null,
-    technical_documentation: null,
-}
+    technical_documentation: null
+};

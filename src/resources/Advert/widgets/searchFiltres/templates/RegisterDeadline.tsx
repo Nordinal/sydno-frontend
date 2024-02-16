@@ -6,26 +6,20 @@ import dayjs from 'dayjs';
 export const RegisterDeadline: React.FC<{
     register_valid_until?: string | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    register_valid_until,
-    changeConfigProperty
-}) => {
-  const onDateChanged = (
-    _: DatePickerProps['value'],
-    dateString?: string,
-  ) => {
-    changeConfigProperty<string>('register_valid_until', dateString || undefined);
-  }
+}> = ({ register_valid_until, changeConfigProperty }) => {
+    const onDateChanged = (_: DatePickerProps['value'], dateString?: string) => {
+        changeConfigProperty<string>('register_valid_until', dateString || undefined);
+    };
 
-  return (
-    <>
-      <p>Учет действует до</p>
-      <DatePicker
-        value={ register_valid_until ? dayjs(register_valid_until) : undefined}
-        onChange={onDateChanged}
-        allowClear
-        style={{width: '100%'}}
-      />
-    </>
-  )
-}
+    return (
+        <>
+            <p>Учет действует до</p>
+            <DatePicker
+                value={register_valid_until ? dayjs(register_valid_until) : undefined}
+                onChange={onDateChanged}
+                allowClear
+                style={{ width: '100%' }}
+            />
+        </>
+    );
+};

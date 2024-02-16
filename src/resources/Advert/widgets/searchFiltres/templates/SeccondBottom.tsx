@@ -3,17 +3,14 @@ import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
-    {value: true, label: 'да'},
-    {value: false, label: 'нет'}
+    { value: true, label: 'да' },
+    { value: false, label: 'нет' }
 ];
 
 export const SeccondBottom: React.FC<{
     seccond_bottom?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    seccond_bottom,
-    changeConfigProperty
-}) => {
+}> = ({ seccond_bottom, changeConfigProperty }) => {
     return (
         <div>
             <p>Второе дно</p>
@@ -25,5 +22,5 @@ export const SeccondBottom: React.FC<{
                 options={OPTIONS}
             />
         </div>
-    )
-}
+    );
+};

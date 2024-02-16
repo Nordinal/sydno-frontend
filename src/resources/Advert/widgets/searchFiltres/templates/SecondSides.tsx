@@ -3,17 +3,14 @@ import { TChangeConfigProperty } from '../types';
 import { Select } from 'antd';
 
 const OPTIONS = [
-    {value: true, label: 'да'},
-    {value: false, label: 'нет'}
+    { value: true, label: 'да' },
+    { value: false, label: 'нет' }
 ];
 
 export const SecondSides: React.FC<{
     second_sides?: boolean | null;
     changeConfigProperty: TChangeConfigProperty;
-}> = ({
-    second_sides,
-    changeConfigProperty
-}) => {
+}> = ({ second_sides, changeConfigProperty }) => {
     return (
         <div>
             <p>Вторые борта</p>
@@ -25,5 +22,5 @@ export const SecondSides: React.FC<{
                 options={OPTIONS}
             />
         </div>
-    )
-}
+    );
+};

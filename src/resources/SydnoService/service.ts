@@ -3,21 +3,21 @@ import axios from 'axios';
 export const baseURL = process.env.NEXT_PUBLIC_API_BACKEND;
 
 export const sydnoServiceJson = axios.create({
-  baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  },
-  withCredentials: true,
+    baseURL,
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    },
+    withCredentials: true
 });
 
 export const sydnoServiceFormData = axios.create({
-  baseURL,
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    'Access-Control-Allow-Origin': '*'
-  },
-  withCredentials: true,
+    baseURL,
+    headers: {
+        'Content-Type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*'
+    },
+    withCredentials: true
 });
 
 // Включить по необходимости
