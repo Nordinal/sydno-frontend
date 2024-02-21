@@ -142,13 +142,15 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                 </div>
                                 {disableNumberButton === false || (
                                     <div className='flex flex-col gap-3 w-36 '>
-                                        <UserButton
-                                            className='ml-1'
-                                            id={user.id}
-                                            src={user.avatar}
-                                            name={user.name}
-                                            advertCount={user.adverts_count}
-                                        />
+                                        {user && (
+                                            <UserButton
+                                                className='ml-1'
+                                                id={user.id}
+                                                src={user.avatar}
+                                                name={user.name}
+                                                advertCount={user.adverts_count}
+                                            />
+                                        )}
                                         {showNumber ? (
                                             phone_number
                                         ) : (

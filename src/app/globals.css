@@ -3,31 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --main-app-br: 6px;
-  --header-height: 48px;
-  --primary-color: #34a8ff;
+    --main-app-br: 6px;
+    --header-height: 48px;
+    --primary-color: #34a8ff;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 body {
-  min-width: 375px;
+    min-width: 375px;
 }
 
 body.lock {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 body.lock {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 h1,
@@ -36,10 +36,10 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0;
+    margin: 0;
 }
 
 .sydno-anchor {
-  padding-top: var(--header-height);
-  margin-top: calc(var(--header-height) * -1);
+    padding-top: var(--header-height);
+    margin-top: calc(var(--header-height) * -1);
 }

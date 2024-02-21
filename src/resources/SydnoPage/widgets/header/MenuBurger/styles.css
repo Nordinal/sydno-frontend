@@ -7,7 +7,7 @@
 .sudno-MenuBurger:before,
 .sudno-MenuBurger > div {
     position: absolute;
-    content: "";
+    content: '';
     width: 100%;
     border-bottom: 2px solid var(--burger-color);
 }

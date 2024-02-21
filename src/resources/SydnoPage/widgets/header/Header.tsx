@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useUser } from 'Auth/entities';
 import { ProfileButton, SingButton } from 'Auth/features';
 import Image from 'next/image';
+import { CreateAdButton } from 'SydnoComponents/buttons';
 import { MenuBurger } from './MenuBurger/ui';
 
 const dontShowCreateAdUrls = ['/create'];
@@ -104,11 +105,7 @@ export const Header = () => {
                         ) : (
                             <LoadingOutlined className='mr-4' style={{ color: '#fff', fontSize: '18px' }} />
                         )}
-                        {showCreateAdButton && (
-                            <Link href={'/create'}>
-                                <Button type='primary'>Разместить объявление</Button>
-                            </Link>
-                        )}
+                        {showCreateAdButton && <CreateAdButton />}
                     </div>
                 </div>
                 <div

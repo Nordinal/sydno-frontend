@@ -1,11 +1,12 @@
 'use client';
-import { Tabs, Typography } from 'antd';
+import { Divider, Tabs, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { MyDrafts } from '../widgets/MyAdverts/MyDrafts';
 import { MyModeration } from '../widgets/MyAdverts/MyModeration';
 import { sydnoServiceJson } from 'SydnoService/service';
 import { MyActive } from 'Profile/widgets/MyAdverts/MyActive';
 import { MyInactive } from 'Profile/widgets/MyAdverts/MyInactive';
+import { EmptyMyAdverts } from 'Profile/widgets/EmptyMyAdverts/EmptyMyAdverts';
 
 export interface IInfoMyAdverts {
     active: number;
@@ -50,14 +51,21 @@ export const Profile = () => {
     };
 
     useEffect(() => {
-        sydnoServiceJson.get('/api/advertsinfo').then((res) => setInfo(res.data));
+        sydnoServiceJson.get('/api/advertsinfo').then((res) => setInfo(res.data || null));
     }, []);
 
-    if (!info) return null;
+    if (info === undefined) return null;
     return (
-        <div>
+        <div className='h-full'>
             <Typography.Title level={2}>Мои объявления</Typography.Title>
-            <Tabs defaultActiveKey='1' items={getItems(info)} />
+            {info !== null ? (
+                <Tabs defaultActiveKey='1' items={getItems(info)} />
+            ) : (
+                <div>
+                    <Divider />
+                    <EmptyMyAdverts className='mt-12' />
+                </div>
+            )}
         </div>
     );
 };
