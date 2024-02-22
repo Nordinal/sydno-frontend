@@ -75,7 +75,7 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
             }}
         >
             <div className='mb-6'>
-                <Typography.Title level={2}>Найди подходящее судно</Typography.Title>
+                <Typography.Title level={3}>Найти подходящее судно</Typography.Title>
             </div>
             <Row gutter={[16, 24]}>
                 <Col xs={24} sm={6}>
