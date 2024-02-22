@@ -1,12 +1,13 @@
 'use client';
 import React, { Suspense } from 'react';
 import { BaseAdvertCard, IAdvertCard } from 'Advert/widgets';
-import { SearchFiltres } from '../../widgets/searchFiltres';
+import { SearchFiltres } from '../../widgets/searchFiltres/SearchFiltres';
 import { BasicList } from 'SydnoComponents/lists';
 import { Col, Row } from 'antd';
 import { convertObjectToPathname, getUrlQueryParams } from 'SydnoHelpers/commons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { smoothScrollToAnchor } from 'SydnoHelpers/commons';
+import { TFilterOptions } from 'Advert/widgets/searchFiltres/types';
 
 export const MainAdvertPage = () => {
     return (
@@ -64,7 +65,7 @@ export const MainAdvertPageUI = () => {
     return (
         <Row className='pt-4 pb-16'>
             <Col className='pb-6' span={24}>
-                <SearchFiltres filterOptions={getUrlQueryParams(searchParams)} onFindButtonClick={changeUrlByOptions} />
+                <SearchFiltres filterOptions={getUrlQueryParams<TFilterOptions>(searchParams)} onFindButtonClick={changeUrlByOptions} />
             </Col>
             <Col span={24}>
                 <div className='sydno-anchor' id='advert-list-anchor'></div>

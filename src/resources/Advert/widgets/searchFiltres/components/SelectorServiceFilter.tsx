@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { TChangeConfigProperty } from '../types';
-import { Select } from 'antd';
+import { Select, Typography } from 'antd';
 import { sydnoServiceFormData } from 'SydnoService/service';
 
-export const Type: React.FC<{
-    type?: string | null;
-    changeConfigProperty: TChangeConfigProperty;
-}> = ({ type, changeConfigProperty }) => {
+export const SelectorServiceFilter: React.FC<{
+    value?: string | null;
+    placeholder?: string;
+    keyProperty: string;
+    adress: string;
+    onChange: TChangeConfigProperty;
+}> = ({ value, keyProperty, onChange, adress, placeholder }) => {
     const [typeList, setTypeList] = useState<{ value: string; label: string }[]>();
 
     useEffect(() => {
-        sydnoServiceFormData.get('/api/selector?vesseltypes').then((res) => {
+        sydnoServiceFormData.get(`/api/selector?${adress}`).then((res) => {
             const data = res.data.message;
             setTypeList(
-                Object.entries(data.vessel_types as { [x in string]: string }).map(
+                Object.entries(data[adress] as { [x in string]: string }).map(
                     ([value, label]: [string, string]) => ({
                         value,
                         label
@@ -24,15 +27,16 @@ export const Type: React.FC<{
     }, []);
 
     return (
-        <>
-            <p>Тип</p>
+        <div>
+            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
             <Select
-                value={type}
+                value={value}
                 style={{ width: '100%' }}
-                onChange={(value) => changeConfigProperty<string>('type', value)}
+                onChange={(value) => onChange(value, keyProperty)}
                 allowClear
+                placeholder={placeholder}
                 options={typeList}
             />
-        </>
+        </div>
     );
 };

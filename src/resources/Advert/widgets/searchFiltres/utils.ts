@@ -5,6 +5,9 @@ import { TFilterOptions } from './types';
  * Компонент отдает объект в таком виде, если какое-то поле не определено(пользователь не выбрал фильтр), то значение свойства будет null
  */
 export const initialFilterOptions: TFilterOptions = {
+    name: null,
+    max_price: null,
+    min_price: null,
     flag: null,
     type: null,
     exploitation_type: null,
@@ -16,7 +19,8 @@ export const initialFilterOptions: TFilterOptions = {
     vessel_status: null,
     project_number: null,
     building_number: null,
-    building_year: null,
+    max_building_year: null,
+    min_building_year: null,
     building_country: null,
     port_adress_country: null,
     port_adress_city: null,
@@ -46,10 +50,8 @@ export const initialFilterOptions: TFilterOptions = {
     max_num_engines: null,
     min_power: null,
     max_power: null,
-    min_maximum_speed_in_ballast: null,
-    max_maximum_speed_in_ballast: null,
-    min_maximum_speed_in_load: null,
-    max_maximum_speed_in_load: null,
+    min_maximum_speed: null,
+    max_maximum_speed: null,
     cargo_tanks: null,
     min_total_capacity_cargo_tanks: null,
     max_total_capacity_cargo_tanks: null,
