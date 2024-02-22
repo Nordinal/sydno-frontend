@@ -16,12 +16,10 @@ export const SelectorServiceFilter: React.FC<{
         sydnoServiceFormData.get(`/api/selector?${adress}`).then((res) => {
             const data = res.data.message;
             setTypeList(
-                Object.entries(data[adress] as { [x in string]: string }).map(
-                    ([value, label]: [string, string]) => ({
-                        value,
-                        label
-                    })
-                )
+                Object.entries(data[adress] as { [x in string]: string }).map(([value, label]: [string, string]) => ({
+                    value,
+                    label
+                }))
             );
         });
     }, []);

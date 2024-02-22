@@ -1,6 +1,6 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
-import { DatePicker, Typography} from 'antd';
+import { DatePicker, Typography } from 'antd';
 import dayjs from 'dayjs';
 
 export const DatePickerFilter: React.FC<{
@@ -10,7 +10,6 @@ export const DatePickerFilter: React.FC<{
     picker: string;
     onChange: TChangeConfigProperty;
 }> = ({ value, keyProperty, onChange, placeholder, picker }) => {
-
     return (
         <div>
             <Typography.Text type='secondary'>{placeholder}</Typography.Text>
@@ -23,4 +22,3 @@ export const DatePickerFilter: React.FC<{
         </div>
     );
 };
-            

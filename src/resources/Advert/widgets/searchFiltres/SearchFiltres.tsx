@@ -57,22 +57,12 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
         {
             label: 'Юридические',
             key: '0',
-            children: (
-                <LegalFilters
-                    filterConfig={filterConfig}
-                    changeConfigProperty={changeConfigProperty}
-                />
-            )
+            children: <LegalFilters filterConfig={filterConfig} changeConfigProperty={changeConfigProperty} />
         },
         {
             label: 'Технические',
             key: '1',
-            children: (
-                <TechnicalFilters
-                    filterConfig={filterConfig}
-                    changeConfigProperty={changeConfigProperty}
-                />
-            )
+            children: <TechnicalFilters filterConfig={filterConfig} changeConfigProperty={changeConfigProperty} />
         }
     ];
 
@@ -89,7 +79,7 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
                 <Typography.Title level={2}>Найди подходящее судно</Typography.Title>
             </div>
             <Row gutter={[16, 24]}>
-                <Col xs={24} sm={6} >
+                <Col xs={24} sm={6}>
                     <SelectorServiceFilter
                         onChange={changeConfigProperty}
                         value={filterConfig['type']}
@@ -98,7 +88,7 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
                         placeholder='Тип судна'
                     />
                 </Col>
-                <Col xs={24} sm={6} >
+                <Col xs={24} sm={6}>
                     <InputNumberRangeFilter
                         onChange={changeConfigProperty}
                         value={[filterConfig['max_price'], filterConfig['min_price']]}
@@ -106,7 +96,7 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
                         placeholder='Цена, руб.'
                     />
                 </Col>
-                <Col xs={24} sm={6} >
+                <Col xs={24} sm={6}>
                     <InputTextFilter
                         onChange={changeConfigProperty}
                         value={filterConfig['class_formula'] || ''}
@@ -114,24 +104,20 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
                         placeholder='Класс'
                     />
                 </Col>
-                <Col xs={24} sm={6} style={{display: 'flex', alignItems: 'end'}}>
+                <Col xs={24} sm={6} style={{ display: 'flex', alignItems: 'end' }}>
                     <Button onClick={onButtonClickHandler} type='primary' className='w-full'>
                         Показать объявления
                     </Button>
                 </Col>
             </Row>
-            <div
-                className={
-                    showHiddenBlock ? 'mt-4' : 'hidden'
-                }
-            >
+            <div className={showHiddenBlock ? 'mt-4' : 'hidden'}>
                 <Tabs defaultActiveKey='0' items={items} />
             </div>
             <div className={'mt-4'}>
-                <Button onClick={toggleShowAll} type='link' style={{paddingLeft: 0}}>
+                <Button onClick={toggleShowAll} type='link' style={{ paddingLeft: 0 }}>
                     {showHiddenBlock ? 'Свернуть' : 'Все фильтры'}
                 </Button>
-                <Button onClick={resetFiltres} type='link' style={{paddingLeft: 0}}>
+                <Button onClick={resetFiltres} type='link' style={{ paddingLeft: 0 }}>
                     Очистить фильтр
                 </Button>
             </div>
@@ -139,14 +125,13 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
     );
 };
 
-const TechnicalFilters: React.FC<{filterConfig: TFilterOptions,changeConfigProperty: TChangeConfigProperty}> = ({
+const TechnicalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigProperty: TChangeConfigProperty }> = ({
     changeConfigProperty,
     filterConfig
 }) => {
-
     return (
         <Row gutter={[16, 24]}>
-            <Col xs={24} sm={6} >
+            <Col xs={24} sm={6}>
                 <SelectorServiceFilter
                     onChange={changeConfigProperty}
                     value={filterConfig['material']}
@@ -301,13 +286,12 @@ const TechnicalFilters: React.FC<{filterConfig: TFilterOptions,changeConfigPrope
             </Col>
         </Row>
     );
-}
+};
 
-const LegalFilters: React.FC<{filterConfig: TFilterOptions,changeConfigProperty: TChangeConfigProperty}> = ({
+const LegalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigProperty: TChangeConfigProperty }> = ({
     changeConfigProperty,
     filterConfig
 }) => {
-
     return (
         <Row gutter={[16, 24]}>
             <Col xs={24} sm={6}>
@@ -407,4 +391,4 @@ const LegalFilters: React.FC<{filterConfig: TFilterOptions,changeConfigProperty:
             </Col>
         </Row>
     );
-}
+};

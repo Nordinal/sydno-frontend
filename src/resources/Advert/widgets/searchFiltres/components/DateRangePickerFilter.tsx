@@ -1,15 +1,14 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
-import { DatePicker, Typography} from 'antd';
+import { DatePicker, Typography } from 'antd';
 import dayjs from 'dayjs';
 
 export const DateRangePickerFilter: React.FC<{
-    value: [(string | null), (string | null)];
+    value: [string | null, string | null];
     placeholder?: string;
     keyProperties: [string, string];
     onChange: TChangeConfigProperty;
 }> = ({ value, keyProperties, onChange, placeholder }) => {
-
     return (
         <div className='w-full'>
             <Typography.Text type='secondary'>{placeholder}</Typography.Text>

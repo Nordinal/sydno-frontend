@@ -65,7 +65,10 @@ export const MainAdvertPageUI = () => {
     return (
         <Row className='pt-4 pb-16'>
             <Col className='pb-6' span={24}>
-                <SearchFiltres filterOptions={getUrlQueryParams<TFilterOptions>(searchParams)} onFindButtonClick={changeUrlByOptions} />
+                <SearchFiltres
+                    filterOptions={getUrlQueryParams<TFilterOptions>(searchParams)}
+                    onFindButtonClick={changeUrlByOptions}
+                />
             </Col>
             <Col span={24}>
                 <div className='sydno-anchor' id='advert-list-anchor'></div>

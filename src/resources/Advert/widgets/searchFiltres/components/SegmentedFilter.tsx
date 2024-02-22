@@ -1,18 +1,18 @@
 import React from 'react';
 import { TChangeConfigProperty } from '../types';
-import { Segmented, Typography} from 'antd';
+import { Segmented, Typography } from 'antd';
 
 export const SegmentedFilter: React.FC<{
     value: boolean | null | undefined;
     placeholder?: string;
     keyProperty: string;
-    options?: string[]
+    options?: string[];
     onChange: TChangeConfigProperty;
 }> = ({ value, keyProperty, onChange, placeholder, options = ['Все', 'Есть', 'Нету'] }) => {
-    const _value = typeof value === 'string' ? JSON.parse(value) : value; 
+    const _value = typeof value === 'string' ? JSON.parse(value) : value;
     const convertValue = (val: string | null | boolean | undefined) => {
-        if(typeof val === 'string') {
-            switch(val) {
+        if (typeof val === 'string') {
+            switch (val) {
                 case options[0]:
                     return null;
                 case options[1]:
@@ -20,9 +20,8 @@ export const SegmentedFilter: React.FC<{
                 case options[2]:
                     return false;
             }
-        }
-        else {
-            switch(val) {
+        } else {
+            switch (val) {
                 case undefined:
                 case null:
                     return options[0];
@@ -32,12 +31,17 @@ export const SegmentedFilter: React.FC<{
                     return options[2];
             }
         }
-    }
+    };
 
     return (
         <div>
             <Typography.Text type='secondary'>{placeholder}</Typography.Text>
-            <Segmented value={convertValue(_value) as string} options={options} block onChange={(val) => onChange(convertValue(val as string), keyProperty)}/>
+            <Segmented
+                value={convertValue(_value) as string}
+                options={options}
+                block
+                onChange={(val) => onChange(convertValue(val as string), keyProperty)}
+            />
         </div>
     );
 };
