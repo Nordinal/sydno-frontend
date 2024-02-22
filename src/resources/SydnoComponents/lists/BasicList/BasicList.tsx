@@ -44,7 +44,6 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
             const result = await sydnoServiceJson.get<IBasicListService<T>>(
                 props.action + '?' + convertObjectToPathname(filtersObj)
             );
-            console.log(result.data);
             setService(result.data);
         } catch (e) {
             notification.error({

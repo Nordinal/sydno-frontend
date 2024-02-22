@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 export const EmptyMyAdverts = ({ className }: { className: string }) => {
     return (
         <div className={className}>
-            <Typography.Title level={1}>Увы, мы не нашли ваши объявления</Typography.Title>
+            <Typography.Title level={1}>Ой, мы не нашли ваши объявления</Typography.Title>
             <Typography.Title level={4} type='secondary'>
                 Давайте разместим первое объявление
             </Typography.Title>
