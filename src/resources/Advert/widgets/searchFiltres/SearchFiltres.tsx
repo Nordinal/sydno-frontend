@@ -90,8 +90,8 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
                 <Col xs={24} sm={6}>
                     <InputNumberRangeFilter
                         onChange={changeConfigProperty}
-                        value={[filterConfig['max_price'], filterConfig['min_price']]}
-                        keyProperties={['max_price', 'min_price']}
+                        value={[filterConfig['min_price'], filterConfig['max_price']]}
+                        keyProperties={['min_price', 'max_price']}
                         placeholder='Цена, руб.'
                     />
                 </Col>
