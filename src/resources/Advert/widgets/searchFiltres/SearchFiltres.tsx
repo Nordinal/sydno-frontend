@@ -1,7 +1,6 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { TFilterOptions } from './types';
 import { Button, Col, Row, Tabs, Typography } from 'antd';
-import './styles.css';
 import { initialFilterOptions } from './utils';
 import { TChangeConfigProperty } from './types';
 import { SelectorServiceFilter } from './components/SelectorServiceFilter';
