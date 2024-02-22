@@ -23,9 +23,8 @@ export const InputNumberRangeFilter: React.FC<{
                     placeholder={'до'}
                     value={value[1]}
                     onChange={(val) => {
-                        onChange(value[1] && (val || 0) > (value[1] || 0) ? value[1] : val, keyProperties[1]);
-                        if ((val || 0) < (value[0] || 0)) {
-                            onChange(val, keyProperties[0]);
+                        if (value[1] && (val || 0) < (value[0] || 0)) {
+                            onChange(value[1] && (val || 0) > (value[1] || 0) ? value[1] : val, keyProperties[1]);
                         }
                         onChange(val, keyProperties[1]);
                     }}
