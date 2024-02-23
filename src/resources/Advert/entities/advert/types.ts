@@ -58,6 +58,7 @@ export interface IAdvertLegalInformation {
     imo_number: string;
     ice_strengthening: number;
     id?: number;
+    name: string;
 }
 
 export interface IAdvertListItem {

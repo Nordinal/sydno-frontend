@@ -44,7 +44,7 @@ export const CreateAdvert = () => {
                         <Card.Meta
                             avatar={<HistoryOutlined style={{ fontSize: 28 }} />}
                             title='Объявление об аренде сунда'
-                            description='Тысячи людей увидят объявление о аренде твоего сунда'
+                            description='Тысячи людей увидят объявление об аренде твоего сунда'
                         />
                     </Card>
                 </Col>

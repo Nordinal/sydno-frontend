@@ -74,7 +74,14 @@ const UserAdverts = ({ id }: { id: number }) => {
         <BasicList
             action={`/api/useradverts/${id}`}
             renderItem={(item: IAdvertCard) => {
-                return <BaseAdvertCard key={item.id} {...item} onClick={() => onAdvertCardClick(item.id)} />;
+                return (
+                    <BaseAdvertCard
+                        key={item.id}
+                        {...item}
+                        onClick={() => onAdvertCardClick(item.id)}
+                        isForUser={true}
+                    />
+                );
             }}
         />
     );
