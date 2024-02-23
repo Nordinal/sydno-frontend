@@ -1,4 +1,10 @@
-export type TChangeConfigProperty = <T>(name: string, value: T | undefined) => void;
+export type TChangeConfigProperty = <T>(value: T, name: string) => void;
+
+export interface IFilterBaseOptions {
+    min_price?: number | null;
+    max_price?: number | null;
+    name?: string | null;
+}
 
 /**
  * Юридические опции
@@ -60,9 +66,14 @@ export interface ILegalFilterOptions {
     building_number?: string | null;
 
     /**
-     * год постройки Date
+     * год постройки Date конец
      */
-    building_year?: string | null;
+    max_building_year: string | null;
+
+    /**
+     * год постройки Date начало
+     */
+    min_building_year: string | null;
 
     /**
      * страна постройки
@@ -213,22 +224,12 @@ export interface ITechnicalFilterOptions {
     /**
      * Минимальная Максимальная скорость в балласте км/ч
      */
-    min_maximum_speed_in_ballast?: number | null;
+    min_maximum_speed?: number | null;
 
     /**
      * Максимальная Максимальная скорость в балласте км/ч
      */
-    max_maximum_speed_in_ballast?: number | null;
-
-    /**
-     * Минимальная Максимальная скорость в грузу
-     */
-    min_maximum_speed_in_load?: number | null;
-
-    /**
-     * Максимальная Максимальная скорость в грузу
-     */
-    max_maximum_speed_in_load?: number | null;
+    max_maximum_speed?: number | null;
 
     /**
      * Грузовой танк
@@ -286,4 +287,4 @@ export interface ITechnicalFilterOptions {
     technical_documentation?: boolean | null;
 }
 
-export type TFilterOptions = ILegalFilterOptions & ITechnicalFilterOptions;
+export type TFilterOptions = IFilterBaseOptions & ILegalFilterOptions & ITechnicalFilterOptions;

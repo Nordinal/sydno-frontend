@@ -54,7 +54,7 @@ export function CreateSaleAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }
         sydnoServiceJson.get('/api/selector?vesseltypes&exploitationtypes').then((res) => {
             const data = res.data.message;
             setVesseltypes(
-                Object.entries(data.vessel_types as { [x in string]: string }).map(
+                Object.entries(data.vesseltypes as { [x in string]: string }).map(
                     ([value, label]: [string, string]) => ({
                         value,
                         label
@@ -62,7 +62,7 @@ export function CreateSaleAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }
                 )
             );
             setExploitationTypes(
-                Object.entries(data.exploitation_types as { [x in string]: string }).map(
+                Object.entries(data.exploitationtypes as { [x in string]: string }).map(
                     ([value, label]: [string, string]) => ({
                         value,
                         label

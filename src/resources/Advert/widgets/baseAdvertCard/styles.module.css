@@ -23,12 +23,12 @@
 }
 
 .sudno-AdvertCard-draft::after {
-    content: "";
+    content: '';
     opacity: 0;
 }
 
 .sudno-AdvertCard-draft:hover::after {
-    content: "Продолжить создание →";
+    content: 'Продолжить создание →';
     position: absolute;
     opacity: 1;
     transition: opacity 0.2s linear;

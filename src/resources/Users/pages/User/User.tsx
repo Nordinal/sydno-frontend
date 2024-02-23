@@ -14,12 +14,25 @@ import { UserButton } from 'Users/features/UserButton/UserButton';
 dayjs.locale('ru');
 
 export const User = ({ id }: { id: number }) => {
-    const [user, setUser] = useState<IUserService>();
+    const [user, setUser] = useState<IUserService | null>();
     useEffect(() => {
-        sydnoServiceJson.get<IUserService>('api/user/' + id).then((res) => setUser(res.data));
+        if (typeof id === 'number') {
+            sydnoServiceJson
+                .get<IUserService>('api/user/' + id)
+                .then((res) => setUser(res.data))
+                .catch((err) => setUser(null));
+        } else {
+            setUser(null);
+        }
     }, []);
 
-    if (!user) return null;
+    if (user === undefined) return null;
+    if (!user)
+        return (
+            <div>
+                <Typography.Title className='mt-4'>Пользователь не найден</Typography.Title>
+            </div>
+        );
     return (
         <div className='my-8'>
             <Row>
@@ -79,7 +92,7 @@ const UserAdverts = ({ id }: { id: number }) => {
                         key={item.id}
                         {...item}
                         onClick={() => onAdvertCardClick(item.id)}
-                        isForUser={true}
+                        isMiniCard={true}
                     />
                 );
             }}

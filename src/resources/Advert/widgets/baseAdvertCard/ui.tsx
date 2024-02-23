@@ -8,7 +8,6 @@ import Link from 'next/link';
 import styles from './styles.module.css';
 import { AddToFavoriteButton } from '../../features/AddToFavoriteButton';
 import { UserButton } from 'Users/features';
-import { useRouter } from 'next/router';
 
 export interface IAdvertCard extends IAdvertListItem {
     onClick?: () => void;
@@ -17,7 +16,7 @@ export interface IAdvertCard extends IAdvertListItem {
     customFeature?: React.ReactNode;
     disableNumberButton?: boolean;
     isDraft: boolean;
-    isForUser: boolean;
+    isMiniCard: boolean;
 }
 
 const FALLBACK_IMAGE_SRC = '/sheep-icon.png';
@@ -78,7 +77,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     advert_technical_information,
     registration_number,
     user,
-    isForUser
+    isMiniCard
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -120,7 +119,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                         fallbackImageSrc={FALLBACK_IMAGE_SRC}
                         imageStyle={{ borderRadius: 'var(--main-app-br)' }}
                         flag={advert_legal_information ? advert_legal_information.flag : ''}
-                        isForUser={isDraft ? true : isForUser}
+                        isMiniCard={isDraft ? true : isMiniCard}
                     />
                 </Col>
                 <Col {...middleCol[size || 'big']}>
@@ -162,7 +161,8 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                         {user && (
                                             <UserButton
                                                 className='ml-1'
-                                                src={user.avatar ? user.avatar : ''}
+                                                id={user.id}
+                                                src={user.avatar}
                                                 name={user.name}
                                                 advertCount={user.adverts_count}
                                             />

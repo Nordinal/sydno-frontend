@@ -5,6 +5,6 @@ export const metadata: Metadata = {
     title: 'Настройки'
 };
 
-export default function ProfileServer() {
+export default function SettingsServer() {
     return <ProfileSettings />;
 }

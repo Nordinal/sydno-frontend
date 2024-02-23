@@ -57,9 +57,15 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
                                     Мои объявления
                                 </Button>
                             </Link>
-                            <Button type='link' style={{ textAlign: 'start', paddingLeft: 0 }}>
-                                Избранное
-                            </Button>
+                            <Link href={'/profile/favorite'}>
+                                <Button
+                                    danger={pathname === '/profile/favorite'}
+                                    type='link'
+                                    style={{ textAlign: 'start', paddingLeft: 0 }}
+                                >
+                                    Избранное
+                                </Button>
+                            </Link>
                         </div>
 
                         <Divider style={{ margin: '8px 0' }} />

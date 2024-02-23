@@ -1,6 +1,6 @@
 import { Avatar, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { sydnoServiceJson } from 'SydnoService/service';
 import { IUserService } from 'Users/shared/types';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,7 @@ type TUserButtonProps = TUserButton & {
 export const UserButton = ({ id, src, name, advertCount, className }: TUserButtonProps) => {
     const [user, setUser] = useState<TUserButton>({});
     useEffect(() => {
-        if (id && (!src ?? !name ?? advertCount)) {
+        if (id && !name) {
             sydnoServiceJson.get<IUserService>('/api/user/' + id).then(({ data }) =>
                 setUser({
                     advertCount: data.adverts_count,
@@ -67,7 +67,8 @@ const UserButtonUi = ({ id, src, name, advertCount, className }: TUserButtonProp
 
     const advertCountLocale = getDeclination(advertCount || 0, 'объявление', 'объявления', 'объявлений');
 
-    const handleClick = () => {
+    const handleClick = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+        event.stopPropagation();
         router.push('/users/' + id);
     };
 

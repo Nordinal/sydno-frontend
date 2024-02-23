@@ -57,7 +57,7 @@ export const RegionSelector = ({
                     'http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
                     {
                         query: search,
-                        from_bound: { value: 'country' },
+                        from_bound: { value: 'city' },
                         to_bound: { value: 'city' },
                         constraints: {
                             locations: { country: '*' }
