@@ -16,7 +16,9 @@ export const InputNumberRangeFilter: React.FC<{
                     style={{ width: '50%' }}
                     placeholder={'от'}
                     value={value[0]}
-                    onChange={(val) => onChange(value[1] && (val || 0) > (value[1] || 0) ? value[1] : val, keyProperties[0])}
+                    onChange={(val) =>
+                        onChange(value[1] && (val || 0) > (value[1] || 0) ? value[1] : val, keyProperties[0])
+                    }
                 />
                 <InputNumber
                     style={{ width: '50%' }}

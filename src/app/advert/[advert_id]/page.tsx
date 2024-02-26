@@ -129,7 +129,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ params }) => {
             }
         });
     }, []);
-    console.log(advertData);
     const ConvertedAdvertData = advertData && ConvertData(advertData);
 
     if (!advertData) {

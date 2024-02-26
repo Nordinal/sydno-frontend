@@ -10,6 +10,8 @@ export interface ISmallImageSlider {
     imageClass?: string;
     fallbackImageSrc?: string;
     imageStyle?: React.CSSProperties;
+    flag?: string;
+    isMiniCard: boolean;
 }
 
 export const SmallImageSlider: React.FC<ISmallImageSlider> = ({
@@ -19,7 +21,9 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({
     showLabels = true,
     fallbackImageSrc = '',
     imageClass,
-    imageStyle
+    imageStyle,
+    flag,
+    isMiniCard
 }) => {
     const [activeIndex, setActiveIndex] = useState<number>(defaultIndex);
     const imageRef = useRef<HTMLImageElement>(null);
@@ -44,6 +48,16 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({
 
     return (
         <div className='sudno-SmallImageSlider flex items-center'>
+            {flag && (
+                <img
+                    className={`sudno-SmallImageSlider-flag ${isMiniCard ? 'user-advert' : ''}`}
+                    alt={`Флаг ${flag}`}
+                    width={30}
+                    height={20}
+                    src={`/flags/${flag}.svg`}
+                />
+            )}
+            <span className={`sudno-SmallImageSlider-sell-rent ${isMiniCard ? 'user-advert' : ''}`}>продажа</span>
             <img
                 ref={imageRef}
                 src={items.length === 0 ? fallbackImageSrc : items[activeIndex]}

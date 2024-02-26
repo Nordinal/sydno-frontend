@@ -34,16 +34,13 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ user_id, advert_id }
     useEffect(() => {
         getOtherAdverts(Number(user_id), Number(advert_id)).then((data) => {
             if (data === false) {
-                // setAllAdvertsLoaded(true);
-                // setIsLoading(афд);
+                setAllAdvertsLoaded(true);
             } else {
-                console.log(data);
                 setOtherAdverts(data.data);
             }
         });
     }, [user_id, advert_id]);
     useEffect(() => {
-        console.log(curruntPage);
         const fetchNextPageData = async () => {
             try {
                 if (curruntPage > 1) {

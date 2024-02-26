@@ -8,7 +8,7 @@ export const SegmentedFilter: React.FC<{
     keyProperty: string;
     options?: string[];
     onChange: TChangeConfigProperty;
-}> = ({ value, keyProperty, onChange, placeholder, options = ['Все', 'Есть', 'Нету'] }) => {
+}> = ({ value, keyProperty, onChange, placeholder, options = ['Все', 'Есть', 'Нет'] }) => {
     const _value = typeof value === 'string' ? JSON.parse(value) : value;
     const convertValue = (val: string | null | boolean | undefined) => {
         if (typeof val === 'string') {

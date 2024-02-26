@@ -13,7 +13,14 @@ export const MyFavorite = () => {
         <BasicList
             action='/api/adverts/favorites'
             renderItem={(item: IAdvertCard) => {
-                return <BaseAdvertCard key={item.id} {...item} onClick={() => onAdvertCardClick(item.id)} />;
+                return (
+                    <BaseAdvertCard
+                        key={item.id}
+                        {...item}
+                        onClick={() => onAdvertCardClick(item.id)}
+                        isMiniCard={true}
+                    />
+                );
             }}
         />
     );

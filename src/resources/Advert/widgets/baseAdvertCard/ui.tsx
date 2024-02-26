@@ -16,6 +16,7 @@ export interface IAdvertCard extends IAdvertListItem {
     customFeature?: React.ReactNode;
     disableNumberButton?: boolean;
     isDraft: boolean;
+    isMiniCard: boolean;
 }
 
 const FALLBACK_IMAGE_SRC = '/sheep-icon.png';
@@ -34,7 +35,7 @@ const leftCol = {
         span: 24
     },
     big: {
-        className: 'sm:pr-4 xl:pb-0 pb-4',
+        className: 'sm:pr-4 xl:pb-0 ',
         flex: '1 1 150px'
     }
 };
@@ -73,10 +74,14 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     featureWrapperClass,
     disableNumberButton,
     isDraft,
-    user
+    advert_technical_information,
+    registration_number,
+    user,
+    isMiniCard
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
+
     const isTouch = isTouchDevice();
 
     const showNumberBtnHandler = (e: SyntheticEvent) => {
@@ -113,6 +118,8 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                         showLabels={showDetails}
                         fallbackImageSrc={FALLBACK_IMAGE_SRC}
                         imageStyle={{ borderRadius: 'var(--main-app-br)' }}
+                        flag={advert_legal_information ? advert_legal_information.flag : ''}
+                        isMiniCard={isDraft ? true : isMiniCard}
                     />
                 </Col>
                 <Col {...middleCol[size || 'big']}>
@@ -120,12 +127,21 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                         <Typography.Title level={3}>
                             <Link href={'advert/' + id}>{header}</Link>
                         </Typography.Title>
-                        <Typography.Title level={4} style={{ marginTop: 0 }}>
+                        <Typography.Title level={5} style={{ marginTop: 0 }}>
                             <Price locale={PRICE_LOCALE} options={NUMBER_FORMAT_OPTIONS} price={price} />
                         </Typography.Title>
+
+                        <Typography.Paragraph>
+                            {advert_legal_information && advert_legal_information.port_address.value}
+                        </Typography.Paragraph>
                         <div className='flex flex-col flex-auto'>
                             <Typography.Paragraph className={styles['sudno-AdvertCard-labels'] + ' flex items-center'}>
-                                <DetailsInfo size={size || 'big'} {...advert_legal_information} />
+                                <DetailsInfo
+                                    size={size || 'big'}
+                                    {...advert_legal_information}
+                                    registration_number={registration_number}
+                                    length={advert_technical_information && advert_technical_information.overall_length}
+                                />
                             </Typography.Paragraph>
                             <Typography.Paragraph className={styles['sudno-AdvertCard-description']}>
                                 {description}
@@ -141,7 +157,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                     <AddToFavoriteButton id={id} isFavorite={false} />
                                 </div>
                                 {disableNumberButton === false || (
-                                    <div className='flex flex-col gap-3 w-36 '>
+                                    <div className='flex flex-col gap-3 w-40'>
                                         {user && (
                                             <UserButton
                                                 className='ml-1'
@@ -193,18 +209,18 @@ const DetailsItem: React.FC<{
 const DetailsInfo: React.FC<
     IAdvertLegalInformation & {
         size: 'small' | 'big';
+        registration_number: string;
+        length: number;
     }
 > = (props) => {
     return (
         <div className={'flex flex-wrap justify-start items-center ' + (props.size === 'small' ? 'flex-col' : '')}>
+            <DetailsItem label='Название'>{props.name}</DetailsItem>
             <DetailsItem label='Тип'>{props.type}</DetailsItem>
-            <DetailsItem label='Класс'>{props.class_formula}</DetailsItem>
-            <DetailsItem label='Назначение'>{props.purpose}</DetailsItem>
-            <DetailsItem label='Тип эксплуатации'>{props.exploitation_type}</DetailsItem>
             <DetailsItem label='Год постройки'>{props.building_year}</DetailsItem>
-            <DetailsItem label='Флаг'>
-                <Flag country_code={props.flag} />
-            </DetailsItem>
+            <DetailsItem label='Класс'>{props.class_formula}</DetailsItem>
+            <DetailsItem label='Длина'>{props.length}</DetailsItem>
+            <DetailsItem label='Регистровый номер'>{props.imo_number}</DetailsItem>
         </div>
     );
 };
