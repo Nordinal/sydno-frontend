@@ -14,11 +14,12 @@ export const DateRangePickerFilter: React.FC<{
             <Typography.Text type='secondary'>{placeholder}</Typography.Text>
             <DatePicker.RangePicker
                 picker='year'
+                allowEmpty={[true, true]}
                 style={{ width: '100%' }}
                 value={[value[0] ? dayjs(value[0]) : null, value[1] ? dayjs(value[1]) : null]}
                 onChange={(value, formatValue) => {
-                    onChange(formatValue[0], keyProperties[0]);
-                    onChange(formatValue[1], keyProperties[1]);
+                    onChange(value?.[0] ? formatValue[0] : null, keyProperties[0]);
+                    onChange(value?.[1] ? formatValue[1] : null, keyProperties[1]);
                 }}
             />
         </div>

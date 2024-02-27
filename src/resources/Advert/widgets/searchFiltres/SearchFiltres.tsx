@@ -206,14 +206,6 @@ const TechnicalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigPro
             <Col xs={24} sm={6}>
                 <InputNumberRangeFilter
                     onChange={changeConfigProperty}
-                    value={[filterConfig['min_maximum_freeboard'], filterConfig['max_maximum_freeboard']]}
-                    keyProperties={['min_maximum_freeboard', 'max_maximum_freeboard']}
-                    placeholder='Максимальный надводный борт, м.'
-                />
-            </Col>
-            <Col xs={24} sm={6}>
-                <InputNumberRangeFilter
-                    onChange={changeConfigProperty}
                     value={[filterConfig['min_deadweight'], filterConfig['max_deadweight']]}
                     keyProperties={['min_deadweight', 'max_deadweight']}
                     placeholder='Дедвейт, т.'
@@ -254,8 +246,8 @@ const TechnicalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigPro
             <Col xs={24} sm={6}>
                 <SegmentedFilter
                     onChange={changeConfigProperty}
-                    value={filterConfig['seccond_bottom']}
-                    keyProperty={'seccond_bottom'}
+                    value={filterConfig['second_bottom']}
+                    keyProperty={'second_bottom'}
                     placeholder='Наличие второго дна'
                 />
             </Col>
@@ -265,14 +257,6 @@ const TechnicalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigPro
                     value={filterConfig['second_sides']}
                     keyProperty={'second_sides'}
                     placeholder='Наличие вторых бортов'
-                />
-            </Col>
-            <Col xs={24} sm={6}>
-                <SegmentedFilter
-                    onChange={changeConfigProperty}
-                    value={filterConfig['superstructures']}
-                    keyProperty={'superstructures'}
-                    placeholder='Наличие надстроек'
                 />
             </Col>
             <Col xs={24} sm={6}>
@@ -307,7 +291,7 @@ const LegalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigPropert
                     <CountriesSelector
                         value={filterConfig['flag'] || undefined}
                         style={{ width: '100%' }}
-                        placeholder='Выберать флаг'
+                        placeholder='Выберите флаг'
                         onChange={(value: string) => changeConfigProperty<string>(value, 'flag')}
                         allowClear={true}
                     />
@@ -342,16 +326,16 @@ const LegalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigPropert
             <Col xs={24} sm={6}>
                 <RegionSelectorFilter
                     onChange={changeConfigProperty}
-                    value={filterConfig['vessel_location_country']}
-                    keyProperty='vessel_location_country'
+                    value={filterConfig['vessel_location_city']}
+                    keyProperty='vessel_location_city'
                     placeholder='Местонахождение судна'
                 />
             </Col>
             <Col xs={24} sm={6}>
-                <RegionSelectorFilter
+                <InputTextFilter
                     onChange={changeConfigProperty}
-                    value={filterConfig['building_country']}
-                    keyProperty='building_country'
+                    value={filterConfig['building_place'] || ''}
+                    keyProperty={'building_place'}
                     placeholder='Место постройки'
                 />
             </Col>

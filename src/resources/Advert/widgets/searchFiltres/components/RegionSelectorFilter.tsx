@@ -15,6 +15,8 @@ export const RegionSelectorFilter: React.FC<{
             <RegionSelector
                 value={value ? { value } : undefined}
                 style={{ width: '100%' }}
+                placeholder={placeholder}
+                allowClear={true}
                 onChange={({ city }: { city: any }) => onChange<string>(city, keyProperty)}
             />
         </div>

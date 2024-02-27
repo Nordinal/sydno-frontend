@@ -78,7 +78,7 @@ export interface ILegalFilterOptions {
     /**
      * страна постройки
      */
-    building_country?: string | null;
+    building_place?: string | null;
 
     // порт приписки
     // страна
@@ -135,16 +135,6 @@ export interface ITechnicalFilterOptions {
      * Высота борта 74м
      */
     max_board_height?: number | null;
-
-    /**
-     * Максимальный надводный борт 0
-     */
-    min_maximum_freeboard?: number | null;
-
-    /**
-     * Максимальный надводный борт 47м
-     */
-    max_maximum_freeboard?: number | null;
 
     /**
      * Материал корпуса
@@ -249,7 +239,7 @@ export interface ITechnicalFilterOptions {
     /**
      * Второе дно
      */
-    seccond_bottom?: boolean | null;
+    second_bottom?: boolean | null;
 
     /**
      * Вторые борта
