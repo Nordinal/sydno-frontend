@@ -35,7 +35,11 @@ export const SegmentedFilter: React.FC<{
 
     return (
         <div>
-            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
+            <div className='truncate'>
+                <Typography.Text title={placeholder} type='secondary'>
+                    {placeholder}
+                </Typography.Text>
+            </div>
             <Segmented
                 value={convertValue(_value) as string}
                 options={options}

@@ -26,7 +26,11 @@ export const SelectorServiceFilter: React.FC<{
 
     return (
         <div>
-            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
+            <div className='truncate'>
+                <Typography.Text title={placeholder} type='secondary'>
+                    {placeholder}
+                </Typography.Text>
+            </div>
             <Select
                 value={value}
                 style={{ width: '100%' }}

@@ -10,7 +10,11 @@ export const InputNumberRangeFilter: React.FC<{
 }> = ({ value, keyProperties, onChange, placeholder }) => {
     return (
         <div>
-            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
+            <div className='truncate'>
+                <Typography.Text title={placeholder} type='secondary'>
+                    {placeholder}
+                </Typography.Text>
+            </div>
             <Space.Compact className='w-full'>
                 <InputNumber
                     style={{ width: '50%' }}

@@ -11,7 +11,11 @@ export const DateRangePickerFilter: React.FC<{
 }> = ({ value, keyProperties, onChange, placeholder }) => {
     return (
         <div className='w-full'>
-            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
+            <div className='truncate'>
+                <Typography.Text title={placeholder} type='secondary'>
+                    {placeholder}
+                </Typography.Text>
+            </div>
             <DatePicker.RangePicker
                 picker='year'
                 allowEmpty={[true, true]}

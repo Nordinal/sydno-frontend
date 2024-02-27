@@ -11,7 +11,11 @@ export const RegionSelectorFilter: React.FC<{
 }> = ({ value, keyProperty, onChange, placeholder }) => {
     return (
         <div>
-            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
+            <div className='truncate'>
+                <Typography.Text title={placeholder} type='secondary'>
+                    {placeholder}
+                </Typography.Text>
+            </div>
             <RegionSelector
                 value={value ? { value } : undefined}
                 style={{ width: '100%' }}

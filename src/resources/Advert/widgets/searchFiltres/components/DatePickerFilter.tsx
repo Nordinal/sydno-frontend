@@ -12,7 +12,11 @@ export const DatePickerFilter: React.FC<{
 }> = ({ value, keyProperty, onChange, placeholder, picker }) => {
     return (
         <div>
-            <Typography.Text type='secondary'>{placeholder}</Typography.Text>
+            <div className='truncate'>
+                <Typography.Text title={placeholder} type='secondary'>
+                    {placeholder}
+                </Typography.Text>
+            </div>
             <DatePicker
                 picker='year'
                 value={value ? dayjs(value) : undefined}
