@@ -21,9 +21,7 @@ export const InputNumberRangeFilter: React.FC<{
                     placeholder={'от'}
                     value={value[0]}
                     max={value[1] || undefined}
-                    onChange={(val) =>
-                        onChange(val, keyProperties[0])
-                    }
+                    onChange={(val) => onChange(val, keyProperties[0])}
                 />
                 <InputNumber
                     style={{ width: '50%' }}
