@@ -11,7 +11,7 @@ import { TFilterOptions } from 'Advert/widgets/searchFiltres/types';
 
 export const MainAdvertPage = () => {
     return (
-        <Suspense>
+        <Suspense fallback={'loading'}>
             <MainAdvertPageUI />
         </Suspense>
     );
@@ -76,7 +76,7 @@ export const MainAdvertPageUI = () => {
             <Col span={24}>
                 <BasicList
                     action='/api/alladverts'
-                    showTotalCount={true}
+                    showTotalCount
                     filters={getUrlQueryParams(searchParams) as any}
                     pagination={{
                         onChange: paginationChange

@@ -59,15 +59,26 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
         getData();
     }, [props.action, props.filters]);
 
+    const getListProps = (props: IBasicList<T>) => {
+        const listProps: Partial<IBasicList<T>> = {...props};
+        delete listProps.showTotalCount;
+        delete listProps.action;
+        return listProps;
+    }
+
+    const listProps = getListProps(props);
+
     return (
         <div>
-            {props.showTotalCount &&
-                <Typography.Title level={4}>
-                    Найдено {service?.total || 0} {getDeclination(service?.total || 0, 'объявление', 'объявления', 'объявлений')}
-                </Typography.Title>
+            {props.showTotalCount
+                ?
+                    <Typography.Title level={4}>
+                        Найдено {service?.total || 0} {getDeclination(service?.total || 0, 'объявление', 'объявления', 'объявлений')}
+                    </Typography.Title>
+                : null
             }
             <List
-                {...{ ...props, action: null }}
+                {...listProps}
                 loading={props.loading || loading}
                 pagination={
                     Number(service?.total) > 10 && {
