@@ -9,7 +9,6 @@ import { BasicList } from 'SydnoComponents/lists';
 import { BaseAdvertCard, IAdvertCard } from 'Advert/widgets';
 import dayjs from 'dayjs';
 import { IUserService } from 'Users/shared/types';
-import { UserButton } from 'Users/features/UserButton/UserButton';
 
 dayjs.locale('ru');
 

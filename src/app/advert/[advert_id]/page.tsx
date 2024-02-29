@@ -8,7 +8,7 @@ type Props = {
 };
 
 const getAdvert = async (id?: string | number) => {
-    if(!id) return;
+    if (!id) return;
     try {
         return await fetch(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/adverts/${id}`);
     } catch (e) {

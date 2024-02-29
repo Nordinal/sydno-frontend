@@ -60,23 +60,22 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
     }, [props.action, props.filters]);
 
     const getListProps = (props: IBasicList<T>) => {
-        const listProps: Partial<IBasicList<T>> = {...props};
+        const listProps: Partial<IBasicList<T>> = { ...props };
         delete listProps.showTotalCount;
         delete listProps.action;
         return listProps;
-    }
+    };
 
     const listProps = getListProps(props);
 
     return (
         <div>
-            {props.showTotalCount
-                ?
-                    <Typography.Title level={4}>
-                        Найдено {service?.total || 0} {getDeclination(service?.total || 0, 'объявление', 'объявления', 'объявлений')}
-                    </Typography.Title>
-                : null
-            }
+            {props.showTotalCount ? (
+                <Typography.Title level={4}>
+                    Найдено {service?.total || 0}{' '}
+                    {getDeclination(service?.total || 0, 'объявление', 'объявления', 'объявлений')}
+                </Typography.Title>
+            ) : null}
             <List
                 {...listProps}
                 loading={props.loading || loading}

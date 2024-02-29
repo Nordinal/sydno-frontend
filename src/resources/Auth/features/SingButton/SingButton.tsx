@@ -181,11 +181,7 @@ const SingInForm = ({
                 <Form.Item>
                     <div className='flex justify-between align-center'>
                         <div className='flex items-center'>
-                            <Checkbox
-                                className=''
-                                checked={remember}
-                                onClick={() => setRemember(!remember)}
-                            >
+                            <Checkbox className='' checked={remember} onClick={() => setRemember(!remember)}>
                                 Запомнить меня
                             </Checkbox>
                         </div>

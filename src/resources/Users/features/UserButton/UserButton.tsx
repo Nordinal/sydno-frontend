@@ -61,10 +61,7 @@ const UserButtonUi = ({ id, src, name, advertCount, className }: TUserButtonProp
 
     return (
         <div className={className || ''}>
-            <div
-                className={'flex ' + s['user-button__person']}
-                onClick={handleClick}
-            >
+            <div className={'flex ' + s['user-button__person']} onClick={handleClick}>
                 <div className='mr-2'>
                     <Avatar src={src} icon={<UserOutlined />} />
                 </div>

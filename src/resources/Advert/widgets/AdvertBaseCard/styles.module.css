@@ -1,7 +1,8 @@
 .sudno-AdvertCard {
     position: relative;
-    transition: 0.2s;
+    transition: box-shadow 0.2s;
     padding: 15px;
+    margin: 15px 0;
     border-radius: var(--main-app-br);
 }
 
@@ -12,14 +13,6 @@
 .sudno-AdvertCard:hover {
     box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
     cursor: pointer;
-}
-
-.sudno-AdvertCard-description {
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    color: rgba(0, 0, 0, 0.45) !important;
 }
 
 .sudno-AdvertCard-draft::after {

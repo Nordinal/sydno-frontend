@@ -25,7 +25,8 @@ export function CreateSaleAdvert({ id }: { id: number }) {
     useLayoutEffect(() => {
         if (id) {
             setLoading(true);
-            sydnoServiceJson.get<IInstanceCreateAd>(`/api/adverts/${id}/edit`)
+            sydnoServiceJson
+                .get<IInstanceCreateAd>(`/api/adverts/${id}/edit`)
                 .then((res) => {
                     setInstance(res.data);
                     setLoading(false);
@@ -39,7 +40,7 @@ export function CreateSaleAdvert({ id }: { id: number }) {
         };
     }, [id]);
 
-    if(id && loading) return <Result icon={<LoadingOutlined />} status='info' title='Загрузка...' />
+    if (id && loading) return <Result icon={<LoadingOutlined />} status='info' title='Загрузка...' />;
     return (
         <div>
             <Row>
