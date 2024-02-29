@@ -10,6 +10,7 @@ import { FavoriteButton } from '../../features/FavoriteButton/FavoriteButton';
 import { UserButton } from 'Users/features';
 import { PhoneButton } from 'Advert/features/PhoneButton/PhoneButton';
 import dayjs from 'dayjs';
+import { getCountryName } from 'SydnoComponents/selectors';
 
 dayjs.locale('ru');
 
@@ -45,6 +46,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     isDraft,
     advert_technical_information,
     registration_number,
+    in_favorites,
     user,
     isMiniCard,
     showUserInfo = true
@@ -89,7 +91,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                     />
                 </Col>
                 <Col xs={24} sm={showRightPanel ? 12 : 14}>
-                    <div className='flex flex-col justify-between h-full pl-2'>
+                    <div className='flex flex-col justify-between h-full pl-4'>
                         <div>
                             <Typography.Title level={3} style={{ marginBottom: 0 }}>
                                 <Link href={'advert/' + id}>{header}</Link>
@@ -128,7 +130,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                 </Col>
                 <Col xs={24} sm={1}>
                     <div>
-                        <FavoriteButton id={id} isFavorite={false} />
+                        <FavoriteButton id={id} isFavorite={in_favorites} />
                     </div>
                 </Col>
                 {showRightPanel && (
@@ -179,6 +181,7 @@ const DetailsInfo: React.FC<
         <div className={'flex flex-wrap justify-start items-center ' + (props.size === 'small' ? 'flex-col' : '')}>
             <DetailsItem label='Название'>{props.name}</DetailsItem>
             <DetailsItem label='Тип'>{props.type}</DetailsItem>
+            <DetailsItem label='Страна'>{getCountryName(props.flag as any)}</DetailsItem>
             <DetailsItem label='Год постройки'>{props.building_year}</DetailsItem>
             <DetailsItem label='Класс'>{props.class_formula}</DetailsItem>
             <DetailsItem label='Длина'>{props.length}</DetailsItem>

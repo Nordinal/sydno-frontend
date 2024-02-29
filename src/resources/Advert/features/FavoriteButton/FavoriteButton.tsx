@@ -27,8 +27,9 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavo
     );
     const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
     const [localFavorite, setLocalFavorite] = useState(isFavorite);
+    const [animated, setAnimated] = useState(false);
 
-    const onButtonClickHandler = (e: SyntheticEvent) => {
+    const clickHandler = (e: SyntheticEvent) => {
         e.stopPropagation();
 
         if (!auth) {
@@ -36,6 +37,7 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavo
             return;
         }
         if (!localFavorite) {
+            setAnimated(true);
             setLocalFavorite(!localFavorite);
             addToFavourite(id)
                 .then((res) => onChange?.(res))
@@ -43,6 +45,7 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavo
                     notification.error({ message: 'Ошибка', placement: 'bottomRight' });
                 });
         } else {
+            setAnimated(false);
             setLocalFavorite(!localFavorite);
             deleteFromFavourite(id)
                 .then((res) => onChange?.(!res))
@@ -55,17 +58,23 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavo
     return (
         <div
             title='Добавить в избранное'
-            onClick={onButtonClickHandler}
+            onClick={clickHandler}
             className={s['favorite-button__container'] + ' ' + className}
         >
             <StarFilled
-                className={localFavorite ? s['favorite-button__star_favorite'] : s['favorite-button__star_unfavorite']}
-            />
-            <StarFilled
                 className={
-                    localFavorite ? s['favorite-button__star_two_favorite'] : s['favorite-button__star_two_unfavorite']
+                    (localFavorite ? s['favorite-button__star_favorite'] : s['favorite-button__star_unfavorite']) + ' ' + 
+                    (animated ? s['favorite-button__star_animate'] : '')
                 }
             />
+            {animated
+                ? (
+                    <StarFilled
+                        className={s['favorite-button__star_two_animate']}
+                    />
+                )
+                : null
+            }
         </div>
     );
 };
