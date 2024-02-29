@@ -91,12 +91,20 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                 <Col xs={24} sm={showRightPanel ? 12 : 14}>
                     <div className='flex flex-col justify-between h-full pl-2'>
                         <div>
-                            <Typography.Title level={2} style={{ marginBottom: 0 }}>
+                            <Typography.Title level={3} style={{ marginBottom: 0 }}>
                                 <Link href={'advert/' + id}>{header}</Link>
                             </Typography.Title>
-                            <Typography.Title level={3} style={{ marginTop: 0 }}>
+                            <Typography.Title level={4} style={{ marginTop: 0 }}>
                                 <Price locale={PRICE_LOCALE} options={NUMBER_FORMAT_OPTIONS} price={price} />
                             </Typography.Title>
+                            <Typography.Paragraph>
+                                <DetailsInfo
+                                    size={size || 'big'}
+                                    {...advert_legal_information}
+                                    registration_number={registration_number}
+                                    length={advert_technical_information && advert_technical_information.overall_length}
+                                />
+                            </Typography.Paragraph>
                             <Typography.Paragraph
                                 ellipsis={{
                                     rows: 2,
@@ -108,14 +116,6 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                                 {description}
                             </Typography.Paragraph>
                         </div>
-                        <Typography.Paragraph>
-                            <DetailsInfo
-                                size={size || 'big'}
-                                {...advert_legal_information}
-                                registration_number={registration_number}
-                                length={advert_technical_information && advert_technical_information.overall_length}
-                            />
-                        </Typography.Paragraph>
                         <div className='flex flex-col'>
                             <Typography.Text type='secondary'>
                                 {advert_legal_information && advert_legal_information.port_address.value}
