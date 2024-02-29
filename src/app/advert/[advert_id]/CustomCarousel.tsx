@@ -49,7 +49,7 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
     };
 
     return (
-        <div>
+        <div className='cursor-pointer'>
             <Swiper
                 style={{ zIndex: '0' }}
                 modules={[Navigation, Pagination, Scrollbar, A11y, Controller, Keyboard]}

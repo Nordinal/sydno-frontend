@@ -74,11 +74,9 @@ export const MainAdvertPageUI = () => {
                 <div className='sydno-anchor' id='advert-list-anchor'></div>
             </Col>
             <Col span={24}>
-                <div className='sydno-anchor' id='advert-list-anchor'></div>
-            </Col>
-            <Col span={24}>
                 <BasicList
                     action='/api/alladverts'
+                    showTotalCount={true}
                     filters={getUrlQueryParams(searchParams) as any}
                     pagination={{
                         onChange: paginationChange

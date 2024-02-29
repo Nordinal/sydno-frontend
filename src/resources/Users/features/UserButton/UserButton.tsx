@@ -5,6 +5,7 @@ import { sydnoServiceJson } from 'SydnoService/service';
 import { IUserService } from 'Users/shared/types';
 import { useRouter } from 'next/navigation';
 import s from './_UserButton.module.css';
+import { getDeclination } from 'SydnoHelpers/commons';
 
 type TUserButton = {
     id?: number;
@@ -46,22 +47,6 @@ export const UserButton = ({ id, src, name, advertCount, className }: TUserButto
     );
 };
 
-const getDeclination = (number: number, one: string, two: string, five: string) => {
-    let n = Math.abs(number);
-    n %= 100;
-    if (n >= 5 && n <= 20) {
-        return five;
-    }
-    n %= 10;
-    if (n === 1) {
-        return one;
-    }
-    if (n >= 2 && n <= 4) {
-        return two;
-    }
-    return five;
-};
-
 const UserButtonUi = ({ id, src, name, advertCount, className }: TUserButtonProps) => {
     const router = useRouter();
 
@@ -75,22 +60,22 @@ const UserButtonUi = ({ id, src, name, advertCount, className }: TUserButtonProp
     if (typeof name !== 'string') return null;
 
     return (
-        <div className={'inline-block' + (` ${className}` || '')}>
+        <div className={className || ''}>
             <div
-                className={`flex ${name.length >= 26 ? `items-start` : `items-center`} ` + s['user-button__person']}
+                className={'flex ' + s['user-button__person']}
                 onClick={handleClick}
             >
                 <div className='mr-2'>
                     <Avatar src={src} icon={<UserOutlined />} />
                 </div>
-                <div className={`${name.length > 100 ? 'truncate' : ''}`}>
+                <div className='flex items-center'>
                     <Typography.Text className={s['user-button__name']} title={name}>
                         {name}
                     </Typography.Text>
                 </div>
             </div>
             {advertCount && (
-                <div className='mt-2'>
+                <div className='mt-2 truncate'>
                     <Typography.Text>
                         {advertCount} {advertCountLocale}
                     </Typography.Text>

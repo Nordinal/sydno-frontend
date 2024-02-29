@@ -1,11 +1,12 @@
-import { List, ListProps, notification } from 'antd';
+import { List, ListProps, notification, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { convertObjectToPathname } from 'SydnoHelpers/commons';
+import { convertObjectToPathname, getDeclination } from 'SydnoHelpers/commons';
 import { sydnoServiceJson } from 'SydnoService/service';
 
 export interface IBasicList<T> extends ListProps<T> {
     action: string;
     filters?: IFilters;
+    showTotalCount?: boolean;
 }
 
 export type IFilters = {
@@ -59,22 +60,30 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
     }, [props.action, props.filters]);
 
     return (
-        <List
-            {...{ ...props, action: null }}
-            loading={props.loading || loading}
-            pagination={
-                Number(service?.total) > 10 && {
-                    total: service?.total,
-                    ...(props.pagination || {}),
-                    defaultCurrent: props.filters?.page,
-                    onChange: (page, pageSize) => {
-                        if (props.pagination instanceof Object && props.pagination.onChange)
-                            props.pagination.onChange(page, pageSize);
-                        else getData(page);
+        <div>
+            {props.showTotalCount &&
+                <Typography.Title level={4}>
+                    Найдено {service?.total || 0} {getDeclination(service?.total || 0, 'объявление', 'объявления', 'объявлений')}
+                </Typography.Title>
+            }
+            <List
+                {...{ ...props, action: null }}
+                loading={props.loading || loading}
+                pagination={
+                    Number(service?.total) > 10 && {
+                        total: service?.total,
+                        ...(props.pagination || {}),
+                        current: props.filters?.page || 1,
+                        showSizeChanger: false,
+                        onChange: (page, ...args) => {
+                            if (props.pagination instanceof Object && props.pagination.onChange)
+                                props.pagination.onChange.apply(this, [page, ...args]);
+                            else getData(page);
+                        }
                     }
                 }
-            }
-            dataSource={service?.data}
-        />
+                dataSource={service?.data}
+            />
+        </div>
     );
 };
