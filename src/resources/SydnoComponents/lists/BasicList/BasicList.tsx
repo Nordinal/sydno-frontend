@@ -33,6 +33,7 @@ interface IBasicListService<T> {
 export const BasicList = <T,>(props: IBasicList<T>) => {
     const [loading, setLoading] = useState(false);
     const [service, setService] = useState<IBasicListService<T>>();
+    const [localPage, setLocalPage] = useState<number>(props.filters?.page || 1);
 
     const getData = async (page?: number) => {
         setLoading(true);
@@ -56,6 +57,7 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
     };
 
     useEffect(() => {
+        setLocalPage(props.filters?.page || 1);
         getData();
     }, [props.action, props.filters]);
 
@@ -83,12 +85,14 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
                     Number(service?.total) > 10 && {
                         total: service?.total,
                         ...(props.pagination || {}),
-                        current: props.filters?.page || 1,
+                        current: localPage,
                         showSizeChanger: false,
                         onChange: (page, ...args) => {
                             if (props.pagination instanceof Object && props.pagination.onChange)
                                 props.pagination.onChange.apply(this, [page, ...args]);
                             else getData(page);
+
+                            setLocalPage(page);
                         }
                     }
                 }
