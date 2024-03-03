@@ -20,7 +20,10 @@ export const ProfileButton = () => {
         },
         {
             key: '2',
-            label: 'Избранное'
+            label: 'Избранное',
+            onClick: () => {
+                router.push('/profile/favorites');
+            }
         },
         {
             type: 'divider'
