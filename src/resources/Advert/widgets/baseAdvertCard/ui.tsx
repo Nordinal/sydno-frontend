@@ -77,7 +77,8 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     advert_technical_information,
     registration_number,
     user,
-    isMiniCard
+    isMiniCard,
+    created_at
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -127,12 +128,15 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                         <Typography.Title level={3}>
                             <Link href={'advert/' + id}>{header}</Link>
                         </Typography.Title>
-                        <Typography.Title level={5} style={{ marginTop: 0 }}>
+                        <Typography.Title level={4} style={{ marginTop: '-3px' }}>
                             <Price locale={PRICE_LOCALE} options={NUMBER_FORMAT_OPTIONS} price={price} />
                         </Typography.Title>
 
                         <Typography.Paragraph>
-                            {advert_legal_information && advert_legal_information.port_address.value}
+                            <span style={{ display: 'block' }}>
+                                {advert_legal_information && advert_legal_information.port_address.value}
+                            </span>
+                            Дата размещения: {created_at.split('T')[0].split('-').join('.')}
                         </Typography.Paragraph>
                         <div className='flex flex-col flex-auto'>
                             <Typography.Paragraph className={styles['sudno-AdvertCard-labels'] + ' flex items-center'}>
@@ -151,39 +155,36 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                 </Col>
                 <Col {...rightCol[size || 'big']} className='flex flex-col items-end h-74  '>
                     <div className={featureWrapperClass || 'flex flex-col items-end  h-full justify-between '}>
-                        {
-                            <>
-                                <div>
-                                    <AddToFavoriteButton id={id} isFavorite={false} />
-                                </div>
-                                {disableNumberButton === false || (
-                                    <div className='flex flex-col gap-3 w-40'>
-                                        {user && (
-                                            <UserButton
-                                                className='ml-1'
-                                                id={user.id}
-                                                src={user.avatar}
-                                                name={user.name}
-                                                advertCount={user.adverts_count}
-                                            />
-                                        )}
-                                        {showNumber ? (
-                                            phone_number
-                                        ) : (
-                                            <Button
-                                                style={{
-                                                    maxWidth: '100%',
-                                                    height: 'auto'
-                                                }}
-                                                onClick={showNumberBtnHandler}
-                                            >
-                                                Показать телефон
-                                            </Button>
-                                        )}
-                                    </div>
+                        <div className={'flex  items-start justify-start'}>
+                            <AddToFavoriteButton id={id} isFavorite={false} />
+                            {user && (
+                                <UserButton
+                                    className='ml-1'
+                                    id={user.id}
+                                    src={user.avatar}
+                                    name={user.name}
+                                    advertCount={user.adverts_count}
+                                />
+                            )}
+                        </div>
+                        {disableNumberButton === false || (
+                            <div className='flex flex-col gap-3 w-40'>
+                                {showNumber ? (
+                                    phone_number
+                                ) : (
+                                    <Button
+                                        style={{
+                                            maxWidth: '100%',
+                                            height: 'auto'
+                                        }}
+                                        onClick={showNumberBtnHandler}
+                                    >
+                                        Показать телефон
+                                    </Button>
                                 )}
-                            </>
-                        }
+                            </div>
+                        )}
+
                         {customFeature}
                     </div>
                 </Col>

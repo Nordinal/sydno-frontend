@@ -1,0 +1,12 @@
+.starDefault,
+.starFilled {
+    transition: color 0.15s ease-in;
+}
+
+.starDefault:hover {
+    color: #40a9ff !important;
+}
+
+.starFilled:hover {
+    color: #73baf5 !important;
+}

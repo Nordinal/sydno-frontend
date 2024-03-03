@@ -37,7 +37,7 @@
     flex-direction: column;
 }
 .other-flag {
-    width: 40px;
+    height: 25px;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -45,7 +45,7 @@
 
 @media screen and (max-width: 1150px) {
     .other-flag {
-        width: 30px;
+        height: 20px;
     }
     .other-sell-rent {
         font-size: 12px;
@@ -62,13 +62,12 @@
         margin-bottom: 10px;
     }
     .other-flag {
-        width: 60px;
+        height: 35px;
     }
 }
 @media screen and (max-width: 500px) {
     .other-flag {
-        width: 20%;
-        width: 40px;
+        height: 25px;
     }
     .other-sell-rent {
         font-size: 14px;

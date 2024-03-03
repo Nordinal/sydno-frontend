@@ -25,13 +25,7 @@ export const OtherAdvert: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef 
             <Link href={String(advert.id)}>
                 <div className='image-block'>
                     <img alt={advert.header} src={advert.images[0]} />
-                    <img
-                        className='other-flag'
-                        alt={`Флаг ${flagData}`}
-                        width={30}
-                        height={20}
-                        src={`/flags/${flagCode}.svg`}
-                    />
+                    <img className='other-flag' alt={`Флаг ${flagData}`} src={`/flags/${flagCode}.svg`} />
                     <span className='other-sell-rent'>продажа</span>
                 </div>
             </Link>

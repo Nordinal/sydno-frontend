@@ -4,7 +4,8 @@ import { useAdvert } from '../../entities/advert/model';
 import { useShallow } from 'zustand/react/shallow';
 import { useUser } from 'Auth/entities';
 import { notification } from 'antd';
-import { HeartTwoTone, StarTwoTone } from '@ant-design/icons';
+import { HeartTwoTone, StarFilled, StarOutlined, StarTwoTone } from '@ant-design/icons';
+import s from './styles.module.css';
 
 export interface IAddToFavoriteButtonProps {
     id: string | number;
@@ -69,7 +70,15 @@ export const AddToFavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
 
     return (
         <div onClick={onButtonClickHandler} className={padding ? `p-${padding}` : 'p-2'}>
-            <StarTwoTone twoToneColor={localFavorite ? '' : '#d9d9d9'} style={{ fontSize: fontSize || '25px' }} />
+            <StarTwoTone
+                twoToneColor={localFavorite ? '' : '#d9d9d9'}
+                style={{ fontSize: fontSize || '25px', color: '#34a8ff' }}
+            />
+            {/* {localFavorite ? (
+                <StarFilled style={{ fontSize: '25px', color: '#34a8ff' }} className={s.starFilled} />
+            ) : (
+                <StarOutlined style={{ fontSize: '25px', color: '#d9d9d9' }} className={s.starDefault} />
+            )} */}
         </div>
     );
 };

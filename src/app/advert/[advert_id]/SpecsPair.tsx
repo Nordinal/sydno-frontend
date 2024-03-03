@@ -25,7 +25,6 @@ export const SpecsPair: React.FC<DetailsPairProps | null> = (props) => {
                     <Typography.Text
                         style={{
                             fontSize: props.column === 1 ? '14.5px' : '16px',
-                            // fontSize: '16px',
                             wordWrap: 'break-word'
                         }}
                         strong

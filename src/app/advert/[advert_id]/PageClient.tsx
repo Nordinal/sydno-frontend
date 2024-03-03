@@ -45,6 +45,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
             deleteFromFavourite: state.deleteFromFavourite
         }))
     );
+    console.log(advertData);
     const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
     const [isLoading, setIsLoading] = useState(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
