@@ -65,7 +65,7 @@ export interface IAdvertListItem {
     id: number;
     user_id: number;
     updated_at: string;
-    in_favorites: boolean
+    in_favorites: boolean;
     created_at: string;
     header: string;
     price: number;

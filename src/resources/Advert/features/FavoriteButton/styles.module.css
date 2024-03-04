@@ -29,7 +29,7 @@
 
 .favorite-button__star_animate svg {
     animation-name: add_favorite;
-    animation-duration: .5s;
+    animation-duration: 0.5s;
 }
 
 @keyframes add_favorite {

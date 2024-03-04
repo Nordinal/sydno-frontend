@@ -63,18 +63,12 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavo
         >
             <StarFilled
                 className={
-                    (localFavorite ? s['favorite-button__star_favorite'] : s['favorite-button__star_unfavorite']) + ' ' + 
+                    (localFavorite ? s['favorite-button__star_favorite'] : s['favorite-button__star_unfavorite']) +
+                    ' ' +
                     (animated ? s['favorite-button__star_animate'] : '')
                 }
             />
-            {animated
-                ? (
-                    <StarFilled
-                        className={s['favorite-button__star_two_animate']}
-                    />
-                )
-                : null
-            }
+            {animated ? <StarFilled className={s['favorite-button__star_two_animate']} /> : null}
         </div>
     );
 };

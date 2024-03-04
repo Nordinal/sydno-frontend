@@ -9,13 +9,13 @@ type Props = {
 };
 
 const getAdvert = async (id?: string | number) => {
-    if(!id) return;
+    if (!id) return;
     const res = await fetchDataNext(`/api/adverts/${id}`);
     return res;
 };
 
 const getAdvertMetadata = async (id?: string | number) => {
-    if(!id) return;
+    if (!id) return;
     const res = await fetchDataNext(`/api/adverts/${id}/metadata`);
     return res;
 };
