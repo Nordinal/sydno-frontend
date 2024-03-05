@@ -88,7 +88,7 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
                             </Button>
                         </div>
                     </Col>
-                    <Col xs={24} sm={{offset: 1, span: 19}}>
+                    <Col xs={24} sm={{ offset: 1, span: 19 }}>
                         {children}
                     </Col>
                 </Row>

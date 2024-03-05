@@ -28,7 +28,9 @@ export const SydnoLayout = ({ children }: { children: React.ReactNode }) => {
             <StaticContext.Provider value={{ modal }}>
                 <Layout style={{ background: 'white', minHeight: '100vh' }}>
                     <Header />
-                    <Layout.Content className={s['sydno-container']}>{children}</Layout.Content>
+                    <Layout.Content style={{ position: 'relative' }} className={s['sydno-container']}>
+                        {children}
+                    </Layout.Content>
                     <Footer />
                 </Layout>
                 {contextHolder}

@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import AdvertPage from './PageClient';
 import { IReceivedAdvert } from './IAdvertListItemReady';
+import { fetchDataNext } from 'SydnoService/serviceNext';
 
 type Props = {
     params: { advert_id: string };
@@ -9,15 +10,18 @@ type Props = {
 
 const getAdvert = async (id?: string | number) => {
     if (!id) return;
-    try {
-        return await fetch(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/adverts/${id}`);
-    } catch (e) {
-        return;
-    }
+    const res = await fetchDataNext(`/api/adverts/${id}`);
+    return res;
+};
+
+const getAdvertMetadata = async (id?: string | number) => {
+    if (!id) return;
+    const res = await fetchDataNext(`/api/adverts/${id}/metadata`);
+    return res;
 };
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-    const advert = await getAdvert(params.advert_id);
+    const advert = await getAdvertMetadata(params.advert_id);
     const advertData: IReceivedAdvert = await advert?.json();
     console.log(advertData);
     if (advert?.ok) {
