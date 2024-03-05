@@ -1,1 +1,1 @@
-export { BaseAdvertCard, type IAdvertCard } from './widgets/baseAdvertCard/ui';
+export { BaseAdvertCard, type IAdvertCard } from './widgets/AdvertBaseCard/AdvertBaseCard';

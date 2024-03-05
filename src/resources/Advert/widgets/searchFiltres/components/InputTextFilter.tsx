@@ -18,7 +18,7 @@ export const InputTextFilter: React.FC<{
             <Input
                 placeholder={placeholder}
                 value={value || undefined}
-                onChange={(event) => onChange(event.target.value, keyProperty)}
+                onChange={(event) => onChange(event.target.value || null, keyProperty)}
             />
         </div>
     );

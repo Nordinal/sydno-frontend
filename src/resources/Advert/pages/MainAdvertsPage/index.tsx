@@ -11,7 +11,7 @@ import { TFilterOptions } from 'Advert/widgets/searchFiltres/types';
 
 export const MainAdvertPage = () => {
     return (
-        <Suspense>
+        <Suspense fallback={'loading'}>
             <MainAdvertPageUI />
         </Suspense>
     );
@@ -74,11 +74,9 @@ export const MainAdvertPageUI = () => {
                 <div className='sydno-anchor' id='advert-list-anchor'></div>
             </Col>
             <Col span={24}>
-                <div className='sydno-anchor' id='advert-list-anchor'></div>
-            </Col>
-            <Col span={24}>
                 <BasicList
                     action='/api/alladverts'
+                    showTotalCount
                     filters={getUrlQueryParams(searchParams) as any}
                     pagination={{
                         onChange: paginationChange

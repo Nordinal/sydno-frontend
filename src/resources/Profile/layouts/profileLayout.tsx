@@ -35,8 +35,8 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
         <AuthWrapper>
             <div className='my-8'>
                 <Row>
-                    <Col span={6}>
-                        <div className='mb-4 flex align-center'>
+                    <Col xs={24} sm={4}>
+                        <div className='mb-2 flex align-center'>
                             <div className='mr-2'>
                                 <Avatar src={avatar} icon={<UserOutlined />} />
                             </div>
@@ -44,8 +44,6 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
                                 <Typography.Title level={4}>{name}</Typography.Title>
                             </div>
                         </div>
-
-                        <Divider style={{ margin: '1rem 0' }} />
 
                         <div className='flex flex-col'>
                             <Link href={'/profile'}>
@@ -57,9 +55,9 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
                                     Мои объявления
                                 </Button>
                             </Link>
-                            <Link href={'/profile/favorite'}>
+                            <Link href={'/profile/favorites'}>
                                 <Button
-                                    danger={pathname === '/profile/favorite'}
+                                    danger={pathname === '/profile/favorites'}
                                     type='link'
                                     style={{ textAlign: 'start', paddingLeft: 0 }}
                                 >
@@ -84,13 +82,13 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
 
                         <Divider style={{ margin: '8px 0' }} />
 
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col mb-8'>
                             <Button onClick={openExitModal} type='link' style={{ textAlign: 'start', paddingLeft: 0 }}>
                                 Выйти
                             </Button>
                         </div>
                     </Col>
-                    <Col offset={1} span={17}>
+                    <Col xs={24} sm={{offset: 1, span: 19}}>
                         {children}
                     </Col>
                 </Row>

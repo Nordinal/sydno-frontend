@@ -1,11 +1,12 @@
-import { List, ListProps, notification } from 'antd';
+import { List, ListProps, notification, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { convertObjectToPathname } from 'SydnoHelpers/commons';
+import { convertObjectToPathname, getDeclination } from 'SydnoHelpers/commons';
 import { sydnoServiceJson } from 'SydnoService/service';
 
 export interface IBasicList<T> extends ListProps<T> {
     action: string;
     filters?: IFilters;
+    showTotalCount?: boolean;
 }
 
 export type IFilters = {
@@ -32,6 +33,7 @@ interface IBasicListService<T> {
 export const BasicList = <T,>(props: IBasicList<T>) => {
     const [loading, setLoading] = useState(false);
     const [service, setService] = useState<IBasicListService<T>>();
+    const [localPage, setLocalPage] = useState<number>(props.filters?.page || 1);
 
     const getData = async (page?: number) => {
         setLoading(true);
@@ -55,26 +57,47 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
     };
 
     useEffect(() => {
+        setLocalPage(props.filters?.page || 1);
         getData();
     }, [props.action, props.filters]);
 
+    const getListProps = (props: IBasicList<T>) => {
+        const listProps: Partial<IBasicList<T>> = { ...props };
+        delete listProps.showTotalCount;
+        delete listProps.action;
+        return listProps;
+    };
+
+    const listProps = getListProps(props);
+
     return (
-        <List
-            {...{ ...props, action: null }}
-            loading={props.loading || loading}
-            pagination={
-                Number(service?.total) > 10 && {
-                    total: service?.total,
-                    ...(props.pagination || {}),
-                    defaultCurrent: props.filters?.page,
-                    onChange: (page, pageSize) => {
-                        if (props.pagination instanceof Object && props.pagination.onChange)
-                            props.pagination.onChange(page, pageSize);
-                        else getData(page);
+        <div>
+            {props.showTotalCount ? (
+                <Typography.Title level={4}>
+                    Найдено {service?.total || 0}{' '}
+                    {getDeclination(service?.total || 0, 'объявление', 'объявления', 'объявлений')}
+                </Typography.Title>
+            ) : null}
+            <List
+                {...listProps}
+                loading={props.loading || loading}
+                pagination={
+                    Number(service?.total) > 10 && {
+                        total: service?.total,
+                        ...(props.pagination || {}),
+                        current: localPage,
+                        showSizeChanger: false,
+                        onChange: (page, ...args) => {
+                            if (props.pagination instanceof Object && props.pagination.onChange)
+                                props.pagination.onChange.apply(this, [page, ...args]);
+                            else getData(page);
+
+                            setLocalPage(page);
+                        }
                     }
                 }
-            }
-            dataSource={service?.data}
-        />
+                dataSource={service?.data}
+            />
+        </div>
     );
 };

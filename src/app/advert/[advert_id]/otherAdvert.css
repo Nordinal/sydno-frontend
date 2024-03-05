@@ -8,11 +8,12 @@
 .other-sell-rent {
     color: black;
     background-color: rgb(255, 255, 255);
-    padding: 2px 15px;
+    padding: 3px 15px;
     border-radius: 2rem;
     position: absolute;
     top: 10px;
     left: 10px;
+    font-size: 14px;
     font-weight: 500;
 }
 .other-info-block {

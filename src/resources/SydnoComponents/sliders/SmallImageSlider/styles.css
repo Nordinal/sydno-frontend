@@ -1,6 +1,7 @@
 .sudno-SmallImageSlider {
     width: 100%;
-    height: 270px;
+    height: 250px;
+
     position: relative;
     overflow: hidden;
 }

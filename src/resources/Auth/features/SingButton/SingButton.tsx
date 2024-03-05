@@ -151,13 +151,13 @@ const SingInForm = ({
                     ]}
                 >
                     <Input
-                        readOnly
+                        // readOnly
                         name='email'
                         placeholder='Электронная почта'
                         spellCheck='false'
                         autoCorrect='off'
                         autoComplete='off'
-                        onFocus={(e) => e.currentTarget.removeAttribute('readonly')}
+                        // onFocus={(e) => e.currentTarget.removeAttribute('readonly')}
                     />
                 </Form.Item>
 
@@ -168,25 +168,23 @@ const SingInForm = ({
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <Input.Password
-                        readOnly
+                        // readOnly
                         name='pass'
                         placeholder='Пароль'
                         spellCheck='false'
                         autoCorrect='off'
                         autoComplete='false'
-                        onFocus={(e) => e.currentTarget.removeAttribute('readonly')}
+                        // onFocus={(e) => e.currentTarget.removeAttribute('readonly')}
                     />
                 </Form.Item>
 
                 <Form.Item>
                     <div className='flex justify-between align-center'>
-                        <Checkbox
-                            className='flex items-center'
-                            checked={remember}
-                            onClick={() => setRemember(!remember)}
-                        >
-                            Запомнить меня
-                        </Checkbox>
+                        <div className='flex items-center'>
+                            <Checkbox className='' checked={remember} onClick={() => setRemember(!remember)}>
+                                Запомнить меня
+                            </Checkbox>
+                        </div>
                         <Button type='link' onClick={() => onToggleForm('forgotpass')}>
                             Забыли пароль?
                         </Button>

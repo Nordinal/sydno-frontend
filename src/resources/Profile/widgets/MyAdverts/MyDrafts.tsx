@@ -21,7 +21,7 @@ export const MyDrafts = () => {
                         key={item.id}
                         {...item}
                         isDraft={true}
-                        disableNumberButton={true}
+                        showUserInfo={false}
                         onClick={() => continueEditing(item.id)}
                     />
                 );

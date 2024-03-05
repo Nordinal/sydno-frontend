@@ -1,5 +1,5 @@
 'use client';
-import { Button, Col, Row, Steps, Typography } from 'antd';
+import { Button, Col, Result, Row, Steps, Typography } from 'antd';
 import { useContext, useLayoutEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
@@ -16,18 +16,31 @@ import {
 } from '../entitites/createAdvert/model';
 import { StaticContext } from 'SydnoHelpers/contexts';
 import { sydnoServiceJson } from 'SydnoService/service';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export function CreateSaleAdvert({ id }: { id: number }) {
     const { setInstance } = useCreateSaleAdvert(useShallow((state) => ({ setInstance: state.setInstance })));
+    const [loading, setLoading] = useState<boolean>(false);
 
     useLayoutEffect(() => {
         if (id) {
-            sydnoServiceJson.get<IInstanceCreateAd>(`/api/adverts/${id}/edit`).then((res) => {
-                setInstance(res.data);
-            });
+            setLoading(true);
+            sydnoServiceJson
+                .get<IInstanceCreateAd>(`/api/adverts/${id}/edit`)
+                .then((res) => {
+                    setInstance(res.data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    setLoading(false);
+                });
         }
+        return () => {
+            setInstance({});
+        };
     }, [id]);
 
+    if (id && loading) return <Result icon={<LoadingOutlined />} status='info' title='Загрузка...' />;
     return (
         <div>
             <Row>
