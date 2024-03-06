@@ -12,13 +12,20 @@ export interface IAddToFavoriteButtonProps {
     isFavorite?: boolean;
     onChange?: (isFavorite: boolean) => void;
     className?: string;
+    size?: 'default' | 'large'
 }
 
 /**
  * Фича для добавления/удаления обьявления из избранного
  * @returns
  */
-export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavorite, onChange, className }) => {
+export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
+    id,
+    isFavorite,
+    onChange,
+    className,
+    size = 'default'
+}) => {
     const { addToFavourite, deleteFromFavourite } = useAdvert(
         useShallow((state) => ({
             addToFavourite: state.addToFavourite,
@@ -54,12 +61,35 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({ id, isFavo
                 });
         }
     };
+    
+    const getSizeStyled = (size: 'default' | 'large'): {width: string, height: string, fontSize: string} => {
+        switch(size) {
+            case 'large':
+                const largeSize = '52px';
+                return ({
+                    width: largeSize,
+                    height: largeSize,
+                    fontSize: largeSize
+                })
+            case 'default':
+            default:
+                const defaultSize = '32px';
+                return ({
+                    width: defaultSize,
+                    height: defaultSize,
+                    fontSize: defaultSize
+                })
+        }
+    }
+
+    const sizeStyled = getSizeStyled(size);
 
     return (
         <div
             title='Добавить в избранное'
             onClick={clickHandler}
-            className={s['favorite-button__container'] + ' ' + className}
+            style={sizeStyled}
+            className={s['favorite-button__container'] + ' ' + (className || '')}
         >
             <StarFilled
                 className={

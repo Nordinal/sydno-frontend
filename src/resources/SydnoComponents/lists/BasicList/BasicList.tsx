@@ -2,6 +2,7 @@ import { List, ListProps, notification, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { convertObjectToPathname, getDeclination } from 'SydnoHelpers/commons';
 import { sydnoServiceJson } from 'SydnoService/service';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export interface IBasicList<T> extends ListProps<T> {
     action: string;
@@ -32,7 +33,7 @@ interface IBasicListService<T> {
 
 export const BasicList = <T,>(props: IBasicList<T>) => {
     const [loading, setLoading] = useState(false);
-    const [service, setService] = useState<IBasicListService<T>>();
+    const [service, setService] = useState<IBasicListService<T> | null>();
     const [localPage, setLocalPage] = useState<number>(props.filters?.page || 1);
 
     const getData = async (page?: number) => {
@@ -47,13 +48,15 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
                 props.action + '?' + convertObjectToPathname(filtersObj)
             );
             setService(result.data);
+            setLoading(false);
         } catch (e) {
             notification.error({
                 message: 'Ошибка загрузки списка',
                 placement: 'bottomRight'
             });
+            setService(null);
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     useEffect(() => {
@@ -70,6 +73,7 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
 
     const listProps = getListProps(props);
 
+    if(typeof service === 'undefined') return null;
     return (
         <div>
             {props.showTotalCount ? (
@@ -80,7 +84,10 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
             ) : null}
             <List
                 {...listProps}
-                loading={props.loading || loading}
+                loading={(props.loading || loading) && {
+                    indicator: <LoadingOutlined />,
+                    delay: 500,
+                }}
                 pagination={
                     Number(service?.total) > 10 && {
                         total: service?.total,
