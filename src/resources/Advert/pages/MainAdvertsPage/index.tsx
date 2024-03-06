@@ -11,7 +11,7 @@ import { TFilterOptions } from 'Advert/widgets/searchFiltres/types';
 
 export const MainAdvertPage = () => {
     return (
-        <Suspense fallback={'loading'}>
+        <Suspense>
             <MainAdvertPageUI />
         </Suspense>
     );
@@ -25,10 +25,7 @@ export const MainAdvertPageUI = () => {
     const searchParams = useSearchParams();
 
     const scrollToAnchor = () => {
-        // делаем искусственную задержку, чтобы сначала данны грузились, а потом скролл
-        setTimeout(() => {
-            smoothScrollToAnchor('advert-list-anchor');
-        }, 500);
+        smoothScrollToAnchor('advert-list-anchor');
     };
 
     const changeUrlByOptions = (filterParams: object) => {
