@@ -23,7 +23,6 @@ const getAdvertMetadata = async (id?: string | number) => {
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
     const advert = await getAdvertMetadata(params.advert_id);
     const advertData: IReceivedAdvert = await advert?.json();
-    console.log(advertData);
     if (advert?.ok) {
         return {
             title: advertData.header,
@@ -39,10 +38,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export default async function Page({ params }: Props) {
     const advert = await getAdvert(params.advert_id);
     const advertData: IReceivedAdvert = await advert?.json();
-    console.log(params);
-    console.log(advertData);
     if (advert?.ok) {
-        console.log(advertData);
         return <AdvertPage advert={advertData} />;
     } else {
         return <AdvertPage error={advertData || null} />;

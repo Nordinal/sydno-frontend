@@ -36,8 +36,14 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFav
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     const [open, setOpen] = useState(false);
     const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(null);
+    const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isLocalFavorite);
+
     const handleCancel = () => {
         setOpen(false);
+    };
+
+    const handleFavoriteButtonClick = () => {
+        setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     };
 
     return (
@@ -57,9 +63,13 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFav
                     enabled: true
                 }}
             >
-                <div>
-                    <FavoriteButton id={id} isFavorite={isLocalFavorite} size='large' className='fav-button' />
-                </div>
+                <FavoriteButton
+                    id={id}
+                    isFavorite={isFavorite}
+                    size='large'
+                    className='fav-button'
+                    onChange={handleFavoriteButtonClick}
+                />
 
                 {slides.map((slide, index) => (
                     <SwiperSlide key={index}>
@@ -91,9 +101,10 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFav
                         >
                             <FavoriteButton
                                 id={id}
-                                isFavorite={isLocalFavorite}
+                                isFavorite={isFavorite}
                                 size='large'
                                 className={`fav-button-modal`}
+                                onChange={handleFavoriteButtonClick}
                             />
                             <div className='slider'>
                                 {slides.map((slide, index) => (

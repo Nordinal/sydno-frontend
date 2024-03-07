@@ -1,12 +1,12 @@
 'use client';
 import { useAdvert } from 'Advert/entities';
-import './otherAdverts.css';
+import './OtherAdverts.css';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect, useRef, useState } from 'react';
 import { IReceivedAdvert } from './IAdvertListItemReady';
 import { Button, Col, Spin, Typography } from 'antd';
 import { SmallAdvertCard } from 'Advert/widgets/SmallAdvertCard/SmallAdvertCard';
-import { sydnoServiceFormData } from 'SydnoService/service';
+import { sydnoServiceFormData, sydnoServiceJson } from 'SydnoService/service';
 
 interface OtherAdvertsProps {
     userId: string | number;
@@ -44,11 +44,10 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ userId, advertId }) 
         const fetchNextPageData = async () => {
             try {
                 if (curruntPage > 1) {
-                    // FIXME: избавиться от localhost
-                    const nextPageUrl = `http://localhost/api/otheruseradverts?page=${curruntPage}&user_id=${Number(
+                    const nextPageUrl = `/api/otheruseradverts?page=${curruntPage}&user_id=${Number(
                         userId
                     )}&advertId=${Number(advertId)}`;
-                    const response = await sydnoServiceFormData.get(nextPageUrl);
+                    const response = await sydnoServiceJson.get(nextPageUrl);
                     const nextPageData = response.data.data;
                     const advertsTo = response.data.to;
                     const advertsTotal = response.data.total;

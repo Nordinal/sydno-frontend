@@ -52,8 +52,6 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({
                 <img
                     className={`sudno-SmallImageSlider-flag ${isMiniCard ? 'user-advert' : ''}`}
                     alt={`Флаг ${flag}`}
-                    // width={40}
-                    // height={40}
                     src={`/flags/${flag}.svg`}
                 />
             )}

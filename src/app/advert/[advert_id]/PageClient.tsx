@@ -44,7 +44,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
             deleteFromFavourite: state.deleteFromFavourite
         }))
     );
-    console.log(advertData);
     const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
     const [isLoading, setIsLoading] = useState(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
@@ -77,7 +76,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
     const emailHandler = (e: SyntheticEvent) => {
         window.location.href = `mailto:${advertData?.user.email}`;
     };
-    //FIX: убрать когда разберёмся с likeBtn
+    //TODO: убрать когда разберёмся с likeBtn
     // const likeButtonClickhandler = (e: SyntheticEvent) => {
     //     e.stopPropagation();
     //     if (!auth) {
