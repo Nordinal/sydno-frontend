@@ -1,3 +1,4 @@
+import { CreateAdvertTypes } from 'CreateAdvert/shared/types/basicTypes';
 import { sydnoServiceFormData, sydnoServiceJson } from 'SydnoService/service';
 import { UploadFile } from 'antd';
 import { AxiosError } from 'axios';
@@ -10,6 +11,9 @@ export interface ICreateAdStepOne {
     registration_number: string;
     phone_number: string;
     images: UploadFile<any>[];
+    advert_type: CreateAdvertTypes;
+    fracht_type: number;
+    fracht_price_type: number;
 }
 
 export interface ICreateAdStepTwo {
@@ -90,6 +94,7 @@ export interface ICreateAdModel extends ICreateAdData {
     createStepTwo: (payload: ICreateAdStepTwo) => Promise<boolean>;
     createStepThree: (payload: ICreateAdStepThree) => Promise<boolean>;
     setInstance: (payload: IInstanceCreateAd) => void;
+    setAdvertType: (payload: CreateAdvertTypes) => void;
 }
 
 const initState: ICreateAdData = {
@@ -97,25 +102,44 @@ const initState: ICreateAdData = {
     instance: {}
 };
 
-export const useCreateSaleAdvert = create<ICreateAdModel>((set, get) => ({
+export const useCreateAdvert = create<ICreateAdModel>((set, get) => ({
     ...initState,
     setInstance: (payload: IInstanceCreateAd) => {
         set({
             instance: payload
         });
     },
+    setAdvertType: (payload: CreateAdvertTypes) => {
+        set({
+            instance: {
+                ...get().instance,
+                advert_type: payload
+            }
+        });
+    },
     createStepOne: async (payload) => {
+        const formData = new FormData();
+        const appendFormData = (property: string, value?: string) => {
+            if(typeof value === 'string') {
+                formData.append(property, value); 
+            }
+        }
         try {
             const id = get().instance.id;
-            const formData = new FormData();
             if (id) {
                 formData.append('id', id.toString());
             }
-            formData.append('header', payload.header);
-            formData.append('description', payload.description);
-            formData.append('phone_number', payload.phone_number);
-            formData.append('price', payload.price.toString());
-            formData.append('registration_number', payload.registration_number);
+            const advert_type = get().instance.advert_type;
+
+            appendFormData('advert_type', advert_type?.toString());
+            appendFormData('header', payload.header);
+            appendFormData('description', payload.description);
+            appendFormData('phone_number', payload.phone_number);
+            appendFormData('price', payload.price.toString());
+            appendFormData('registration_number', payload.registration_number);
+            appendFormData('fracht_price_type', payload.fracht_price_type.toString());
+            appendFormData('fracht_type', payload.fracht_type.toString());
+
             payload.images.forEach((image) => {
                 formData.append('images[]', image.originFileObj as Blob);
             });

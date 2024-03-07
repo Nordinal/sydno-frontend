@@ -1,5 +1,5 @@
-import { CreateSaleAdvert } from 'CreateAdvert/pages';
+import { CreateAdvertSale } from 'CreateAdvert/pages';
 
 export default function CreateAdPage(props: { searchParams: { id: number } }) {
-    return <CreateSaleAdvert id={props.searchParams.id} />;
+    return <CreateAdvertSale id={props.searchParams.id} />;
 }

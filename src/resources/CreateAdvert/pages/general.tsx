@@ -15,7 +15,7 @@ export const CreateAdvert = () => {
                     marginBottom: '48px'
                 }}
             >
-                Разместить объявление
+                Какое объявление хотите разместить?
             </Typography.Title>
             <Row gutter={[16, 16]}>
                 <Col span={8}>
@@ -32,14 +32,7 @@ export const CreateAdvert = () => {
                         className='w-full'
                         bordered={false}
                         hoverable
-                        onClick={() =>
-                            notification.warning({
-                                message: 'Функционал будет доступен позже',
-                                placement: 'bottomRight',
-                                duration: 3
-                            })
-                        }
-                        style={{ border: '0 solid white' }}
+                        onClick={() => router.push('/create/fracht')}
                     >
                         <Card.Meta
                             avatar={<HistoryOutlined style={{ fontSize: 28 }} />}

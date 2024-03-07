@@ -1,15 +1,25 @@
 // import { useCreateAd } from "@/entities/createAd/model";
 import { BaseAdvertCard, IAdvertCard } from 'Advert/widgets';
 import { BasicList } from 'SydnoComponents/lists';
-import { Button, List } from 'antd';
+import { Button, List, notification } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 
 export const MyDrafts = () => {
     const router = useRouter();
 
-    const continueEditing = (id: number) => {
-        router.push(`/create/sale?id=${id}`);
+    const continueEditing = (id: number, type: number) => {
+        switch(type) {
+            case 0:
+                router.push(`/create/sale?id=${id}`);
+                break;
+            case 1:
+                router.push(`/create/fracht?id=${id}`);
+                break;
+            default:
+                notification.warning({message: 'Не определен тип объявления', duration: 2, placement: 'bottomRight'});
+                break;
+        }
     };
 
     return (
@@ -22,7 +32,7 @@ export const MyDrafts = () => {
                         {...item}
                         isDraft={true}
                         showUserInfo={false}
-                        onClick={() => continueEditing(item.id)}
+                        onClick={() => continueEditing(item.id, item.advert_type)}
                     />
                 );
             }}

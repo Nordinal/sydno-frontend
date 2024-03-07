@@ -1,13 +1,13 @@
 'use client';
 import { Form, Input, InputNumber, Select, Space } from 'antd';
-import { onFinishStep } from '../../shared/types/basicTypes';
+import { onFinishStep } from '../../../shared/types/basicTypes';
 import { useEffect, useState } from 'react';
-import { ICreateAdStepThree, useCreateSaleAdvert } from '../../entitites/createAdvert/model';
+import { ICreateAdStepThree, useCreateAdvert } from '../../../entitites/createAdvert/model';
 import { useShallow } from 'zustand/react/shallow';
 import { sydnoServiceJson } from 'SydnoService/service';
 
-export function CreateSaleAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) {
-    const { adverts_technical_information } = useCreateSaleAdvert(
+export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) {
+    const { adverts_technical_information } = useCreateAdvert(
         useShallow((state) => ({ adverts_technical_information: state.instance.adverts_technical_information }))
     );
     const [isTanks, setIsTanks] = useState(false);

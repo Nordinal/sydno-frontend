@@ -1,2 +1,3 @@
 export { CreateAdvert } from 'CreateAdvert/pages/general';
-export { CreateSaleAdvert } from 'CreateAdvert/pages/sale';
+export { CreateAdvertSale } from 'CreateAdvert/pages/sale';
+export { CreateAdvertFracht } from 'CreateAdvert/pages/fracht';

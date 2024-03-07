@@ -1,15 +1,15 @@
 'use client';
 import { Form, Input, Select, AutoComplete, Checkbox, DatePicker, InputNumber, Space } from 'antd';
-import { onFinishStep } from '../../shared/types/basicTypes';
+import { onFinishStep } from '../../../shared/types/basicTypes';
 import { useState, useEffect } from 'react';
 import { CountriesSelector, RegionSelector } from 'SydnoComponents/selectors';
-import { useCreateSaleAdvert } from '../../entitites/createAdvert/model';
+import { useCreateAdvert } from '../../../entitites/createAdvert/model';
 import { useShallow } from 'zustand/react/shallow';
 import dayjs from 'dayjs';
 import { sydnoServiceJson } from 'SydnoService/service';
 
-export function CreateSaleAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
-    const { advert_legal_information } = useCreateSaleAdvert(
+export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
+    const { advert_legal_information } = useCreateAdvert(
         useShallow((state) => ({ advert_legal_information: state.instance.advert_legal_information }))
     );
     const [checkboxAccounting, setCheckboxAccounting] = useState<boolean | undefined>(
