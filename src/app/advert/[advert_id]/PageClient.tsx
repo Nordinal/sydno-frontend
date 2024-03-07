@@ -1,6 +1,6 @@
 'use client';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
-import { Button, Col, Divider, Row, Spin, Typography, notification } from 'antd';
+import React, { SyntheticEvent, useState } from 'react';
+import { Button, Col, Divider, Row, Spin, Typography } from 'antd';
 import { useShallow } from 'zustand/react/shallow';
 import './styles.css';
 import { ConvertData } from './DataConverter';
