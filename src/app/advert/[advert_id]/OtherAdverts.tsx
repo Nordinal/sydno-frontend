@@ -1,6 +1,6 @@
 'use client';
 import { useAdvert } from 'Advert/entities';
-import './otherAdverts.css';
+import './OtherAdverts.css';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect, useRef, useState } from 'react';
 import { IReceivedAdvert } from './IAdvertListItemReady';
