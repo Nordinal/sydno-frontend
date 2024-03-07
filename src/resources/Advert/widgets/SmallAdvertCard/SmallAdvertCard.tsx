@@ -1,16 +1,16 @@
 'use client';
-import React, { ForwardedRef, Ref } from 'react';
-import { IReceivedAdvert } from './IAdvertListItemReady';
-import countriesJson from '../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json';
+import React, { ForwardedRef } from 'react';
+import { IReceivedAdvert } from '@/app/advert/[advert_id]/IAdvertListItemReady';
+import countriesJson from '../../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json';
 
-import './otherAdvert.css';
+import './SmallAdvertCard.css';
 import { Price } from 'SydnoComponents/commons';
 import Link from 'next/link';
 interface OtherAdvertsProps {
     advert: IReceivedAdvert;
     forwardedRef?: ForwardedRef<HTMLDivElement>;
 }
-export const OtherAdvert: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef }) => {
+export const SmallAdvertCard: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef }) => {
     const flagCode = advert.advert_legal_information.flag;
     const flagData = countriesJson.data[flagCode as keyof typeof countriesJson.data];
     const PRICE_LOCALE = 'ru';
@@ -21,7 +21,7 @@ export const OtherAdvert: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef 
         maximumFractionDigits: '0'
     };
     return (
-        <div className='other-advert-container' ref={forwardedRef}>
+        <Link href={String(advert.id)} className='other-advert-container'>
             <Link href={String(advert.id)}>
                 <div className='image-block'>
                     <img alt={advert.header} src={advert.images[0]} />
@@ -29,7 +29,7 @@ export const OtherAdvert: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef 
                     <span className='other-sell-rent'>продажа</span>
                 </div>
             </Link>
-            <div className='other-info-block'>
+            <div className='other-info-block' ref={forwardedRef}>
                 <div className='other-info-block-title'>
                     <Link href={String(advert.id)}>
                         <p>
@@ -72,6 +72,6 @@ export const OtherAdvert: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef 
                     </p>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };

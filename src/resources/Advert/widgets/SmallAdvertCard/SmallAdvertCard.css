@@ -1,7 +1,15 @@
 .other-advert-container {
     display: flex;
     flex-direction: column;
+    padding: 6px;
+    border-radius: var(--main-app-br);
 }
+
+.other-advert-container:hover {
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+    cursor: pointer;
+}
+
 .image-block {
     position: relative;
 }

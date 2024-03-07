@@ -19,6 +19,9 @@
     content: "";
     opacity: 0;
 }
+.paddingLeft {
+    padding-left: 1rem;
+}
 
 .sudno-AdvertCard-draft:hover::after {
     content: "Продолжить создание →";
@@ -56,5 +59,11 @@
     .favButton {
         position: absolute;
         right: 10px;
+    }
+    .paddingLeft {
+        padding-left: 0px;
+    }
+    .mTop {
+        margin-top: 1rem;
     }
 }

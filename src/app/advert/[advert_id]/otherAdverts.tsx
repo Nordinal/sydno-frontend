@@ -2,17 +2,17 @@
 import { useAdvert } from 'Advert/entities';
 import './otherAdverts.css';
 import { useShallow } from 'zustand/react/shallow';
-import { memo, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IReceivedAdvert } from './IAdvertListItemReady';
 import { Button, Col, Spin, Typography } from 'antd';
-import { OtherAdvert } from './otherAdvert';
-import axios from 'axios';
+import { SmallAdvertCard } from 'Advert/widgets/SmallAdvertCard/SmallAdvertCard';
+import { sydnoServiceFormData } from 'SydnoService/service';
 
 interface OtherAdvertsProps {
-    user_id: string | number;
-    advert_id: string | number;
+    userId: string | number;
+    advertId: string | number;
 }
-export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ user_id, advert_id }) => {
+export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ userId, advertId }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [allAdvertsLoaded, setAllAdvertsLoaded] = useState<boolean>(false);
     const [curruntPage, setCurruntPage] = useState<number>(1);
@@ -32,23 +32,23 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ user_id, advert_id }
     };
 
     useEffect(() => {
-        getOtherAdverts(Number(user_id), Number(advert_id)).then((data) => {
+        getOtherAdverts(Number(userId), Number(advertId)).then((data) => {
             if (data === false) {
                 setAllAdvertsLoaded(true);
             } else {
                 setOtherAdverts(data.data);
             }
         });
-    }, [user_id, advert_id]);
+    }, [userId, advertId]);
     useEffect(() => {
         const fetchNextPageData = async () => {
             try {
                 if (curruntPage > 1) {
                     // FIXME: избавиться от localhost
                     const nextPageUrl = `http://localhost/api/otheruseradverts?page=${curruntPage}&user_id=${Number(
-                        user_id
-                    )}&advert_id=${Number(advert_id)}`;
-                    const response = await axios.get(nextPageUrl);
+                        userId
+                    )}&advertId=${Number(advertId)}`;
+                    const response = await sydnoServiceFormData.get(nextPageUrl);
                     const nextPageData = response.data.data;
                     const advertsTo = response.data.to;
                     const advertsTotal = response.data.total;
@@ -117,7 +117,7 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ user_id, advert_id }
                 <div className='other-adverts-container'>
                     {otherAdverts &&
                         otherAdverts.map((advert, index) => (
-                            <OtherAdvert
+                            <SmallAdvertCard
                                 key={index}
                                 advert={advert}
                                 forwardedRef={index === otherAdverts.length - 1 ? lastAdvertRef : null}

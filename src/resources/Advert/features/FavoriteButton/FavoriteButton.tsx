@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import React, { SyntheticEvent, useState } from 'react';
 import { useAdvert } from '../../entities/advert/model';
 import { useShallow } from 'zustand/react/shallow';
@@ -12,7 +11,7 @@ export interface IAddToFavoriteButtonProps {
     isFavorite?: boolean;
     onChange?: (isFavorite: boolean) => void;
     className?: string;
-    size?: 'default' | 'large'
+    size?: 'default' | 'large';
 }
 
 /**
@@ -61,26 +60,26 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
                 });
         }
     };
-    
-    const getSizeStyled = (size: 'default' | 'large'): {width: string, height: string, fontSize: string} => {
-        switch(size) {
+
+    const getSizeStyled = (size: 'default' | 'large'): { width: string; height: string; fontSize: string } => {
+        switch (size) {
             case 'large':
                 const largeSize = '52px';
-                return ({
+                return {
                     width: largeSize,
                     height: largeSize,
                     fontSize: largeSize
-                })
+                };
             case 'default':
             default:
                 const defaultSize = '32px';
-                return ({
+                return {
                     width: defaultSize,
                     height: defaultSize,
                     fontSize: defaultSize
-                })
+                };
         }
-    }
+    };
 
     const sizeStyled = getSizeStyled(size);
 
