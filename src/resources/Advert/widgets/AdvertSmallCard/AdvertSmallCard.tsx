@@ -3,14 +3,14 @@ import React, { ForwardedRef } from 'react';
 import { IReceivedAdvert } from '@/app/advert/[advert_id]/IAdvertListItemReady';
 import countriesJson from '../../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json';
 
-import './SmallAdvertCard.css';
+import './AdvertSmallCard.css';
 import { Price } from 'SydnoComponents/commons';
 import Link from 'next/link';
 interface OtherAdvertsProps {
     advert: IReceivedAdvert;
     forwardedRef?: ForwardedRef<HTMLDivElement>;
 }
-export const SmallAdvertCard: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef }) => {
+export const AdvertSmallCard: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef }) => {
     const flagCode = advert.advert_legal_information.flag;
     const flagData = countriesJson.data[flagCode as keyof typeof countriesJson.data];
     const PRICE_LOCALE = 'ru';

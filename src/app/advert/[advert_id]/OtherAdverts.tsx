@@ -5,8 +5,8 @@ import { useShallow } from 'zustand/react/shallow';
 import { useEffect, useRef, useState } from 'react';
 import { IReceivedAdvert } from './IAdvertListItemReady';
 import { Button, Col, Spin, Typography } from 'antd';
-import { SmallAdvertCard } from 'Advert/widgets/SmallAdvertCard/SmallAdvertCard';
-import { sydnoServiceFormData, sydnoServiceJson } from 'SydnoService/service';
+import { sydnoServiceJson } from 'SydnoService/service';
+import { AdvertSmallCard } from 'Advert/widgets/AdvertSmallCard/AdvertSmallCard';
 
 interface OtherAdvertsProps {
     userId: string | number;
@@ -116,7 +116,7 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ userId, advertId }) 
                 <div className='other-adverts-container'>
                     {otherAdverts &&
                         otherAdverts.map((advert, index) => (
-                            <SmallAdvertCard
+                            <AdvertSmallCard
                                 key={index}
                                 advert={advert}
                                 forwardedRef={index === otherAdverts.length - 1 ? lastAdvertRef : null}
