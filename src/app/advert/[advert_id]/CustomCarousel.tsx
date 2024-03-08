@@ -9,9 +9,9 @@ import 'swiper/css/thumbs';
 import 'swiper/css/zoom';
 import './CustomCarousel.css';
 
-import { SyntheticEvent, useEffect, useState } from 'react';
-import { StarFilled, StarOutlined } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
+import { useState } from 'react';
+import { Modal } from 'antd';
+import { FavoriteButton } from 'Advert/features/FavoriteButton/FavoriteButton';
 
 /**
  * Кастомный компонент для отображения изображений в виде карусели и модального окна с каруселью.
@@ -29,23 +29,21 @@ interface CustomSliderProps {
     isLocalFavorite?: boolean;
     isLoading: boolean;
     withModal: boolean;
-    likeButtonClickhandler: (e: SyntheticEvent) => void;
+    id: number;
 }
 
-export const CustomCarousel: React.FC<CustomSliderProps> = ({
-    slides,
-    isLocalFavorite,
-    isLoading,
-    likeButtonClickhandler,
-    withModal
-}) => {
+export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFavorite, withModal, id }) => {
     const [currentSlide, setCurrentSlide] = useState<number>(0);
-
     const [open, setOpen] = useState(false);
     const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(null);
+    const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isLocalFavorite);
 
     const handleCancel = () => {
         setOpen(false);
+    };
+
+    const handleFavoriteButtonClick = () => {
+        setIsFavorite((prevIsFavorite) => !prevIsFavorite);
     };
 
     return (
@@ -65,16 +63,14 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
                     enabled: true
                 }}
             >
-                <Button
-                    loading={isLoading}
-                    style={{ zIndex: 20 }}
-                    className={`fav-button ${isLocalFavorite ? 'favorite' : 'not-favorite'}`}
-                    type='default'
-                    onClick={likeButtonClickhandler}
-                >
-                    {isLocalFavorite && !isLoading && <StarFilled style={{ fontSize: '24px' }} />}
-                    {!isLocalFavorite && !isLoading && <StarOutlined style={{ fontSize: '24px' }} />}
-                </Button>
+                <FavoriteButton
+                    id={id}
+                    isFavorite={isFavorite}
+                    size='large'
+                    className='fav-button'
+                    onChange={handleFavoriteButtonClick}
+                />
+
                 {slides.map((slide, index) => (
                     <SwiperSlide key={index}>
                         <img className='slide' src={slide} alt={`Slide ${index + 1}`} onClick={() => setOpen(true)} />
@@ -103,15 +99,13 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({
                             initialSlide={currentSlide}
                             controller={{ control: controlledSwiper }}
                         >
-                            <Button
-                                loading={isLoading}
-                                className={`fav-button-modal ${isLocalFavorite ? 'favorite' : 'not-favorite'}`}
-                                type='default'
-                                onClick={likeButtonClickhandler}
-                            >
-                                {isLocalFavorite && !isLoading && <StarFilled style={{ fontSize: '24px' }} />}
-                                {!isLocalFavorite && !isLoading && <StarOutlined style={{ fontSize: '24px' }} />}
-                            </Button>
+                            <FavoriteButton
+                                id={id}
+                                isFavorite={isFavorite}
+                                size='large'
+                                className={`fav-button-modal`}
+                                onChange={handleFavoriteButtonClick}
+                            />
                             <div className='slider'>
                                 {slides.map((slide, index) => (
                                     <SwiperSlide key={index}>

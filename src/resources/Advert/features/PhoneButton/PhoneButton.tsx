@@ -32,10 +32,11 @@ export const PhoneButton = ({ phone }: { phone: string }) => {
     return (
         <Button
             style={{
-                width: '100%',
-                height: 'auto'
+                // width: '100%',
+                height: 'auto',
+                textAlign: 'center'
             }}
-            className={'mt-2 ' + (isCopy ? s['phone-button__container_copy'] : '')}
+            className={'mt-2 ' + (isCopy ? s['phone-button__container_copy'] : '') + s.adaptive}
             onClick={showPhoneHandler}
         >
             {showPhone ? (

@@ -112,13 +112,13 @@
 
 /* =================BUTTONS================================== */
 .show-tel {
-    /* border: 1.5px solid #52c41a !important; */
+    border: none !important;
     background-color: #52c41a !important;
     color: white !important;
 }
 .show-tel:hover {
-    background-color: rgb(85, 182, 37) !important;
-    /* border: 1.5px solid rgb(85, 182, 37) !important; */
+    background-color: rgb(116, 216, 65) !important;
+    border: none !important;
 }
 
 .callButton {
@@ -160,14 +160,6 @@
 }
 .disabled:hover {
     opacity: 0.6;
-}
-.favorite {
-    background-color: #34a8ff !important;
-    color: white !important;
-    border: 1.5px solid #34a8ff !important;
-}
-.favorite:hover {
-    opacity: 0.9 !important;
 }
 
 @media screen and (max-width: 1250px) {

@@ -1,6 +1,6 @@
 'use client';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
-import { Button, Col, Divider, Row, Spin, Typography, notification } from 'antd';
+import React, { SyntheticEvent, useState } from 'react';
+import { Button, Col, Divider, Row, Spin, Typography } from 'antd';
 import { useShallow } from 'zustand/react/shallow';
 import './styles.css';
 import { ConvertData } from './DataConverter';
@@ -14,7 +14,7 @@ import { CheckOutlined, CopyOutlined, EyeOutlined, MailOutlined, PhoneOutlined }
 import { SpecsPair } from './SpecsPair';
 import { UserButton } from 'Users/features';
 import { CustomCarousel } from './CustomCarousel';
-import { OtherAdverts } from './otherAdverts';
+import { OtherAdverts } from './OtherAdverts';
 
 interface IAdvertPageProps {
     advert?: IReceivedAdvert;
@@ -38,9 +38,8 @@ const NUMBER_FORMAT_OPTIONS = {
  */
 
 const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
-    const { getAdvert, addToFavourite, deleteFromFavourite } = useAdvert(
+    const { addToFavourite, deleteFromFavourite } = useAdvert(
         useShallow((state) => ({
-            getAdvert: state.getAdvert,
             addToFavourite: state.addToFavourite,
             deleteFromFavourite: state.deleteFromFavourite
         }))
@@ -77,46 +76,46 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
     const emailHandler = (e: SyntheticEvent) => {
         window.location.href = `mailto:${advertData?.user.email}`;
     };
-
-    const likeButtonClickhandler = (e: SyntheticEvent) => {
-        e.stopPropagation();
-        if (!auth) {
-            notification.warning({
-                message: 'Необходимо авторизоваться на сайте',
-                placement: 'bottomRight'
-            });
-            return;
-        }
-        if (advertData?.id !== undefined) {
-            if (!isLocalFavorite) {
-                setIsLoading(true);
-                addToFavourite(advertData?.id).then((res) => {
-                    if (res) {
-                        setIsLoading(false);
-                        setIsLocalFavorite(res);
-                    } else {
-                        notification.error({
-                            message: 'Ошибка',
-                            placement: 'bottomRight'
-                        });
-                    }
-                });
-            } else {
-                setIsLoading(true);
-                deleteFromFavourite(advertData?.id).then((res) => {
-                    if (res) {
-                        setIsLoading(false);
-                        setIsLocalFavorite(!res);
-                    } else {
-                        notification.error({
-                            message: 'Ошибка',
-                            placement: 'bottomRight'
-                        });
-                    }
-                });
-            }
-        }
-    };
+    //TODO: убрать когда разберёмся с likeBtn
+    // const likeButtonClickhandler = (e: SyntheticEvent) => {
+    //     e.stopPropagation();
+    //     if (!auth) {
+    //         notification.warning({
+    //             message: 'Необходимо авторизоваться на сайте',
+    //             placement: 'bottomRight'
+    //         });
+    //         return;
+    //     }
+    //     if (advertData?.id !== undefined) {
+    //         if (!isLocalFavorite) {
+    //             setIsLoading(true);
+    //             addToFavourite(advertData?.id).then((res) => {
+    //                 if (res) {
+    //                     setIsLoading(false);
+    //                     setIsLocalFavorite(res);
+    //                 } else {
+    //                     notification.error({
+    //                         message: 'Ошибка',
+    //                         placement: 'bottomRight'
+    //                     });
+    //                 }
+    //             });
+    //         } else {
+    //             setIsLoading(true);
+    //             deleteFromFavourite(advertData?.id).then((res) => {
+    //                 if (res) {
+    //                     setIsLoading(false);
+    //                     setIsLocalFavorite(!res);
+    //                 } else {
+    //                     notification.error({
+    //                         message: 'Ошибка',
+    //                         placement: 'bottomRight'
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //     }
+    // };
 
     const ConvertedAdvertData = advertData && ConvertData(advertData);
 
@@ -168,10 +167,10 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                         <Col span={17}>
                             <CustomCarousel
                                 isLocalFavorite={isLocalFavorite}
-                                likeButtonClickhandler={likeButtonClickhandler}
                                 isLoading={isLoading}
                                 slides={advertData?.images.length > 0 ? advertData?.images : FALLBACK_IMAGE_SRC}
                                 withModal={advertData?.images.length > 0}
+                                id={advertData.id}
                             />
                         </Col>
 
@@ -205,7 +204,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                     <Specs ConvertedAdvertData={ConvertedAdvertData} />
                     <Divider />
 
-                    <OtherAdverts user_id={advertData.user_id} advert_id={advertData.id} />
+                    <OtherAdverts userId={advertData.user_id} advertId={advertData.id} />
                 </Col>
 
                 <Col span={5}>
@@ -275,10 +274,10 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                 <Col span={24}>
                     <CustomCarousel
                         isLocalFavorite={isLocalFavorite}
-                        likeButtonClickhandler={likeButtonClickhandler}
                         isLoading={isLoading}
                         slides={advertData?.images && advertData?.images}
                         withModal={advertData?.images.length > 0}
+                        id={advertData.id}
                     />
 
                     <Typography.Title level={2} className='header' style={{ marginTop: '10px' }}>
@@ -336,7 +335,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                     <Divider />
 
                     <Specs ConvertedAdvertData={ConvertedAdvertData} />
-                    <OtherAdverts user_id={advertData.user_id} advert_id={advertData.id} />
+                    <OtherAdverts userId={advertData.user_id} advertId={advertData.id} />
                     <div className='created-at'>
                         <Typography.Paragraph
                             style={{

@@ -1,18 +1,27 @@
 .other-advert-container {
     display: flex;
     flex-direction: column;
+    padding: 6px;
+    border-radius: var(--main-app-br);
 }
+
+.other-advert-container:hover {
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.2);
+    cursor: pointer;
+}
+
 .image-block {
     position: relative;
 }
 .other-sell-rent {
     color: black;
     background-color: rgb(255, 255, 255);
-    padding: 2px 15px;
+    padding: 3px 15px;
     border-radius: 2rem;
     position: absolute;
     top: 10px;
     left: 10px;
+    font-size: 14px;
     font-weight: 500;
 }
 .other-info-block {
@@ -37,7 +46,7 @@
     flex-direction: column;
 }
 .other-flag {
-    width: 40px;
+    height: 25px;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -45,7 +54,7 @@
 
 @media screen and (max-width: 1150px) {
     .other-flag {
-        width: 30px;
+        height: 20px;
     }
     .other-sell-rent {
         font-size: 12px;
@@ -62,13 +71,12 @@
         margin-bottom: 10px;
     }
     .other-flag {
-        width: 60px;
+        height: 35px;
     }
 }
 @media screen and (max-width: 500px) {
     .other-flag {
-        width: 20%;
-        width: 40px;
+        height: 25px;
     }
     .other-sell-rent {
         font-size: 14px;

@@ -1,9 +1,9 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { IAdvertListItem, IAdvertLegalInformation } from 'Advert/entities';
-import { Flag, Price } from 'SydnoComponents/commons';
+import { Price } from 'SydnoComponents/commons';
 import { SmallImageSlider } from 'SydnoComponents/sliders';
 import { isTouchDevice } from 'SydnoHelpers/commons';
-import { Button, Col, Row, Tag, Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import Link from 'next/link';
 import styles from './styles.module.css';
 import { FavoriteButton } from '../../features/FavoriteButton/FavoriteButton';
@@ -79,7 +79,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
             onClick={onClick}
         >
             <Row>
-                <Col xs={24} sm={showRightPanel ? 7 : 9}>
+                <Col xs={24} sm={24} md={showRightPanel ? 7 : 9}>
                     <SmallImageSlider
                         items={images}
                         maxItems={5}
@@ -90,8 +90,12 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                         isMiniCard={isDraft ? true : isMiniCard}
                     />
                 </Col>
-                <Col xs={24} sm={showRightPanel ? 12 : 14}>
-                    <div className='flex flex-col justify-between h-full pl-4'>
+                <Col xs={24} sm={24} md={showRightPanel ? 12 : 14}>
+                    <div
+                        // className={`flex flex-col justify-between h-full` + styles.paddingLeft}
+                        className={`flex flex-col justify-between h-full ${styles.paddingLeft}`}
+                        // style={{ paddingLeft: '1rem', '@media (max-width: 767px)': { paddingLeft: '0px' } }}
+                    >
                         <div>
                             <Typography.Title level={3} style={{ marginBottom: 0 }}>
                                 <Link href={'advert/' + id}>{header}</Link>
@@ -128,18 +132,18 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                         </div>
                     </div>
                 </Col>
-                <Col xs={24} sm={1}>
-                    <div>
+                <Col xs={24} sm={24} md={1}>
+                    <div className={`${styles.favButton} ${styles.mTop}`}>
                         <FavoriteButton id={id} isFavorite={in_favorites} />
                     </div>
                 </Col>
                 {showRightPanel && (
-                    <Col xs={24} sm={4}>
+                    <Col xs={24} sm={24} md={4}>
                         <div>
                             {showUserInfo && user && (
                                 <>
                                     <UserButton
-                                        className='ml-1'
+                                        className={`ml-1 ${styles.mTop}`}
                                         id={user.id}
                                         src={user.avatar}
                                         name={user.name}

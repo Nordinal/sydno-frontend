@@ -47,13 +47,11 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({
     };
 
     return (
-        <div className='sudno-SmallImageSlider flex items-center'>
+        <div className={`sudno-SmallImageSlider flex items-center ${isMiniCard ? 'user-advert' : ''}`}>
             {flag && (
                 <img
                     className={`sudno-SmallImageSlider-flag ${isMiniCard ? 'user-advert' : ''}`}
                     alt={`Флаг ${flag}`}
-                    width={30}
-                    height={20}
                     src={`/flags/${flag}.svg`}
                 />
             )}
