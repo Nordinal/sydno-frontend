@@ -135,10 +135,10 @@ export const useCreateAdvert = create<ICreateAdModel>((set, get) => ({
             appendFormData('header', payload.header);
             appendFormData('description', payload.description);
             appendFormData('phone_number', payload.phone_number);
-            appendFormData('price', payload.price.toString());
+            appendFormData('price', payload.price?.toString());
             appendFormData('registration_number', payload.registration_number);
-            appendFormData('fracht_price_type', payload.fracht_price_type.toString());
-            appendFormData('fracht_type', payload.fracht_type.toString());
+            appendFormData('fracht_price_type', payload.fracht_price_type?.toString());
+            appendFormData('fracht_type', payload.fracht_type?.toString());
 
             payload.images.forEach((image) => {
                 formData.append('images[]', image.originFileObj as Blob);
