@@ -7,6 +7,7 @@ import { IReceivedAdvert } from './IAdvertListItemReady';
 import { Button, Col, Spin, Typography } from 'antd';
 import { sydnoServiceJson } from 'SydnoService/service';
 import { AdvertSmallCard } from 'Advert/widgets/AdvertSmallCard/AdvertSmallCard';
+import { IAdvertCard } from 'Advert/widgets';
 
 interface OtherAdvertsProps {
     userId: string | number;
@@ -23,7 +24,7 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ userId, advertId }) 
             getOtherAdverts: state.getOtherAdverts
         }))
     );
-    const [otherAdverts, setOtherAdverts] = useState<IReceivedAdvert[] | undefined>();
+    const [otherAdverts, setOtherAdverts] = useState<IAdvertCard[] | undefined>();
     const handleLoadMoreAdverts = () => {
         if (!isLoading && !allAdvertsLoaded) {
             setIsLoading(true);

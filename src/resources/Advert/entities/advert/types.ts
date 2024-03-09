@@ -64,6 +64,8 @@ export interface IAdvertLegalInformation {
 export interface IAdvertListItem {
     id: number;
     advert_type: number;
+    fracht_price_type: string;
+    fracht_type: string;
     user_id: number;
     updated_at: string;
     in_favorites: boolean;

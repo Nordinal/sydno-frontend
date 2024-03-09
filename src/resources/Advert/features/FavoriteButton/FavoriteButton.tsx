@@ -8,7 +8,7 @@ import s from './styles.module.css';
 
 export interface IAddToFavoriteButtonProps {
     id: string | number;
-    isFavorite?: boolean;
+    isDefaultFavorite?: boolean;
     onChange?: (isFavorite: boolean) => void;
     className?: string;
     size?: 'default' | 'large';
@@ -20,7 +20,7 @@ export interface IAddToFavoriteButtonProps {
  */
 export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
     id,
-    isFavorite,
+    isDefaultFavorite,
     onChange,
     className,
     size = 'default'
@@ -32,7 +32,7 @@ export const FavoriteButton: React.FC<IAddToFavoriteButtonProps> = ({
         }))
     );
     const { auth } = useUser(useShallow((state) => ({ auth: state.auth })));
-    const [localFavorite, setLocalFavorite] = useState(isFavorite);
+    const [localFavorite, setLocalFavorite] = useState(isDefaultFavorite);
     const [animated, setAnimated] = useState(false);
 
     const clickHandler = (e: SyntheticEvent) => {

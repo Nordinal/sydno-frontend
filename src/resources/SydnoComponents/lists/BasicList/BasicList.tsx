@@ -1,4 +1,4 @@
-import { List, ListProps, notification, Typography } from 'antd';
+import { Grid, List, ListProps, notification, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { convertObjectToPathname, getDeclination } from 'SydnoHelpers/commons';
 import { sydnoServiceJson } from 'SydnoService/service';
@@ -8,6 +8,7 @@ export interface IBasicList<T> extends ListProps<T> {
     action: string;
     filters?: IFilters;
     showTotalCount?: boolean;
+    mode?: 'list' | 'kanban';
 }
 
 export type IFilters = {
@@ -35,6 +36,7 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
     const [loading, setLoading] = useState(false);
     const [service, setService] = useState<IBasicListService<T> | null>();
     const [localPage, setLocalPage] = useState<number>(props.filters?.page || 1);
+    const breakpoint = Grid.useBreakpoint();
 
     const getData = async (page?: number) => {
         setLoading(true);
@@ -88,11 +90,18 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
                     indicator: <LoadingOutlined />,
                     delay: 500,
                 }}
+                grid={
+                    props.mode === 'kanban' ? {
+                        gutter: 16,
+                        column: breakpoint.md ? 4 : breakpoint.sm ? 1 : 1,
+                    } : undefined
+                }
                 pagination={
-                    Number(service?.total) > 10 && {
+                    Number(service?.total) > 12 && {
                         total: service?.total,
                         ...(props.pagination || {}),
                         current: localPage,
+                        pageSize: 12,
                         showSizeChanger: false,
                         onChange: (page, ...args) => {
                             if (props.pagination instanceof Object && props.pagination.onChange)

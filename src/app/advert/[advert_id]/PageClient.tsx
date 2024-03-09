@@ -15,6 +15,7 @@ import { SpecsPair } from './SpecsPair';
 import { UserButton } from 'Users/features';
 import { CustomCarousel } from './CustomCarousel';
 import { OtherAdverts } from './OtherAdverts';
+import dayjs from 'dayjs';
 
 interface IAdvertPageProps {
     advert?: IReceivedAdvert;
@@ -137,7 +138,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
         <div className='pt-6'>
             <Row>
                 <Col span={19}>
-                    <Typography.Title level={screenSize === 'small' ? 2 : 2} className='header'>
+                    <Typography.Title level={2} className='header'>
                         {advertData.header}
                     </Typography.Title>
 
@@ -151,7 +152,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                                 display: 'flex'
                             }}
                         >
-                            Дата размещения: {advertData.created_at.split('T')[0].split('-').join('.')}
+                            Дата размещения: {dayjs(advertData.created_at).format('DD.MM.YYYY')}
                             <EyeOutlined
                                 style={{
                                     fontSize: '20px',
@@ -166,11 +167,11 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                     <div className='carousel-specs'>
                         <Col span={17}>
                             <CustomCarousel
-                                isLocalFavorite={isLocalFavorite}
-                                isLoading={isLoading}
+                                title={advertData.header}
+                                isDefaultFavorite={isLocalFavorite}
                                 slides={advertData?.images.length > 0 ? advertData?.images : FALLBACK_IMAGE_SRC}
-                                withModal={advertData?.images.length > 0}
                                 id={advertData.id}
+                                screenSize={screenSize as any}
                             />
                         </Col>
 
@@ -273,10 +274,10 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
             <Row>
                 <Col span={24}>
                     <CustomCarousel
-                        isLocalFavorite={isLocalFavorite}
-                        isLoading={isLoading}
+                        title={advertData.header}
+                        isDefaultFavorite={isLocalFavorite}
                         slides={advertData?.images && advertData?.images}
-                        withModal={advertData?.images.length > 0}
+                        screenSize={screenSize}
                         id={advertData.id}
                     />
 

@@ -1,6 +1,6 @@
 'use client';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, Controller, Keyboard } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y, Controller, Keyboard, Zoom } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
@@ -9,7 +9,7 @@ import 'swiper/css/thumbs';
 import 'swiper/css/zoom';
 import './CustomCarousel.css';
 
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Modal } from 'antd';
 import { FavoriteButton } from 'Advert/features/FavoriteButton/FavoriteButton';
 
@@ -26,28 +26,18 @@ import { FavoriteButton } from 'Advert/features/FavoriteButton/FavoriteButton';
 
 interface CustomSliderProps {
     slides: string[];
-    isLocalFavorite?: boolean;
-    isLoading: boolean;
-    withModal: boolean;
+    isDefaultFavorite?: boolean;
     id: number;
+    title: string;
+    screenSize: 'small' | 'middle' | 'big';
 }
 
-export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFavorite, withModal, id }) => {
+export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isDefaultFavorite, id, title, screenSize }) => {
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     const [open, setOpen] = useState(false);
-    const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(null);
-    const [isFavorite, setIsFavorite] = useState<boolean | undefined>(isLocalFavorite);
-
-    const handleCancel = () => {
-        setOpen(false);
-    };
-
-    const handleFavoriteButtonClick = () => {
-        setIsFavorite((prevIsFavorite) => !prevIsFavorite);
-    };
 
     return (
-        <div className='cursor-pointer'>
+        <div className={screenSize === 'big' ? 'cursor-pointer' : ''}>
             <Swiper
                 style={{ zIndex: '0' }}
                 modules={[Navigation, Pagination, Scrollbar, A11y, Controller, Keyboard]}
@@ -55,7 +45,6 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFav
                 slidesPerView={1}
                 navigation={{ enabled: true }}
                 pagination={{ clickable: true }}
-                onSwiper={setControlledSwiper}
                 onSlideChange={(swiper) => {
                     setCurrentSlide(swiper.realIndex);
                 }}
@@ -65,10 +54,9 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFav
             >
                 <FavoriteButton
                     id={id}
-                    isFavorite={isFavorite}
+                    isDefaultFavorite={isDefaultFavorite}
                     size='large'
                     className='fav-button'
-                    onChange={handleFavoriteButtonClick}
                 />
 
                 {slides.map((slide, index) => (
@@ -78,45 +66,57 @@ export const CustomCarousel: React.FC<CustomSliderProps> = ({ slides, isLocalFav
                 ))}
             </Swiper>
 
-            <div>
-                {withModal && (
-                    <Modal
-                        open={open}
-                        onCancel={handleCancel}
-                        style={{ padding: '0px' }}
-                        footer={null}
-                        maskClosable={true}
-                        destroyOnClose={true}
-                        className='modal-wrapper'
-                    >
-                        <Swiper
-                            style={{ zIndex: '0' }}
-                            modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
-                            spaceBetween={50}
-                            slidesPerView={1}
-                            navigation={{ enabled: true }}
-                            pagination={{ clickable: true }}
-                            initialSlide={currentSlide}
-                            controller={{ control: controlledSwiper }}
-                        >
-                            <FavoriteButton
-                                id={id}
-                                isFavorite={isFavorite}
-                                size='large'
-                                className={`fav-button-modal`}
-                                onChange={handleFavoriteButtonClick}
-                            />
-                            <div className='slider'>
-                                {slides.map((slide, index) => (
-                                    <SwiperSlide key={index}>
-                                        <img className='modal-slide' src={slide} alt={`Slide ${index + 1}`} />
-                                    </SwiperSlide>
-                                ))}
-                            </div>
-                        </Swiper>
-                    </Modal>
-                )}
-            </div>
+            {screenSize === 'big' && open && (
+                <ModalSwipper title={title} open={open} onCancel={() => setOpen(false)} slides={slides} currentSlide={currentSlide}/>
+            )}
         </div>
     );
 };
+
+
+const ModalSwipper = ({
+    open,
+    onCancel,
+    slides,
+    currentSlide,
+    title
+}: {
+    open: boolean,
+    onCancel: (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void,
+    slides: string[],
+    currentSlide: number,
+    title: string
+}) => {
+    return (
+        <Modal
+            open={open}
+            onCancel={onCancel}
+            footer={null}
+            title={title}
+            centered
+            width={'80vw'}
+            classNames={{
+                body: 'modal-swipper__container'
+            }}
+        >
+            <Swiper
+                modules={[Navigation, Pagination, Zoom]}
+                zoom
+                navigation
+                initialSlide={currentSlide}
+                pagination={{
+                    clickable: true,
+                }}
+                className='modal-swipper__swipper'
+            >
+                {slides.map((slide, index) => (
+                    <SwiperSlide key={index}>
+                        <div className="swiper-zoom-container">
+                            <img className='modal-swipper__image' src={slide} alt={`Slide ${index + 1}`} />
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </Modal>
+    );
+}

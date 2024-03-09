@@ -38,8 +38,3 @@ h5,
 h6 {
     margin: 0;
 }
-
-.sydno-anchor {
-    padding-top: var(--header-height);
-    margin-top: calc(var(--header-height) * -1);
-}

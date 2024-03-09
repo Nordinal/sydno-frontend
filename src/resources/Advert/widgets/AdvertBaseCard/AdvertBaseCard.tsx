@@ -49,6 +49,9 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
     in_favorites,
     user,
     isMiniCard,
+    fracht_price_type,
+    advert_type,
+    fracht_type,
     showUserInfo = true
 }) => {
     const [showDetails, setShowDetails] = useState<boolean>(false);
@@ -82,6 +85,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                 <Col xs={24} sm={24} md={showRightPanel ? 7 : 9}>
                     <SmallImageSlider
                         items={images}
+                        type={advert_type}
                         maxItems={5}
                         showLabels={showDetails}
                         fallbackImageSrc={FALLBACK_IMAGE_SRC}
@@ -102,11 +106,13 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                             </Typography.Title>
                             <Typography.Title level={4} style={{ marginTop: 0 }}>
                                 <Price locale={PRICE_LOCALE} options={NUMBER_FORMAT_OPTIONS} price={price} />
+                                {typeof fracht_price_type === 'string' && ` / ${fracht_price_type}`}
                             </Typography.Title>
                             <Typography.Paragraph>
                                 <DetailsInfo
                                     size={size || 'big'}
                                     {...advert_legal_information}
+                                    fracht_type={fracht_type}
                                     registration_number={registration_number}
                                     length={advert_technical_information && advert_technical_information.overall_length}
                                 />
@@ -134,7 +140,7 @@ export const BaseAdvertCard: React.FC<IAdvertCard> = ({
                 </Col>
                 <Col xs={24} sm={24} md={1}>
                     <div className={`${styles.favButton} ${styles.mTop}`}>
-                        <FavoriteButton id={id} isFavorite={in_favorites} />
+                        <FavoriteButton id={id} isDefaultFavorite={in_favorites} />
                     </div>
                 </Col>
                 {showRightPanel && (
@@ -179,12 +185,14 @@ const DetailsInfo: React.FC<
         size: 'small' | 'big';
         registration_number: string;
         length: number;
+        fracht_type: string
     }
 > = (props) => {
     return (
         <div className={'flex flex-wrap justify-start items-center ' + (props.size === 'small' ? 'flex-col' : '')}>
             <DetailsItem label='Название'>{props.name}</DetailsItem>
             <DetailsItem label='Тип'>{props.type}</DetailsItem>
+            {typeof props.fracht_type === 'string' && <DetailsItem label='Тип фрахта'>{props.fracht_type}</DetailsItem>}
             <DetailsItem label='Страна'>{getCountryName(props.flag as any)}</DetailsItem>
             <DetailsItem label='Год постройки'>{props.building_year}</DetailsItem>
             <DetailsItem label='Класс'>{props.class_formula}</DetailsItem>

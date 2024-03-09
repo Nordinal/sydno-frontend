@@ -1,7 +1,7 @@
 .other-advert-container {
     display: flex;
     flex-direction: column;
-    padding: 6px;
+    padding: 12px;
     border-radius: var(--main-app-br);
 }
 

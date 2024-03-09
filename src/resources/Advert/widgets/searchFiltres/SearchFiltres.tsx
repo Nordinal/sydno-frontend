@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { TFilterOptions } from './types';
+import { TFilterOptions, TChangeConfigProperty } from './types';
 import { Button, Col, Row, Tabs, Typography } from 'antd';
 import { initialFilterOptions } from './utils';
-import { TChangeConfigProperty } from './types';
 import { SelectorServiceFilter } from './components/SelectorServiceFilter';
 import { InputNumberRangeFilter } from './components/InputNumberRangeFilter';
 import { InputTextFilter } from './components/InputTextFilter';
@@ -11,6 +10,7 @@ import { DateRangePickerFilter } from './components/DateRangePickerFilter';
 import { RegionSelectorFilter } from './components/RegionSelectorFilter';
 import { DatePickerFilter } from './components/DatePickerFilter';
 import { SegmentedFilter } from './components/SegmentedFilter';
+import { SearchInput } from '../SearchInput/SearchInput';
 
 export interface ISearchFiltresProps {
     filterOptions: TFilterOptions;

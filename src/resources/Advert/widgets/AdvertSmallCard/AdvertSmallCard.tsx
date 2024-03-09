@@ -6,11 +6,15 @@ import countriesJson from '../../../../resources/SydnoComponents/selectors/Count
 import './AdvertSmallCard.css';
 import { Price } from 'SydnoComponents/commons';
 import Link from 'next/link';
+import { IAdvertCard } from '../AdvertBaseCard/AdvertBaseCard';
+import { useRouter } from 'next/navigation';
 interface OtherAdvertsProps {
-    advert: IReceivedAdvert;
+    advert: IAdvertCard;
     forwardedRef?: ForwardedRef<HTMLDivElement>;
 }
 export const AdvertSmallCard: React.FC<OtherAdvertsProps> = ({ advert, forwardedRef }) => {
+    const router = useRouter();
+
     const flagCode = advert.advert_legal_information.flag;
     const flagData = countriesJson.data[flagCode as keyof typeof countriesJson.data];
     const PRICE_LOCALE = 'ru';
@@ -21,17 +25,15 @@ export const AdvertSmallCard: React.FC<OtherAdvertsProps> = ({ advert, forwarded
         maximumFractionDigits: '0'
     };
     return (
-        <Link href={String(advert.id)} className='other-advert-container'>
-            <Link href={String(advert.id)}>
-                <div className='image-block'>
-                    <img alt={advert.header} src={advert.images[0]} />
-                    <img className='other-flag' alt={`Флаг ${flagData}`} src={`/flags/${flagCode}.svg`} />
-                    <span className='other-sell-rent'>продажа</span>
-                </div>
-            </Link>
+        <div onClick={() => router.push('/advert/' + String(advert.id))} className='other-advert-container'>
+            <div className='image-block'>
+                <img alt={advert.header} src={advert.images[0]} />
+                <img className='other-flag' alt={`Флаг ${flagData}`} src={`/flags/${flagCode}.svg`} />
+                <span className='other-sell-rent'>продажа</span>
+            </div>
             <div className='other-info-block' ref={forwardedRef}>
                 <div className='other-info-block-title'>
-                    <Link href={String(advert.id)}>
+                    <Link href={'/advert/' + String(advert.id)}>
                         <p>
                             {advert.advert_legal_information.name.substring(
                                 0,
@@ -72,6 +74,6 @@ export const AdvertSmallCard: React.FC<OtherAdvertsProps> = ({ advert, forwarded
                     </p>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 };
