@@ -1,13 +1,13 @@
 'use client';
 import React, { Suspense, useState } from 'react';
 import { BaseAdvertCard, IAdvertCard } from 'Advert/widgets';
-import { SearchFiltres } from '../../widgets/SearchFiltres/SearchFiltres';
+import { SearchFiltres } from '../../widgets/SearchFiltre/SearchFiltre';
 import { BasicList } from 'SydnoComponents/lists';
 import { Col, Row } from 'antd';
 import { convertObjectToPathname, getUrlQueryParams } from 'SydnoHelpers/commons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { smoothScrollToAnchor } from 'SydnoHelpers/commons';
-import { TFilterOptions } from 'Advert/widgets/SearchFiltres/types';
+import { TFilterOptions } from 'Advert/widgets/SearchFiltre/types';
 import { SortedFilters } from 'Advert/widgets/SortedFilters/SortedFiters';
 import { SearchInput } from 'Advert/widgets/SearchInput/SearchInput';
 import { AdvertSmallCard } from 'Advert/widgets/AdvertSmallCard/AdvertSmallCard';
