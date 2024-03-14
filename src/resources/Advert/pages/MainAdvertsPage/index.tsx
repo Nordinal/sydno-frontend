@@ -3,7 +3,7 @@ import React, { Suspense, useState } from 'react';
 import { BaseAdvertCard, IAdvertCard } from 'Advert/widgets';
 import { SearchFiltres } from '../../widgets/SearchFiltre/SearchFiltre';
 import { BasicList } from 'SydnoComponents/lists';
-import { Col, Row } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import { convertObjectToPathname, getUrlQueryParams } from 'SydnoHelpers/commons';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { smoothScrollToAnchor } from 'SydnoHelpers/commons';
@@ -11,6 +11,8 @@ import { TFilterOptions } from 'Advert/widgets/SearchFiltre/types';
 import { SortedFilters } from 'Advert/widgets/SortedFilters/SortedFiters';
 import { SearchInput } from 'Advert/widgets/SearchInput/SearchInput';
 import { AdvertSmallCard } from 'Advert/widgets/AdvertSmallCard/AdvertSmallCard';
+import { ColorBlock } from 'Advert/widgets/ColorBlock/ColorBlock';
+import { HistoryOutlined, KeyOutlined } from '@ant-design/icons';
 
 export const MainAdvertPage = () => {
     return (
@@ -63,16 +65,36 @@ export const MainAdvertPageUI = () => {
         router.push('/advert/' + id);
     };
 
+    const filters = getUrlQueryParams<TFilterOptions>(searchParams);
+
     return (
         <Row className='pt-4 pb-16'>
             <Col className='pb-6' span={24}>
+                <Row gutter={[16, 16]}>
+                    <Col xs={24} sm={24} md={8}>
+                        <ColorBlock onClick={() => changeUrlByOptions({advert_type: undefined})} active={!filters.advert_type} title={'Все'} caption='cудна' className='w-full'/>
+                    </Col>
+                    <Col xs={24} sm={24} md={8}>
+                        <ColorBlock onClick={() => changeUrlByOptions({advert_type: 1})} active={filters.advert_type == 1} icon={<HistoryOutlined />} title={'Аренда'} caption='cудна' className='w-full'/>
+                    </Col>
+                    <Col xs={24} sm={24} md={8}>
+                        <ColorBlock onClick={() => changeUrlByOptions({advert_type: 0})} active={filters.advert_type == 0} icon={<KeyOutlined />} title={'Продажа'} caption='cудна' className='w-full'/>
+                    </Col>
+                </Row>
+            </Col>
+            <Col className='pb-6' span={24}>
                 <SearchFiltres
-                    filterOptions={getUrlQueryParams<TFilterOptions>(searchParams)}
+                    filterOptions={filters}
                     onFindButtonClick={changeUrlByOptions}
                 />
             </Col>
             <Col span={24} className='pb-6'>
-                <SortedFilters mode={mode} setMode={(value) => setMode(value)}/>
+                <SortedFilters
+                    defaultSortValue={filters.sort}
+                    onSortSelect={changeUrlByOptions}
+                    mode={mode}
+                    setMode={(value) => setMode(value)}
+                />
             </Col>
             <Col span={24}>
                 <div id='advert-list-anchor'></div>

@@ -15,6 +15,9 @@ export interface ILegalFilterOptions {
      */
     flag?: string | null;
 
+
+    advert_type?: number;
+
     /**
      * Тип эксплуатации
      */
@@ -277,4 +280,8 @@ export interface ITechnicalFilterOptions {
     technical_documentation?: boolean | null;
 }
 
-export type TFilterOptions = IFilterBaseOptions & ILegalFilterOptions & ITechnicalFilterOptions;
+export interface ISortOptions {
+    sort?: string
+}
+
+export type TFilterOptions = IFilterBaseOptions & ILegalFilterOptions & ITechnicalFilterOptions & ISortOptions;

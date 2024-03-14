@@ -1,8 +1,19 @@
 import { Segmented, Select, Typography } from "antd";
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 
+export type TSort = 'price_asc' | 'price_desc' | 'date' | 'views' | undefined;
 
-export const SortedFilters = ({mode, setMode}: {mode: 'list' | 'kanban', setMode: (value: 'list' | 'kanban') => void}) => {
+export const SortedFilters = ({
+    mode,
+    setMode,
+    onSortSelect,
+    defaultSortValue
+}: {
+    mode: 'list' | 'kanban',
+    setMode: (value: 'list' | 'kanban') => void,
+    onSortSelect: ({sort}: {sort: TSort}) => void,
+    defaultSortValue?: string
+}) => {
     return (
         <div
             className='pt-2 pb-2 pr-4 pl-4 flex justify-between items-center'
@@ -18,12 +29,15 @@ export const SortedFilters = ({mode, setMode}: {mode: 'list' | 'kanban', setMode
                     placeholder="Сортировка"
                     variant="borderless"
                     style={{width: '160px'}}
+                    onSelect={(e, item) => onSortSelect({sort: item.value as TSort})}
+                    onClear={() => onSortSelect({sort: undefined})}
+                    defaultValue={defaultSortValue}
                     allowClear={true}
                     options={[
-                        { value: 0, label: 'Дешевле' },
-                        { value: 1, label: 'Дороже' },
-                        { value: 2, label: 'По дате' },
-                        { value: 2, label: 'По просмотрам' }
+                        { value: 'price_asc', label: 'Дешевле' },
+                        { value: 'price_desc', label: 'Дороже' },
+                        { value: 'date', label: 'По дате' },
+                        { value: 'views', label: 'По просмотрам' }
                     ]}
                 />
             </div>
