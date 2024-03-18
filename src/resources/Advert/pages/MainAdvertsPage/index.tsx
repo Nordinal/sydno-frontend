@@ -13,6 +13,7 @@ import { SearchInput } from 'Advert/widgets/SearchInput/SearchInput';
 import { AdvertSmallCard } from 'Advert/widgets/AdvertSmallCard/AdvertSmallCard';
 import { ColorBlock } from 'Advert/widgets/ColorBlock/ColorBlock';
 import { HistoryOutlined, KeyOutlined } from '@ant-design/icons';
+import { RecentlyWatched } from 'Advert/widgets/RecentlyWatched/RecentlyWatched';
 
 export const MainAdvertPage = () => {
     return (
@@ -121,6 +122,9 @@ export const MainAdvertPageUI = () => {
                         }
                     }}
                 />
+            </Col>
+            <Col span={24}>
+                <RecentlyWatched />
             </Col>
         </Row>
     );

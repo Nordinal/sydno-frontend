@@ -67,7 +67,7 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
 
     return (
         <div
-            className='sudno-SearhFiltres p-4'
+            className='p-4'
             style={{
                 boxShadow: '0 0 20px rgba(128, 128, 128, 0.2)',
                 overflow: 'hidden',
