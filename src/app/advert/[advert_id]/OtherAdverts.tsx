@@ -1,13 +1,11 @@
 'use client';
 import { useAdvert } from 'Advert/entities';
-import './OtherAdverts.css';
 import { useShallow } from 'zustand/react/shallow';
 import { useEffect, useRef, useState } from 'react';
-import { IReceivedAdvert } from './IAdvertListItemReady';
-import { Button, Col, Spin, Typography } from 'antd';
+import { Spin } from 'antd';
 import { sydnoServiceJson } from 'SydnoService/service';
-import { AdvertSmallCard } from 'Advert/widgets/AdvertSmallCard/AdvertSmallCard';
 import { IAdvertCard } from 'Advert/widgets';
+import { SmallAdvertsList } from '../../../resources/SydnoComponents/lists/SmallAdvertsList/SmallAdvertsList';
 
 interface OtherAdvertsProps {
     userId: string | number;
@@ -112,42 +110,14 @@ export const OtherAdverts: React.FC<OtherAdvertsProps> = ({ userId, advertId }) 
 
     return (
         otherAdverts.length > 0 && (
-            <Col span={24}>
-                <Typography.Title level={4}>Другие объявления этого продавца</Typography.Title>
-                <div className='other-adverts-container'>
-                    {otherAdverts &&
-                        otherAdverts.map((advert, index) => (
-                            <AdvertSmallCard
-                                key={index}
-                                advert={advert}
-                                forwardedRef={index === otherAdverts.length - 1 ? lastAdvertRef : null}
-                            />
-                        ))}
-                </div>
-                {isLoading && (
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <Spin size='large' />
-                    </div>
-                )}
-                <div className='other-adverts-button'>
-                    {!isLoading && !allAdvertsLoaded && (
-                        <Button
-                            type='default'
-                            onClick={() => {
-                                handleLoadMoreAdverts();
-                            }}
-                        >
-                            Загрузить ещё
-                        </Button>
-                    )}
-                </div>
-            </Col>
+            <SmallAdvertsList
+                adverts={otherAdverts || []}
+                isLoading={isLoading}
+                allAdvertsLoaded={allAdvertsLoaded}
+                onLoadMore={handleLoadMoreAdverts}
+                title='Другие объявления этого продавца'
+                lastAdvertRef={lastAdvertRef}
+            />
         )
     );
 };
