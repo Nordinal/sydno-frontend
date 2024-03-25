@@ -32,7 +32,7 @@ export function CreateAdvertStepOne({ onFinish }: { onFinish: onFinishStep }) {
                 initialValue={instance.header}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input placeholder='Заголовок объявления' />
+                <Input placeholder='Заголовок объявления' maxLength={100}/>
             </Form.Item>
 
             <Form.Item
@@ -43,7 +43,7 @@ export function CreateAdvertStepOne({ onFinish }: { onFinish: onFinishStep }) {
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 wrapperCol={{ span: 6, offset: 1 }}
             >
-                <Input placeholder='Регистрационный номер' />
+                <Input placeholder='Регистрационный номер' maxLength={50}/>
             </Form.Item>
 
             <Form.Item
@@ -143,7 +143,7 @@ export function CreateAdvertStepOne({ onFinish }: { onFinish: onFinishStep }) {
                 initialValue={instance.description}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input.TextArea placeholder='Описание' rows={8} />
+                <Input.TextArea placeholder='Описание' rows={8} maxLength={300}/>
             </Form.Item>
         </Form>
     );

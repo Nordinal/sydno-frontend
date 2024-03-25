@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TFilterOptions, TChangeConfigProperty } from './types';
 import { Button, Col, Row, Tabs, Typography } from 'antd';
 import { initialFilterOptions } from './utils';
@@ -10,7 +10,6 @@ import { DateRangePickerFilter } from './components/DateRangePickerFilter';
 import { RegionSelectorFilter } from './components/RegionSelectorFilter';
 import { DatePickerFilter } from './components/DatePickerFilter';
 import { SegmentedFilter } from './components/SegmentedFilter';
-import { SearchInput } from '../SearchInput/SearchInput';
 
 export interface ISearchFiltresProps {
     filterOptions: TFilterOptions;
@@ -29,6 +28,12 @@ export const SearchFiltres: React.FC<ISearchFiltresProps> = ({ filterOptions, on
         ...initialFilterOptions,
         ...filterOptions
     });
+    useEffect(() => {
+        setFilterConfig({
+            ...initialFilterOptions,
+            ...filterOptions
+        });
+    }, [filterOptions])
     const [showHiddenBlock, setShowHiddenBlock] = useState<boolean>(false);
 
     const onButtonClickHandler = () => {

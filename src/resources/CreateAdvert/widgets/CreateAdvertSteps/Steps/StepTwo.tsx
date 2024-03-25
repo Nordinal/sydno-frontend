@@ -89,7 +89,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 rules={[{ required: true, message: 'Обязательное поле' }]}
                 initialValue={advert_legal_information?.name}
             >
-                <Input placeholder='Название судна' />
+                <Input placeholder='Название судна' maxLength={70}/>
             </Form.Item>
 
             <Form.Item
@@ -120,7 +120,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 initialValue={advert_legal_information?.class_formula}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input placeholder='Класс' />
+                <Input placeholder='Класс' maxLength={50}/>
             </Form.Item>
 
             <Form.Item
@@ -130,7 +130,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 initialValue={advert_legal_information?.classification_society}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
-                <Input placeholder='Классификационное общество' />
+                <Input placeholder='Классификационное общество' maxLength={50}/>
             </Form.Item>
 
             <Form.Item
@@ -169,7 +169,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                         noStyle
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
-                        <Input style={{ width: '40%' }} placeholder='Назначение' />
+                        <Input style={{ width: '40%' }} placeholder='Назначение' maxLength={70}/>
                     </Form.Item>
                 </Space.Compact>
             </Form.Item>
@@ -257,7 +257,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 name={'building_place'}
                 initialValue={advert_legal_information?.building_place}
             >
-                <Input placeholder='Место постройки' />
+                <Input placeholder='Место постройки' maxLength={70}/>
             </Form.Item>
 
             <Form.Item
@@ -283,7 +283,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 name='imo_number'
                 initialValue={advert_legal_information?.imo_number}
             >
-                <Input placeholder='Номер IMO' />
+                <Input placeholder='Номер IMO' maxLength={40}/>
             </Form.Item>
 
             <Form.Item
@@ -292,7 +292,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 name='project_number'
                 initialValue={advert_legal_information?.project_number}
             >
-                <Input placeholder='Номер проекта' />
+                <Input placeholder='Номер проекта' maxLength={40}/>
             </Form.Item>
 
             <Form.Item
@@ -301,7 +301,7 @@ export function CreateAdvertStepTwo({ onFinish }: { onFinish: onFinishStep }) {
                 name='building_number'
                 initialValue={advert_legal_information?.building_number}
             >
-                <Input placeholder='Строительный номер' />
+                <Input placeholder='Строительный номер' maxLength={40}/>
             </Form.Item>
         </Form>
     );
