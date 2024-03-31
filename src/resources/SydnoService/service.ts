@@ -8,7 +8,17 @@ export const sydnoServiceJson = axios.create({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
     },
-    withCredentials: true
+    withCredentials: true,
+    withXSRFToken: true
+});
+
+sydnoServiceJson.interceptors.request.use(async (config) => {
+    try {
+      await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true, withXSRFToken: true});
+    }
+    finally {
+      return config;
+    }
 });
 
 export const sydnoServiceFormData = axios.create({
@@ -17,15 +27,15 @@ export const sydnoServiceFormData = axios.create({
         'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*'
     },
-    withCredentials: true
+    withCredentials: true,
+    withXSRFToken: true
 });
 
-// Включить по необходимости
-// instanceApi.interceptors.request.use(async (config) => {
-//   try {
-//     await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true});
-//   }
-//   finally {
-//     return config;
-//   }
-// })
+sydnoServiceFormData.interceptors.request.use(async (config) => {
+    try {
+      await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true, withXSRFToken: true});
+    }
+    finally {
+      return config;
+    }
+})
