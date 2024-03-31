@@ -13,12 +13,19 @@ export const sydnoServiceJson = axios.create({
 });
 
 sydnoServiceJson.interceptors.request.use(async (config) => {
-    try {
+  try {
+    if(
+      config.method === 'post' ||
+      config.method === 'put' ||
+      config.method === 'delete' ||
+      config.method === 'patch'
+    ) {
       await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true, withXSRFToken: true});
     }
-    finally {
-      return config;
-    }
+  }
+  finally {
+    return config;
+  }
 });
 
 export const sydnoServiceFormData = axios.create({
@@ -32,10 +39,17 @@ export const sydnoServiceFormData = axios.create({
 });
 
 sydnoServiceFormData.interceptors.request.use(async (config) => {
-    try {
+  try {
+    if(
+      config.method === 'post' ||
+      config.method === 'put' ||
+      config.method === 'delete' ||
+      config.method === 'patch'
+    ) {
       await axios.get(baseURL + '/sanctum/csrf-cookie', {withCredentials: true, withXSRFToken: true});
     }
-    finally {
-      return config;
-    }
+  }
+  finally {
+    return config;
+  }
 })
