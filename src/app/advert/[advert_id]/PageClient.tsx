@@ -37,7 +37,6 @@ const NUMBER_FORMAT_OPTIONS = {
  *
  * Author: [Gleb]
  */
-
 const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
     const { addToFavourite, deleteFromFavourite } = useAdvert(
         useShallow((state) => ({

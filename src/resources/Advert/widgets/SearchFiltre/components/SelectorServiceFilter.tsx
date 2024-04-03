@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TChangeConfigProperty } from '../types';
 import { Select, Typography } from 'antd';
-import { sydnoServiceFormData } from 'SydnoService/service';
+import { sydnoServiceJson } from 'SydnoService/service';
 
 export const SelectorServiceFilter: React.FC<{
     value?: string | null;
@@ -13,7 +13,7 @@ export const SelectorServiceFilter: React.FC<{
     const [typeList, setTypeList] = useState<{ value: string; label: string }[]>();
 
     useEffect(() => {
-        sydnoServiceFormData.get(`/api/selector?${adress}`).then((res) => {
+        sydnoServiceJson.get(`/api/selector?${adress}`).then((res) => {
             const data = res.data.message;
             setTypeList(
                 Object.entries(data[adress] as { [x in string]: string }).map(([value, label]: [string, string]) => ({

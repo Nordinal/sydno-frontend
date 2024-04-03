@@ -15,12 +15,12 @@ export const Footer = () => {
                 </div>
                 <div className='flex items-center justify-center mt-2'>
                     <span>
-                        <Typography.Text type='secondary'>support:</Typography.Text>
+                        <Typography.Text type='secondary'>помощь:</Typography.Text>
                         <Button style={{ padding: '0 4px', height: 'auto' }} type='link' href='mailto:sydno@mail.ru'>
                             sydno@mail.ru
                         </Button>
                     </span>
-                    <Typography.Text type='secondary'>©copyright sydno, 2024</Typography.Text>
+                    <Typography.Text type='secondary'>©copyright Sydno, 2024. Все права защищены</Typography.Text>
                 </div>
             </div>
         </div>
