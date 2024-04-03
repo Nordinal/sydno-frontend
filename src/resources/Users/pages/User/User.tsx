@@ -38,7 +38,7 @@ export const User = ({ id }: { id: number }) => {
                 <Col span={6}>
                     <div className='flex '>
                         <div className='mr-2'>
-                            <img src={user.avatar} />
+                            <Avatar size={64} src={user.avatar} icon={<UserOutlined />} />
                         </div>
                         <div className=''>
                             <Typography.Title className='' level={4}>

@@ -75,16 +75,16 @@ export const UploadAvatar = ({ onLoad, src }: { onLoad: (file: File | null) => v
                     customRequest={({ onSuccess, file }) => customRequest({ onSuccess, file })}
                 >
                     {file ? (
-                        <img
+                        <Avatar
                             src={previewImage}
-                            // onDelete={(e) => {
-                            //     e.stopPropagation();
-                            //     dispatchFile(null);
-                            // }}
-                            // onPreview={(e) => {
-                            //     e.stopPropagation();
-                            //     handlePreview(file);
-                            // }}
+                            onDelete={(e) => {
+                                e.stopPropagation();
+                                dispatchFile(null);
+                            }}
+                            onPreview={(e) => {
+                                e.stopPropagation();
+                                handlePreview(file);
+                            }}
                         />
                     ) : (
                         uploadButton

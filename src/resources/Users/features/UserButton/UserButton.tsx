@@ -63,7 +63,7 @@ const UserButtonUi = ({ id, src, name, advertCount, className }: TUserButtonProp
         <div className={className || ''}>
             <div className={'flex ' + s['user-button__person']} onClick={handleClick}>
                 <div className='mr-2'>
-                    <img src={src} />
+                    <Avatar src={src} icon={<UserOutlined />} />
                 </div>
                 <div className='flex items-center'>
                     <Typography.Text className={s['user-button__name']} title={name}>
