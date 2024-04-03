@@ -51,7 +51,7 @@ export const ProfileButton = () => {
     return (
         <Dropdown menu={{ items }} className='cursor-pointer'>
             <div className='flex items-center' onClick={() => router.push('/profile')}>
-                <Avatar src={avatar} size='small' icon={<UserOutlined />} />
+                <img src={avatar} />
                 <Typography.Text strong style={{ color: 'white' }} className='ml-2'>
                     {name}
                 </Typography.Text>

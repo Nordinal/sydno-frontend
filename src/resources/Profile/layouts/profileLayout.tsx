@@ -38,7 +38,7 @@ export const ProfileLayoutClient = ({ children }: { children: React.ReactNode })
                     <Col xs={24} sm={4}>
                         <div className='mb-2 flex align-center'>
                             <div className='mr-2'>
-                                <Avatar src={avatar} icon={<UserOutlined />} />
+                                <img src={avatar}/>
                             </div>
                             <div>
                                 <Typography.Title level={4}>{name}</Typography.Title>
