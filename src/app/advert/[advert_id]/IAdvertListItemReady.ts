@@ -1,6 +1,8 @@
 export interface IReceivedAdvert {
     id: number;
     user_id: number;
+    advert_type: number;
+    can_edit: number;
     registration_number: string;
     price: number;
     state?: number;

@@ -116,7 +116,7 @@ export const MainAdvertPageUI = () => {
                 />
             </Col>
             <Col span={24}>
-                <RecentlyWatched />
+                <RecentlyWatched className='mt-8'/>
             </Col>
         </Row>
     );

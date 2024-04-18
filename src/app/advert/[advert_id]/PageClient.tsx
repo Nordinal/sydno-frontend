@@ -1,6 +1,6 @@
 'use client';
 import React, { SyntheticEvent, useState } from 'react';
-import { Button, Col, Divider, Row, Spin, Typography } from 'antd';
+import { Button, Col, Divider, Row, Spin, Typography, notification } from 'antd';
 import { useShallow } from 'zustand/react/shallow';
 import './styles.css';
 import { ConvertData } from './DataConverter';
@@ -10,11 +10,12 @@ import Specs from './Specs';
 import { useScreenSize } from './useMobileView';
 import { useUser } from 'Auth/entities';
 import { IReceivedAdvert } from './IAdvertListItemReady';
-import { CheckOutlined, CopyOutlined, EyeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { CheckOutlined, CopyOutlined, EyeOutlined, MailOutlined, PhoneOutlined, EditOutlined } from '@ant-design/icons';
 import { SpecsPair } from './SpecsPair';
 import { UserButton } from 'Users/features';
 import { CustomCarousel } from './CustomCarousel';
 import { OtherAdverts } from './OtherAdverts';
+import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 
 interface IAdvertPageProps {
@@ -48,6 +49,7 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showNumber, setShowNumber] = useState<boolean>(false);
     const [isNumberCopied, setIsNumberCopied] = useState<boolean>(false);
+    const router = useRouter();
 
     const [isLocalFavorite, setIsLocalFavorite] = useState<boolean | undefined>(advertData && advertData.in_favorites);
     const screenSize = useScreenSize();
@@ -118,6 +120,22 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
     // };
 
     const ConvertedAdvertData = advertData && ConvertData(advertData);
+
+    const handleEditClick = () => {
+        if(!advertData) return;
+
+        switch(advertData.advert_type) {
+            case 0:
+                router.push(`/create/sale?id=${advertData.id}`);
+                break;
+            case 1:
+                router.push(`/create/fracht?id=${advertData.id}`);
+                break;
+            default:
+                notification.warning({message: 'Не определен тип объявления', duration: 2, placement: 'bottomRight'});
+                break;
+        }
+    }
 
     if (!advertData) {
         return (
@@ -262,6 +280,12 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                                     Написать на почту
                                     <MailOutlined style={{ fontSize: '20px', marginRight: '-5px' }} />
                                 </Button>
+                                {advertData.can_edit &&
+                                    <Button className='callButton' type='default' onClick={handleEditClick}>
+                                        Редактировать
+                                        <EditOutlined style={{ fontSize: '22px', marginRight: '-10px' }} />
+                                    </Button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -301,11 +325,17 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                                 Позвонить
                                 <PhoneOutlined style={{ fontSize: '22px', marginRight: '-10px' }} />
                             </Button>
-
+                            {/* can_edit */}
                             <Button className='callButton' type='primary' onClick={emailHandler}>
                                 Написать на почту
                                 <MailOutlined style={{ fontSize: '22px', marginRight: '-10px' }} />
                             </Button>
+                            {advertData.can_edit &&
+                                <Button className='callButton' type='default' onClick={handleEditClick}>
+                                    Редактировать
+                                    <EditOutlined style={{ fontSize: '22px', marginRight: '-10px' }} />
+                                </Button>
+                            }
                         </div>
                     </div>
 

@@ -52,20 +52,20 @@ export function CreateAdvertSteps({ id, type }: { id?: number, type: CreateAdver
                             marginBottom: '48px'
                         }}
                     >
-                        Создание объявления {type === CreateAdvertTypes.Sale ? 'продажи' : 'аредны'}
+                        {id ? 'Редактирование' : 'Создание'} объявления {type === CreateAdvertTypes.Sale ? 'продажи' : 'аредны'}
                     </Typography.Title>
                 </Col>
             </Row>
             <Row>
                 <Col span={18}>
-                    <CreateSaleAdUI />
+                    <CreateSaleAdUI isEdit={!!id}/>
                 </Col>
             </Row>
         </div>
     );
 }
 
-export function CreateSaleAdUI() {
+export function CreateSaleAdUI({isEdit}: {isEdit: boolean}) {
     const { createStepOne, createStepTwo, createStepThree } = useCreateAdvert(
         useShallow((state) => ({
             createStepOne: state.createStepOne,
@@ -161,7 +161,10 @@ export function CreateSaleAdUI() {
                 </Col>
                 <Col offset={1} span={15}>
                     <Button loading={loading} form={current} type='primary' className='mr-4 w-full' htmlType='submit'>
-                        {index === 2 ? 'Создать объявление' : 'Перейти к следующему шагу'}
+                        {index === 2
+                            ? (isEdit ? 'Редактировать' : 'Создать') + ' объявление'
+                            : 'Перейти к следующему шагу'
+                        }
                     </Button>
                 </Col>
             </Row>

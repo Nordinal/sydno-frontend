@@ -1,9 +1,7 @@
-// import { useCreateAd } from "@/entities/createAd/model";
 import { BaseAdvertCard, IAdvertCard } from 'Advert/widgets';
 import { BasicList } from 'SydnoComponents/lists';
-import { Button, List, notification } from 'antd';
+import { notification } from 'antd';
 import { useRouter } from 'next/navigation';
-import { useShallow } from 'zustand/react/shallow';
 
 export const MyDrafts = () => {
     const router = useRouter();

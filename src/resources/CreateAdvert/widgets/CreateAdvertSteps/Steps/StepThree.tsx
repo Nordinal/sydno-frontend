@@ -7,8 +7,8 @@ import { useShallow } from 'zustand/react/shallow';
 import { sydnoServiceJson } from 'SydnoService/service';
 
 export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) {
-    const { adverts_technical_information } = useCreateAdvert(
-        useShallow((state) => ({ adverts_technical_information: state.instance.adverts_technical_information }))
+    const { advert_technical_information } = useCreateAdvert(
+        useShallow((state) => ({ advert_technical_information: state.instance.advert_technical_information }))
     );
     const [isTanks, setIsTanks] = useState(false);
     const [isBulkTanks, setIsBulkTanks] = useState(false);
@@ -50,7 +50,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                     <Form.Item
                         noStyle
                         name='overall_length'
-                        initialValue={adverts_technical_information?.overall_length}
+                        initialValue={advert_technical_information?.overall_length}
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
                         <InputNumber style={{ width: '50%' }} placeholder='Длина' addonAfter='м.' step='0.01' />
@@ -58,7 +58,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                     <Form.Item
                         noStyle
                         name='overall_width'
-                        initialValue={adverts_technical_information?.overall_width}
+                        initialValue={advert_technical_information?.overall_width}
                         rules={[{ required: true, message: 'Обязательное поле' }]}
                     >
                         <InputNumber style={{ width: '50%' }} placeholder='Ширина' addonAfter='м.' step='0.01' />
@@ -70,7 +70,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Высота борта'
                 labelAlign='left'
                 name='board_height'
-                initialValue={adverts_technical_information?.board_height}
+                initialValue={advert_technical_information?.board_height}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
@@ -88,7 +88,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Осадка в грузу'
                 labelAlign='left'
                 name='draft_in_cargo'
-                initialValue={adverts_technical_information?.draft_in_cargo}
+                initialValue={advert_technical_information?.draft_in_cargo}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
@@ -104,7 +104,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Материал корпуса'
                 labelAlign='left'
                 name='material'
-                initialValue={adverts_technical_information?.overall_length}
+                initialValue={advert_technical_information?.material}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select placeholder='Материал корпуса' options={materials} />
@@ -114,7 +114,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Дедвейт'
                 labelAlign='left'
                 name='deadweight'
-                initialValue={adverts_technical_information?.deadweight}
+                initialValue={advert_technical_information?.deadweight}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{ width: '100%' }} placeholder='Дедвейт (тонны)' addonAfter='тонны' />
@@ -124,7 +124,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Доковый вес'
                 labelAlign='left'
                 name='dock_weight'
-                initialValue={adverts_technical_information?.dock_weight}
+                initialValue={advert_technical_information?.dock_weight}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{ width: '100%' }} placeholder='Доковый вес (тонны)' addonAfter='тонны' />
@@ -134,7 +134,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Водоизмещение полное'
                 labelAlign='left'
                 name='full_displacement'
-                initialValue={adverts_technical_information?.full_displacement}
+                initialValue={advert_technical_information?.full_displacement}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
@@ -148,7 +148,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Валовая вместимость'
                 labelAlign='left'
                 name='gross_tonnage'
-                initialValue={adverts_technical_information?.gross_tonnage}
+                initialValue={advert_technical_information?.gross_tonnage}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{ width: '100%' }} placeholder='Валовая вместимость' addonAfter='рег. тонны' />
@@ -158,7 +158,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Количество главных двигателей'
                 labelAlign='left'
                 name='num_engines'
-                initialValue={adverts_technical_information?.num_engines}
+                initialValue={advert_technical_information?.num_engines}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
@@ -173,7 +173,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Количество вспомогательных двигателей'
                 labelAlign='left'
                 name='num_additional_engines'
-                initialValue={adverts_technical_information?.num_additional_engines}
+                initialValue={advert_technical_information?.num_additional_engines}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
@@ -189,7 +189,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Мощность двигателей'
                 labelAlign='left'
                 name='power'
-                initialValue={adverts_technical_information?.power}
+                initialValue={advert_technical_information?.power}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber
@@ -204,7 +204,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Максимальная скорость'
                 labelAlign='left'
                 name='maximum_speed'
-                initialValue={adverts_technical_information?.maximum_speed}
+                initialValue={advert_technical_information?.maximum_speed}
             >
                 <InputNumber
                     style={{ width: '100%' }}
@@ -218,7 +218,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Грузовые танки'
                 labelAlign='left'
                 name='cargo_tanks'
-                initialValue={adverts_technical_information?.cargo_tanks || isTanks}
+                initialValue={advert_technical_information?.cargo_tanks || isTanks}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -243,7 +243,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                     label='Суммарная вместимость'
                     labelAlign='left'
                     name='total_capacity_cargo_tanks'
-                    initialValue={adverts_technical_information?.total_capacity_cargo_tanks}
+                    initialValue={advert_technical_information?.total_capacity_cargo_tanks}
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <InputNumber style={{ width: '100%' }} placeholder='Суммарная вместимость' />
@@ -254,7 +254,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Второе дно'
                 labelAlign='left'
                 name='second_bottom'
-                initialValue={adverts_technical_information?.second_bottom}
+                initialValue={advert_technical_information?.second_bottom}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -276,7 +276,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Вторые борта'
                 labelAlign='left'
                 name='second_sides'
-                initialValue={adverts_technical_information?.second_sides}
+                initialValue={advert_technical_information?.second_sides}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -298,7 +298,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Грузоподъемность'
                 labelAlign='left'
                 name='carrying'
-                initialValue={adverts_technical_information?.carrying}
+                initialValue={advert_technical_information?.carrying}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <InputNumber style={{ width: '100%' }} placeholder='Грузоподъемность' />
@@ -308,7 +308,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Наливные танки'
                 labelAlign='left'
                 name='liquid_tanks'
-                initialValue={adverts_technical_information?.liquid_tanks || isBulkTanks}
+                initialValue={advert_technical_information?.liquid_tanks || isBulkTanks}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -333,7 +333,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                     label='Cуммарная вместимость'
                     labelAlign='left'
                     name='total_capacity_liquid_tanks'
-                    initialValue={adverts_technical_information?.total_capacity_liquid_tanks}
+                    initialValue={advert_technical_information?.total_capacity_liquid_tanks}
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <InputNumber style={{ width: '100%' }} placeholder='Cуммарная вместимость' />
@@ -344,7 +344,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 label='Пассажировместимость'
                 labelAlign='left'
                 name='passangers_avialable'
-                initialValue={adverts_technical_information?.passangers_avialable || isCapacity}
+                initialValue={advert_technical_information?.passangers_avialable || isCapacity}
                 rules={[{ required: true, message: 'Обязательное поле' }]}
             >
                 <Select
@@ -369,7 +369,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                     label='Количество человек'
                     labelAlign='left'
                     name='num_passangers'
-                    initialValue={adverts_technical_information?.num_passangers}
+                    initialValue={advert_technical_information?.num_passangers}
                     rules={[{ required: true, message: 'Обязательное поле' }]}
                 >
                     <InputNumber style={{ width: '100%' }} placeholder='Количество человек' />

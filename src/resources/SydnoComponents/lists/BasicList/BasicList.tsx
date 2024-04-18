@@ -7,7 +7,9 @@ import { LoadingOutlined } from '@ant-design/icons';
 export interface IBasicList<T> extends ListProps<T> {
     action: string;
     filters?: IFilters;
+    pageSize?: number;
     showTotalCount?: boolean;
+    dataLoadCallback?: <T>(data: IBasicListService<T>) => void;
     mode?: 'list' | 'kanban';
 }
 
@@ -17,7 +19,7 @@ export type IFilters = {
     page?: number;
 };
 
-interface IBasicListService<T> {
+export interface IBasicListService<T> {
     current_page: number;
     data: T[];
     first_page_url: string;
@@ -49,6 +51,7 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
             const result = await sydnoServiceJson.get<IBasicListService<T>>(
                 props.action + '?' + convertObjectToPathname(filtersObj)
             );
+            props.dataLoadCallback?.(result.data);
             setService(result.data);
             setLoading(false);
         } catch (e) {
@@ -97,11 +100,11 @@ export const BasicList = <T,>(props: IBasicList<T>) => {
                     } : undefined
                 }
                 pagination={
-                    Number(service?.total) > 12 && {
+                    Number(service?.total) > (props.pageSize || 12) && {
                         total: service?.total,
                         ...(props.pagination || {}),
                         current: localPage,
-                        pageSize: 12,
+                        pageSize: (props.pageSize || 12),
                         showSizeChanger: false,
                         onChange: (page, ...args) => {
                             if (props.pagination instanceof Object && props.pagination.onChange)

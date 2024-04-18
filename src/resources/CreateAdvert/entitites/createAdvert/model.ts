@@ -81,7 +81,7 @@ export interface ICreateAdStepThree {
 export interface IInstanceCreateAd extends Partial<ICreateAdStepOne> {
     id?: number;
     advert_legal_information?: ICreateAdStepTwo;
-    adverts_technical_information?: ICreateAdStepThree;
+    advert_technical_information?: ICreateAdStepThree;
 }
 
 export interface ICreateAdData {
@@ -198,7 +198,7 @@ export const useCreateAdvert = create<ICreateAdModel>((set, get) => ({
             const advert_id = get().instance.id;
             if (!advert_id) throw new Error('Не найден индификатор объявления');
 
-            const id = get().instance.adverts_technical_information?.id;
+            const id = get().instance.advert_technical_information?.id;
 
             const result = id
                 ? await sydnoServiceJson.post(`/api/advertstechnicalinformation/${id}/edit`, {
@@ -213,8 +213,8 @@ export const useCreateAdvert = create<ICreateAdModel>((set, get) => ({
             set({
                 instance: {
                     ...get().instance,
-                    adverts_technical_information: {
-                        ...(get().instance.adverts_technical_information || {}),
+                    advert_technical_information: {
+                        ...(get().instance.advert_technical_information || {}),
                         ...(!id ? result.data : payload)
                     }
                 }
