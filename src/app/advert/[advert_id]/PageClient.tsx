@@ -325,7 +325,6 @@ const AdvertPage: React.FC<IAdvertPageProps> = ({ advert: advertData }) => {
                                 Позвонить
                                 <PhoneOutlined style={{ fontSize: '22px', marginRight: '-10px' }} />
                             </Button>
-                            {/* can_edit */}
                             <Button className='callButton' type='primary' onClick={emailHandler}>
                                 Написать на почту
                                 <MailOutlined style={{ fontSize: '22px', marginRight: '-10px' }} />
