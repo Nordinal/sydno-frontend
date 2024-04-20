@@ -6,7 +6,7 @@ import s from './Specs.module.css';
 import { SpecsPair } from './SpecsPair';
 
 type DescriptionItem = {
-    key: string;
+    key: string | number;
     label: string;
     children: React.ReactNode | number | string | JSX.Element | undefined;
 };
