@@ -61,7 +61,7 @@ export const SmallImageSlider: React.FC<ISmallImageSlider> = ({
             <span className={`sudno-SmallImageSlider-sell-rent ${isMiniCard ? 'user-advert' : ''}`}>{type === 0 ? 'Продажа' : 'Аренда'}</span>
             <img
                 ref={imageRef}
-                src={items.length === 0 ? fallbackImageSrc : baseURL + items[activeIndex]}
+                src={items.length === 0 ? fallbackImageSrc : items[activeIndex]}
                 className={'sudno-SmallImageSlider-image ' + imageClass}
                 onError={onImageErrorLoad}
                 style={imageStyle}
