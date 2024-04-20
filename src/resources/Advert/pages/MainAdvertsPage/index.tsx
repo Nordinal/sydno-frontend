@@ -115,9 +115,9 @@ export const MainAdvertPageUI = () => {
                     }}
                 />
             </Col>
-            <Col span={24}>
+            {/* <Col span={24}>
                 <RecentlyWatched className='mt-8'/>
-            </Col>
+            </Col> */}
         </Row>
     );
 };
