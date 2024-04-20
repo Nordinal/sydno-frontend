@@ -1,6 +1,7 @@
 import { IAdvertListItem } from 'Advert/entities';
 import countriesJson from '../../../resources/SydnoComponents/selectors/CountriesSelector/countries.json';
 import { IReceivedAdvert } from './IAdvertListItemReady';
+import crypto from 'crypto';
 
 type DescriptionItem = {
     key: string;
