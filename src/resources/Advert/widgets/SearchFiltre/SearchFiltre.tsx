@@ -291,6 +291,14 @@ const LegalFilters: React.FC<{ filterConfig: TFilterOptions; changeConfigPropert
                 />
             </Col>
             <Col xs={24} sm={6}>
+                <InputTextFilter
+                    onChange={changeConfigProperty}
+                    value={filterConfig['purpose'] || ''}
+                    keyProperty={'purpose'}
+                    placeholder='Назначение'
+                />
+            </Col>
+            <Col xs={24} sm={6}>
                 <div>
                     <Typography.Text type='secondary'>Флаг</Typography.Text>
                     <CountriesSelector
