@@ -54,7 +54,7 @@ export const RegionSelector = ({
             setFetching(true);
             axios
                 .post(
-                    'http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
+                    'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
                     {
                         query: search,
                         from_bound: { value: 'city' },
