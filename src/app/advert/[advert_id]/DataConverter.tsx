@@ -254,7 +254,7 @@ export function ConvertData(advertData: IReceivedAdvert): DescriptionsPropsObjec
             {
                 key: crypto.randomUUID ? crypto.randomUUID() : 39,
                 label: 'Количество человек',
-                children: formatField(technicalInformation.passangers_avialable)
+                children: formatField(technicalInformation.num_passangers)
             },
             {
                 key: crypto.randomUUID ? crypto.randomUUID() : 40,

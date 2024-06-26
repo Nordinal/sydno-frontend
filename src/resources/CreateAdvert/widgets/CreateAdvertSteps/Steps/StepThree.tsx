@@ -164,7 +164,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 <InputNumber
                     style={{ width: '100%' }}
                     placeholder='Количество главных двигателей'
-                    min={1}
+                    min={0}
                     max={8}
                     addonAfter='шт.'
                 />
@@ -179,7 +179,7 @@ export function CreateAdvertStepThree({ onFinish }: { onFinish: onFinishStep }) 
                 <InputNumber
                     style={{ width: '100%' }}
                     placeholder='Количество вспомогательных двигателей'
-                    min={1}
+                    min={0}
                     max={8}
                     addonAfter='шт.'
                 />

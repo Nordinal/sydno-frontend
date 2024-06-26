@@ -27,7 +27,7 @@ export const AdvertSmallCard: React.FC<OtherAdvertsProps> = ({ advert, forwarded
     return (
         <div onClick={() => router.push('/advert/' + String(advert.id))} className='other-advert-container'>
             <div className='image-block'>
-                <img alt={advert.header} src={advert.images[0]} />
+                <img alt={advert.header} src={advert.images[0] || '/sheep-icon.png'} />
                 <img className='other-flag' alt={`Флаг ${flagData}`} src={`/flags/${flagCode}.svg`} />
                 <span className='other-sell-rent'>продажа</span>
             </div>
